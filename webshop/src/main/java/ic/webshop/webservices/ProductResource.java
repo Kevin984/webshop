@@ -32,6 +32,10 @@ ProductService productService = ProductServiceProvider.getProductService();
 			JsonObjectBuilder job = Json.createObjectBuilder();
 			job.add("ID", a.getID());
 			job.add("Naam", a.getNaam());
+			job.add("Omschrijving", a.getOmschrijving());
+		//	job.add("Afbeelding", a.getBlobPlaatje());
+			job.add("Prijs", a.getPrijs());
+
 			jab.add(job);
 		}
 		JsonArray array = jab.build();

@@ -17,9 +17,15 @@ public class ProductDAO extends BaseDAO{
 		try(Connection con = super.getConnection()){
 			Statement stmt = con.createStatement();
 			ResultSet dbResultSet = stmt.executeQuery(query);
-			
+			producten.clear();
 			while(dbResultSet.next()){ 
-				
+				 int ID = dbResultSet.getInt("ID");
+				 String naam = dbResultSet.getString("Naam");
+				 String omschrijving = dbResultSet.getString("Omschrijving");
+			//	 String afbeelding = dbResultSet.getString("Afbeelding");
+				 double prijs = dbResultSet.getDouble("Prijs");
+				 Product product = new Product(ID, naam, omschrijving, prijs);
+				 producten.add(product);
 			}
 		}
 		catch(SQLException sqle){ sqle.printStackTrace();
@@ -28,7 +34,7 @@ public class ProductDAO extends BaseDAO{
 	}
 	
 	public List<Product> findAll(){
-		return selectArtikelen("SELECT \"ID\", \"Naam\", \"Categorie\", \"Maat\", \"Kleur\", \"Merk\", \"Inkoopprijs\", \"Verkoopprijs\", \"Aantal\" FROM public.\"Artikel\" ORDER BY \"ID\" ASC, \"Maat\" ASC, \"Kleur\" ASC ");
+		return selectArtikelen("SELECT \"ID\", \"Naam\", \"Omschrijving\", \"Afbeelding\", \"Prijs\" FROM public.\"Product\" ORDER BY \"ID\"");
 	}
 	
 	//gebruik de primary keys (id, maat, kleur) van artikel om een specifiek artikel te vinden

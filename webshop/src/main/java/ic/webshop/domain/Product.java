@@ -8,9 +8,17 @@ private String blobPlaatje, naam, omschrijving;
 double prijs;
 private ArrayList<Categorie> categorieen;
 
-public Product(int ID, String blobPlaatje, String naam, String omschrijving, double prijs) {
+public Product(int ID, String naam, String omschrijving, String blobPlaatje, double prijs) {
 	this.ID = ID;
 	this.blobPlaatje = blobPlaatje;
+	this.naam =naam;
+	this.omschrijving = omschrijving;
+	this.prijs=prijs;
+	categorieen = new ArrayList<Categorie>();
+}
+
+public Product(int ID, String naam, String omschrijving, double prijs) {
+	this.ID = ID;
 	this.naam =naam;
 	this.omschrijving = omschrijving;
 	this.prijs=prijs;

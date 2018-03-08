@@ -11,8 +11,7 @@ public class ProductService {
 
 	public List<Product> getVoorraad(){
 		
-		List<Product> aa = new ArrayList<Product>();
-		aa.add(new Product(0, "yes", "aa", "yee", 10.00));
+		
 		
 		return productDAO.findAll();
 	}
