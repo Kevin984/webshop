@@ -35,6 +35,7 @@ public void setOmschrijving(String omschrijving) {this.omschrijving = omschrijvi
 public String getOmschrijving() {return omschrijving;}
 public void setPrijs(double prijs) {this.prijs = prijs; }
 public double getPrijs() {return prijs;}
+
 public boolean voegCategorieToe(Categorie cat) {
 	boolean result = false;
 	if(!categorieen.contains(cat)) {
@@ -42,6 +43,7 @@ public boolean voegCategorieToe(Categorie cat) {
 	result = true;}
 	return result;
 	 }
+
 public boolean verwijderCategorie(Categorie cat) {
 	boolean result = false;
 	if(categorieen.contains(cat)) {
