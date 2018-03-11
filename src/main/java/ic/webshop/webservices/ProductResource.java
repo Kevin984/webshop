@@ -52,6 +52,7 @@ JsonArrayBuilder jab = Json.createArrayBuilder();
 	}
 
 	@Override
+	@POST
 	@Produces("application/json")
 	public String createProduct(@FormParam("ID")int ID, @FormParam("Naam") String naam, @FormParam("Afbeelding") String afbeelding, @FormParam("Omschrijving") String omschrijving
 			, @FormParam("Prijs") double prijs) {
