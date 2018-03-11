@@ -31,8 +31,8 @@ JsonArrayBuilder jab = Json.createArrayBuilder();
 			job.add("ID", a.getID());
 			job.add("Naam", a.getNaam());
 		//	job.add("Categorie", a.getBlobPlaatje());
-			job.add("Maat", a.getOmschrijving());
-			job.add("Kleur", a.getPrijs());
+			job.add("Omschrijving", a.getOmschrijving());
+			job.add("Prijs", a.getPrijs());
 
 			jab.add(job);
 		}
@@ -66,8 +66,8 @@ JsonArrayBuilder jab = Json.createArrayBuilder();
 		job.add("ID", a.getID());
 		job.add("Naam", a.getNaam());
 	//	job.add("Categorie", a.getBlobPlaatje());
-		job.add("Maat", a.getOmschrijving());
-		job.add("Kleur", a.getPrijs());
+		job.add("Omschrijving", a.getOmschrijving());
+		job.add("Prijs", a.getPrijs());
 		return job;
 	}
 }
