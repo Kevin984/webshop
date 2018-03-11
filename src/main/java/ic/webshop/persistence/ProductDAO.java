@@ -34,7 +34,7 @@ public class ProductDAO extends BaseDAO{
 	}
 	
 	public List<Product> findAll(){
-		return selectArtikelen("SELECT \"ID\", \"Naam\", \"Omschrijving\", \"Afbeelding\", \"Prijs\" FROM public.\"Product\" ORDER BY \"ID\"");
+		return selectArtikelen("SELECT * FROM public.\"Product\" ORDER BY \"ID\"");
 	}
 	
 	//gebruik de primary keys (id, maat, kleur) van artikel om een specifiek artikel te vinden

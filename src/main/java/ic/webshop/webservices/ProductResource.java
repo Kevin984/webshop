@@ -24,8 +24,23 @@ public class ProductResource implements ProductService{
 	private ProductDAO productDAO = new ProductDAO();
 	
 	@Override
-	public ArrayList<Product> getProducten() {
-		return (ArrayList<Product>) productDAO.findAll();
+	public String getProducten() {
+JsonArrayBuilder jab = Json.createArrayBuilder();
+		
+		for(Product a : productDAO.findAll()){ 
+			//maak json van alle gegevens van elk artikel
+			JsonObjectBuilder job = Json.createObjectBuilder();
+			job.add("ID", a.getID());
+			job.add("Naam", a.getNaam());
+			job.add("Categorie", a.getBlobPlaatje());
+			job.add("Maat", a.getOmschrijving());
+			job.add("Kleur", a.getPrijs());
+
+			jab.add(job);
+		}
+		JsonArray array = jab.build();
+		return array.toString();
+	
 	}
 
 	@Override

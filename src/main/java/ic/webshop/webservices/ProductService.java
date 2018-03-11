@@ -18,7 +18,7 @@ import ic.webshop.domain.Product;
 public interface ProductService {
 	@GET  												 
 	@Produces("application/json") 
-	public ArrayList<Product> getProducten();
+	public String getProducten();
 	
 	@DELETE
 	@Path("{id}")  													
