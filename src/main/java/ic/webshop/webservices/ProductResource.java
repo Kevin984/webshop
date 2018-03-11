@@ -1,7 +1,7 @@
 package ic.webshop.webservices;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-
 import javax.annotation.security.RolesAllowed;
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -30,6 +30,8 @@ JsonArrayBuilder jab = Json.createArrayBuilder();
 			JsonObjectBuilder job = Json.createObjectBuilder();
 			job.add("ID", a.getID());
 			job.add("Naam", a.getNaam());
+			String blob = new String(a.getBlobPlaatje(), StandardCharsets.UTF_8);
+			job.add("Afbeelding", blob);
 		//	job.add("Categorie", a.getBlobPlaatje());
 			job.add("Omschrijving", a.getOmschrijving());
 			job.add("Prijs", a.getPrijs());
@@ -65,6 +67,8 @@ JsonArrayBuilder jab = Json.createArrayBuilder();
 		JsonObjectBuilder job = Json.createObjectBuilder();
 		job.add("ID", a.getID());
 		job.add("Naam", a.getNaam());
+		String blob = new String(a.getBlobPlaatje(), StandardCharsets.UTF_8);
+		job.add("Afbeelding", blob);
 	//	job.add("Categorie", a.getBlobPlaatje());
 		job.add("Omschrijving", a.getOmschrijving());
 		job.add("Prijs", a.getPrijs());
