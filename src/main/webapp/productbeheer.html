@@ -141,10 +141,10 @@
     	
     else {
     	$.ajax({
-			url: "https://webshopiac.herokuapp.com/restservices/producten/",
+			url: "restservices/producten/",
 			success: function(response){
 				var data = $("#artikelAanmaken").serialize();
-		    	$.post("https://webshopiac.herokuapp.com/restservices/producten", data, function(response){
+		    	$.post("restservices/producten", data, function(response){
 		    		// reset de form voor nieuwe input
    				$("#artikelAanmaken")[0].reset(); 
    				

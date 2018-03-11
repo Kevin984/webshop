@@ -51,10 +51,10 @@ public class ProductDAO extends BaseDAO{
 			preparedStatement = con.prepareStatement(query);
 			// eerste vraagteken = 1
 			preparedStatement.setInt(1, artikel.getID()); 
-			preparedStatement.setString(1, artikel.getBlobPlaatje()); 
-			preparedStatement.setString(1, artikel.getNaam()); 
-			preparedStatement.setString(1, artikel.getOmschrijving()); 
-			preparedStatement.setDouble(1, artikel.getPrijs()); 
+			preparedStatement.setString(2, artikel.getBlobPlaatje()); 
+			preparedStatement.setString(3, artikel.getNaam()); 
+			preparedStatement.setString(4, artikel.getOmschrijving()); 
+			preparedStatement.setDouble(5, artikel.getPrijs()); 
 
 			preparedStatement.executeUpdate();	
 			preparedStatement.close();
