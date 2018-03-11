@@ -1,4 +1,6 @@
 package ic.webshop.persistence;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -51,7 +53,9 @@ public class ProductDAO extends BaseDAO{
 			preparedStatement = con.prepareStatement(query);
 			// eerste vraagteken = 1
 			preparedStatement.setInt(1, artikel.getID()); 
-			preparedStatement.setString(2, artikel.getBlobPlaatje()); 
+			byte[] source = artikel.getBlobPlaatje();
+			ByteArrayInputStream blob = new ByteArrayInputStream(source);
+			preparedStatement.setBinaryStream(2, blob); 
 			preparedStatement.setString(3, artikel.getNaam()); 
 			preparedStatement.setString(4, artikel.getOmschrijving()); 
 			preparedStatement.setDouble(5, artikel.getPrijs()); 

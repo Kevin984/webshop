@@ -33,7 +33,7 @@ public interface ProductService {
 	
 	@POST 
 	@Produces("application/json")
-	public String createProduct(@FormParam("ID")int ID, @FormParam("Naam") String nm, @FormParam("Afbeelding") String afbeelding, @FormParam("Omschrijving") String omschrijving
+	public String createProduct(@FormParam("ID")int ID, @FormParam("Naam") String nm, @FormParam("Afbeelding") byte[] afbeelding, @FormParam("Omschrijving") String omschrijving
 			, @FormParam("Prijs") double prijs);
 
 }

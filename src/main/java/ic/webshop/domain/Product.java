@@ -4,11 +4,12 @@ import java.util.ArrayList;
 
 public class Product {
 private int ID;
-private String blobPlaatje, naam, omschrijving;
+private byte[] blobPlaatje; 
+private String naam, omschrijving;
 double prijs;
 private ArrayList<Categorie> categorieen;
 
-public Product(int ID, String naam, String omschrijving, String blobPlaatje, double prijs) {
+public Product(int ID, String naam, String omschrijving, byte[] blobPlaatje, double prijs) {
 	this.ID = ID;
 	this.blobPlaatje = blobPlaatje;
 	this.naam =naam;
@@ -27,8 +28,8 @@ public Product(int ID, String naam, String omschrijving, double prijs) {
 
 public void setID(int ID) {this.ID = ID; }
 public int getID() {return ID;}
-public void setBlobPlaatje(String blobPlaatje) {this.blobPlaatje = blobPlaatje; }
-public String getBlobPlaatje() {return blobPlaatje;}
+public void setBlobPlaatje(byte[] blobPlaatje) {this.blobPlaatje = blobPlaatje; }
+public byte[] getBlobPlaatje() {return blobPlaatje;}
 public void setNaam(String naam) {this.naam = naam; }
 public String getNaam() {return naam;}
 public void setOmschrijving(String omschrijving) {this.omschrijving = omschrijving; }
