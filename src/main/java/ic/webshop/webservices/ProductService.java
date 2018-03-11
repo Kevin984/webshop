@@ -31,7 +31,7 @@ public interface ProductService {
 								   Product product);
 	
 	@POST 
-	@Consumes("application/json")
+	@Produces("application/json")
 	public Response createProduct(Product product);
 
 }

@@ -26,7 +26,6 @@ public class ProductResource implements ProductService{
 	@Override
 	public String getProducten() {
 JsonArrayBuilder jab = Json.createArrayBuilder();
-		
 		for(Product a : productDAO.findAll()){ 
 			JsonObjectBuilder job = Json.createObjectBuilder();
 			job.add("ID", a.getID());
