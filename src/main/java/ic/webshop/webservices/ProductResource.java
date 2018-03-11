@@ -31,7 +31,7 @@ JsonArrayBuilder jab = Json.createArrayBuilder();
 			job.add("ID", a.getID());
 			job.add("Naam", a.getNaam());
 			String blob = new String(a.getBlobPlaatje(), StandardCharsets.UTF_8);
-			job.add("Afbeelding", blob);
+		//	job.add("Afbeelding", blob);
 		//	job.add("Categorie", a.getBlobPlaatje());
 			job.add("Omschrijving", a.getOmschrijving());
 			job.add("Prijs", a.getPrijs());
