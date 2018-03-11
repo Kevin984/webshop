@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -32,6 +33,7 @@ public interface ProductService {
 	
 	@POST 
 	@Produces("application/json")
-	public Response createProduct(Product product);
+	public Response createProduct(@FormParam("ID")int ID, @FormParam("Naam") String nm, @FormParam("Afbeelding") String afbeelding, @FormParam("Omschrijving") String omschrijving
+			, @FormParam("Prijs") double prijs);
 
 }

@@ -54,7 +54,10 @@ JsonArrayBuilder jab = Json.createArrayBuilder();
 	}
 
 	@Override
-	public Response createProduct(Product product) {
+	@Produces("application/json")
+	public Response createProduct(@FormParam("ID")int ID, @FormParam("Naam") String naam, @FormParam("Afbeelding") String afbeelding, @FormParam("Omschrijving") String omschrijving
+			, @FormParam("Prijs") double prijs) {
+		Product product = new Product(ID, afbeelding, naam, omschrijving, prijs);
 		productDAO.saveArtikel(product);
 		return Response.status(Response.Status.CREATED).build();
 	}
