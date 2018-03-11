@@ -7,19 +7,14 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Jeans & Lifestyle - Artikel aanmaken</title>
-
+    <title> Artikel aanmaken</title>
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <link href="assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-
     <!-- Custom styles for this template -->
     <link href="dashboard.css" rel="stylesheet">
-	
 	<link href="css/bootstrap.icon-large.min.css" rel="stylesheet">
-
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="assets/js/ie-emulation-modes-warning.js"></script>
@@ -30,9 +25,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-
   <body>
-
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -42,7 +35,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="hoofdpagina.html">Jeans & Lifestyle</a>
+          <a class="navbar-brand" href="hoofdpagina.html">Webshop</a>
         </div>
        
       </div>
@@ -133,29 +126,25 @@
     	if( isNaN(ID) || ID.length != 4){
     		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>ID moet 4 cijfers bevatten!</div>");
     	}
-    	
     	else if(Naam.length < 1 || Naam.length > 50){
     		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>Naam moet 1-50 karakters bevatten!</div>");	
     	}
-    	
     	else if(Afbeelding.length < 1){
     		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>Categorie moet worden ingevuld!</div>");
     	}
-    	
     	else if (!(currRegex.test(Prijs))){
     		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>Prijs moet een bedrag zijn met 2 decimalen! Voorbeeld: 15.94</div>");
     	}
-  
     //	else if(isNaN(Aantal) || Aantal.length < 1 || !(Aantal % 1 === 0)){
     //		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>Aantal moet een heel getal zijn!</div>");
     //	}
     	
     else {
     	$.ajax({
-			url: "restservices/producten/",
+			url: "https://webshopiac.herokuapp.com/restservices/producten/",
 			success: function(response){
 				var data = $("#artikelAanmaken").serialize();
-		    	$.post("restservices/producten", data, function(response){
+		    	$.post("https://webshopiac.herokuapp.com/restservices/producten", data, function(response){
 		    		// reset de form voor nieuwe input
    				$("#artikelAanmaken")[0].reset(); 
    				

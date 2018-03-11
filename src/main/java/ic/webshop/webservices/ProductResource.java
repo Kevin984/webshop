@@ -19,6 +19,7 @@ import javax.ws.rs.core.Response;
 
 import ic.webshop.domain.Product;
 import ic.webshop.persistence.ProductDAO;
+import ipass.JeansNLifestyle.domain.Artikel;
 @Path("/producten") 
 public class ProductResource implements ProductService{
 	private ProductDAO productDAO = new ProductDAO();
@@ -53,11 +54,20 @@ JsonArrayBuilder jab = Json.createArrayBuilder();
 
 	@Override
 	@Produces("application/json")
-	public Response createProduct(@FormParam("ID")int ID, @FormParam("Naam") String naam, @FormParam("Afbeelding") String afbeelding, @FormParam("Omschrijving") String omschrijving
+	public String createProduct(@FormParam("ID")int ID, @FormParam("Naam") String naam, @FormParam("Afbeelding") String afbeelding, @FormParam("Omschrijving") String omschrijving
 			, @FormParam("Prijs") double prijs) {
 		Product product = new Product(ID, afbeelding, naam, omschrijving, prijs);
 		productDAO.saveArtikel(product);
-		return Response.status(Response.Status.CREATED).build();
+		return artikelToJson(product).build().toString();
 	}
 
+	private JsonObjectBuilder artikelToJson(Product a ){
+		JsonObjectBuilder job = Json.createObjectBuilder();
+		job.add("ID", a.getID());
+		job.add("Naam", a.getNaam());
+	//	job.add("Categorie", a.getBlobPlaatje());
+		job.add("Maat", a.getOmschrijving());
+		job.add("Kleur", a.getPrijs());
+		return job;
+	}
 }
