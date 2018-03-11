@@ -129,7 +129,7 @@
     	// format voor bedragen (4.10, 9.43 etc)
     	var currRegex = /^\d+(?:\.\d{0,2})$/;    	
     	
-    	//controleer of alle in ingevuld en niet groter is dan wat de database toe staat. isNaN gebruikt om te kijken of input wel een nummer is
+    	//controleer of alle in ingevuld en niet groter is dan wat de database toe staat. isNaN gebruikt om te kijken of input wel een nummer is a
     	if( isNaN(ID) || ID.length != 4){
     		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>ID moet 4 cijfers bevatten!</div>");
     	}
