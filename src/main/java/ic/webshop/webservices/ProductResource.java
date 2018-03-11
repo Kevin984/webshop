@@ -19,7 +19,6 @@ import javax.ws.rs.core.Response;
 
 import ic.webshop.domain.Product;
 import ic.webshop.persistence.ProductDAO;
-import ipass.JeansNLifestyle.domain.Artikel;
 @Path("/producten") 
 public class ProductResource implements ProductService{
 	private ProductDAO productDAO = new ProductDAO();
