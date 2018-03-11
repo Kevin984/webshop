@@ -43,13 +43,11 @@ JsonArrayBuilder jab = Json.createArrayBuilder();
 
 	@Override
 	public Response deleteProduct(int productID) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Response updateProduct(int productID, Product product) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
