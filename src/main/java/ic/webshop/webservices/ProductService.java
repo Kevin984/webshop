@@ -3,54 +3,35 @@ package ic.webshop.webservices;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
+
 import ic.webshop.domain.Product;
-import ic.webshop.persistence.ProductDAO;
 
-public class ProductService {
-	private ProductDAO productDAO = new ProductDAO(); 
-
-	public List<Product> getVoorraad(){
-		
-		
-		
-		return productDAO.findAll();
-	}
-
-	public Product getArtikelByPK(int ID){
-		Product result = null;
-		
-		for (Product a : productDAO.findAll()){
-		//	if(a.getArtikelID() == (ID)  && a.getMaat().equals(maat) && a.getKleur().equals(kleur) ){
-		//		result = a;
-			//	break;
-		//	}
-		}
-		return result;
-	}
-
-	public void saveArtikel(Product artikel){
-		if (artikel != null){
-			productDAO.saveArtikel(artikel);
-		}
-		else throw new IllegalArgumentException("kan niet opslaan");
-	} 
-
-
-	public void deleteArtikel(int ID){
-		Product a  = productDAO.findByPK(ID);
-		
-		if(a != null){
-			productDAO.deleteArtikel(a);
-		} else throw new IllegalArgumentException("ID, maat en/of kleur bestaat niet.");
-	}
-
-	public void updateArtikel(Product artikel){
-		if (artikel != null){
-			productDAO.updateArtikel(artikel);
-		}
-		
-		else throw new IllegalArgumentException("kan niet updaten");
-		
-	}
+public interface ProductService {
+	@GET  												 
+	@Produces("application/json") 
+	public ArrayList<Product> getProducten();
+	
+	@DELETE
+	@Path("{id}")  													
+	public Response deleteProduct(@PathParam("id") int productID); 
+	
+	@PUT
+	@Path("{id}")
+	@Consumes("application/json") 
+	public Response updateProduct(@PathParam("id") int productID, 
+								   Product product);
+	
+	@POST 
+	@Consumes("application/json")
+	public Response createProduct(Product product);
 
 }

@@ -45,13 +45,17 @@ public class ProductDAO extends BaseDAO{
 	}
 	 
 	public void saveArtikel(Product artikel){
-		String query = "INSERT INTO public.\"Artikel\" (\"ID\", \"Naam\", \"Categorie\", \"Maat\", \"Kleur\", \"Merk\", \"Inkoopprijs\", \"Verkoopprijs\", \"Aantal\")  VALUES(?,?,?,?,?,?,?,?,?)"; 
+		String query = "INSERT INTO public.\"Product\" (\"ID\", \"Afbeelding\", \"Naam\", \"Omschrijving\",\"Prijs\")  VALUES(?,?,?,?,?)"; 
 		
 		try (Connection con = super.getConnection()) {
 			preparedStatement = con.prepareStatement(query);
 			// eerste vraagteken = 1
 			preparedStatement.setInt(1, artikel.getID()); 
-	
+			preparedStatement.setString(1, artikel.getBlobPlaatje()); 
+			preparedStatement.setString(1, artikel.getNaam()); 
+			preparedStatement.setString(1, artikel.getOmschrijving()); 
+			preparedStatement.setDouble(1, artikel.getPrijs()); 
+
 			preparedStatement.executeUpdate();	
 			preparedStatement.close();
 
