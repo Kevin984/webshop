@@ -47,18 +47,20 @@ public class ProductDAO extends BaseDAO{
 	}
 	 
 	public void saveArtikel(Product artikel){
-		String query = "INSERT INTO public.\"Product\" (\"ID\", \"Afbeelding\", \"Naam\", \"Omschrijving\",\"Prijs\")  VALUES(?,?,?,?,?)"; 
-		
+	//	String query = "INSERT INTO public.\"Product\" (\"ID\", \"Afbeelding\", \"Naam\", \"Omschrijving\",\"Prijs\")  VALUES(?,?,?,?,?)"; 
+		String query = "INSERT INTO public.\"Product\"(\r\n" + 
+				"	\"ID\", \"Naam\", \"Omschrijving\", \"Afbeelding\", \"Prijs\")\r\n" + 
+				"	VALUES (nextval('product_seq'::regclass), ?, ?, null, ?);";
 		try (Connection con = super.getConnection()) {
 			preparedStatement = con.prepareStatement(query);
 			// eerste vraagteken = 1
-			preparedStatement.setInt(1, artikel.getID()); 
-			byte[] source = artikel.getBlobPlaatje();
-			ByteArrayInputStream blob = new ByteArrayInputStream(source);
-			preparedStatement.setBinaryStream(2, blob); 
-			preparedStatement.setString(3, artikel.getNaam()); 
-			preparedStatement.setString(4, artikel.getOmschrijving()); 
-			preparedStatement.setDouble(5, artikel.getPrijs()); 
+		//	preparedStatement.setInt(1, artikel.getID()); 
+		//	byte[] source = artikel.getBlobPlaatje();
+		//	ByteArrayInputStream blob = new ByteArrayInputStream(source);
+		//	preparedStatement.setBinaryStream(2, blob); 
+			preparedStatement.setString(1, artikel.getNaam()); 
+			preparedStatement.setString(2, artikel.getOmschrijving()); 
+			preparedStatement.setDouble(3, artikel.getPrijs()); 
 
 			preparedStatement.executeUpdate();	
 			preparedStatement.close();

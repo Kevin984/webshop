@@ -81,7 +81,6 @@
               <tbody>
                 <tr>
 				<form id="artikelAanmaken" accept-charset="utf-8">
-                  <td> <input type="text" class="form-control" id="ID" name="ID"/></td>
                  <td> <input id="Afbeelding" type="file" class="form-control" name="Afbeelding" accept="image/gif, image/jpeg, image/png"></td>
                   <td> <input type="text" class="form-control" id="Naam" name="Naam"/></td>
                   <td><input type="text" class="form-control" id="Omschrijving" name="Omschrijving"/></td>
@@ -129,9 +128,9 @@
     	else if(Naam.length < 1 || Naam.length > 50){
     		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>Naam moet 1-50 karakters bevatten!</div>");	
     	}
-    	else if(Afbeelding.length < 1){
-    		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>Categorie moet worden ingevuld!</div>");
-    	}
+    //	else if(Afbeelding.length < 1){
+    //		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>Categorie moet worden ingevuld!</div>");
+    //	}
     	else if (!(currRegex.test(Prijs))){
     		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>Prijs moet een bedrag zijn met 2 decimalen! Voorbeeld: 15.94</div>");
     	}

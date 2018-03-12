@@ -56,16 +56,16 @@ JsonArrayBuilder jab = Json.createArrayBuilder();
 	@Override
 	@POST
 	@Produces("application/json")
-	public String createProduct(@FormParam("ID")int ID, @FormParam("Naam") String naam, @FormParam("Omschrijving") String omschrijving
+	public String createProduct(@FormParam("Naam") String naam, @FormParam("Omschrijving") String omschrijving
 			, @FormParam("Prijs") double prijs) {
-		Product product = new Product(ID, naam, omschrijving, prijs);
+		Product product = new Product(naam, omschrijving, prijs);
 		productDAO.saveArtikel(product);
 		return artikelToJson(product).build().toString();
 	}
 
 	private JsonObjectBuilder artikelToJson(Product a ){
 		JsonObjectBuilder job = Json.createObjectBuilder();
-		job.add("ID", a.getID());
+//		job.add("ID", a.getID());
 		job.add("Naam", a.getNaam());
 //		String blob = new String(a.getBlobPlaatje(), StandardCharsets.UTF_8);
 //		job.add("Afbeelding", blob);

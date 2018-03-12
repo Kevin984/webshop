@@ -26,6 +26,12 @@ public Product(int ID, String naam, String omschrijving, double prijs) {
 	categorieen = new ArrayList<Categorie>();
 }
 
+public Product( String naam, String omschrijving, double prijs) {
+	this.naam =naam;
+	this.omschrijving = omschrijving;
+	this.prijs=prijs;
+	categorieen = new ArrayList<Categorie>();
+}
 public void setID(int ID) {this.ID = ID; }
 public int getID() {return ID;}
 public void setBlobPlaatje(byte[] blobPlaatje) {this.blobPlaatje = blobPlaatje; }
