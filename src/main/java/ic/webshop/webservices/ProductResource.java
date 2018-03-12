@@ -56,9 +56,9 @@ JsonArrayBuilder jab = Json.createArrayBuilder();
 	@Override
 	@POST
 	@Produces("application/json")
-	public String createProduct(@FormParam("ID")int ID, @FormParam("Naam") String naam, @FormParam("Afbeelding") byte[] afbeelding, @FormParam("Omschrijving") String omschrijving
+	public String createProduct(@FormParam("ID")int ID, @FormParam("Naam") String naam, @FormParam("Omschrijving") String omschrijving
 			, @FormParam("Prijs") double prijs) {
-		Product product = new Product(ID, naam, omschrijving, afbeelding, prijs);
+		Product product = new Product(ID, naam, omschrijving, prijs);
 		productDAO.saveArtikel(product);
 		return artikelToJson(product).build().toString();
 	}
