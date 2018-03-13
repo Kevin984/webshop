@@ -41,8 +41,8 @@ public class ProductDAO extends BaseDAO{
 	
 	//gebruik de primary keys (id, maat, kleur) van artikel om een specifiek artikel te vinden
 	public Product findByPK(int ID){ 	
-		return selectArtikelen("SELECT \"ID\", \"Naam\", \"Categorie\", \"Maat\", \"Kleur\", \"Merk\", \"Inkoopprijs\", \"Verkoopprijs\", \"Aantal\" "
-			+ "FROM public.\"Artikel\" " 
+		return selectArtikelen("SELECT * "
+			+ "FROM public.\"Product\" " 
 				+ " WHERE \"ID\" = " + ID).get(0);
 	}
 	 
@@ -79,8 +79,9 @@ public class ProductDAO extends BaseDAO{
 		
 		if(artikelExists){
 			
-			String query = "DELETE FROM public.\"Product\" WHERE \"ID\" IN ("+artikel.getID()+"))";
+			String query = "DELETE FROM public.\"Product\" WHERE \"ID\" IN ("+artikel.getID()+")";
 			String query2 = "DELETE FROM public.\"Bestellingsregel\" WHERE \"Product_ID\" IN (?)";
+			//delete aanbieding en alle ProductFKs.
 		//	String query3 = "DELETE FROM public.\"Bestelling\" WHERE \"Product_ID\" IN (?)";
 
 			try(Connection con = super.getConnection()){
