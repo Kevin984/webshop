@@ -7,6 +7,7 @@ import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObjectBuilder;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -45,7 +46,9 @@ JsonArrayBuilder jab = Json.createArrayBuilder();
 	}
 
 	@Override
-	public Response deleteProduct(int productID) {
+	@DELETE
+	@Path("{ID}")
+	public Response deleteProduct(@PathParam("ID") int productID) {
 		Product found = null;
 		found = productDAO.findByPK(productID);
 		
@@ -60,8 +63,9 @@ JsonArrayBuilder jab = Json.createArrayBuilder();
 
 	@Override
 	@PUT
-	@Produces("application/json")
-	public String updateProduct(@FormParam("ID") int ID, @FormParam("Naam") String naam, @FormParam("Omschrijving") String omschrijving
+	@Path("{ID}")
+	@Produces("application/json") 
+	public String updateProduct(@PathParam("ID") int ID, @FormParam("Naam") String naam, @FormParam("Omschrijving") String omschrijving
 			, @FormParam("Prijs") double prijs) {
 		Product found = null;
 		found = productDAO.findByPK(ID);

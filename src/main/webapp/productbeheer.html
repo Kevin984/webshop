@@ -187,7 +187,7 @@
 		success: function (voorraad) {
 			//vul hele pagina met alle artikelen
 			$.each(voorraad, function(i, artikel){ 
-		   		$("#voorraad").append("<tr><td>" + artikel.ID + "</td><td>" + artikel.Naam + "</td><td>" + artikel.Omschrijving 
+		   		$("#voorraad").append("<tr id='"+artikel.ID+"'><td>" + artikel.ID + "</td><td>" + artikel.Naam + "</td><td>" + artikel.Omschrijving 
 		   		+ "</td>><td>€" + artikel.Prijs + "</td>" 
 		   		+ "<td><button type='button' class='btn btn-warning' id='alter" + artikel.ID
 		   		+ "'>Artikel Wijzigen</button></td><td>" + "<button type='button' class='btn btn-danger' id='delete" 

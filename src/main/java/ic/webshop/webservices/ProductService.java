@@ -22,12 +22,12 @@ public interface ProductService {
 	public String getProducten();
 	
 	@DELETE
-	@Path("{id}")  													
-	public Response deleteProduct(@PathParam("id") int productID); 
+	@Path("{ID}")  													
+	public Response deleteProduct(@PathParam("ID") int productID); 
 	
 	@PUT
-	@Path("{id}")
-	@Consumes("application/json") 
+	@Path("{ID}")
+	@Produces("application/json") 
 	public String updateProduct(@FormParam("ID") int ID, @FormParam("Naam") String naam, @FormParam("Omschrijving") String omschrijving
 			, @FormParam("Prijs") double prijs);
 	
