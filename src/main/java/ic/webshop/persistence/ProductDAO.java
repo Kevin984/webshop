@@ -73,15 +73,16 @@ public class ProductDAO extends BaseDAO{
 }
 	
 	
-	public boolean deleteArtikel(Product artikel){
+	public boolean deleteProduct(Product artikel){
 		boolean result = false;
 		boolean artikelExists = findByPK(artikel.getID()) != null;
 		
 		if(artikelExists){
 			
-			String query = "DELETE FROM public.\"Artikel\" WHERE \"ID\" IN ("+artikel.getID()+"))";
-			String query2 = "DELETE FROM public.\"VerkoopRegel\" WHERE \"Artikel_ID\" IN (?) AND \"Artikel_Maat\" IN (?) AND \"Artikel_Kleur\" IN (?)";
-			
+			String query = "DELETE FROM public.\"Product\" WHERE \"ID\" IN ("+artikel.getID()+"))";
+			String query2 = "DELETE FROM public.\"Bestellingsregel\" WHERE \"Product_ID\" IN (?)";
+		//	String query3 = "DELETE FROM public.\"Bestelling\" WHERE \"Product_ID\" IN (?)";
+
 			try(Connection con = super.getConnection()){
 				Statement stmt = con.createStatement();
 				//verwijder eerst alle verkoopregels met hetzelfde artikel omdat ze gelinkt zijn aan artikel
@@ -102,8 +103,6 @@ public class ProductDAO extends BaseDAO{
 				//als er niet meer en niet minder dan 1 regel is verwijderd, result = true
 				if(stmt.executeUpdate(query) == 1){ 
 					result = true;
-					
-				
 				}
 			} 
 			catch (SQLException sqle){
@@ -143,11 +142,11 @@ public class ProductDAO extends BaseDAO{
 		
 		//update artikel in database
 		if(artikelExists){ 
-			String query = "UPDATE public.\"Artikel\" "
-			+ " SET \"Naam\" = '" 		+ artikel.getNaam()			+"'," 
+			String query = "UPDATE public.\"Product\" "
+			+ " SET \"Naam\" = '" 		+ artikel.getNaam()			+"',"
+			+ " \"Omschrijving\" = '" +artikel.getOmschrijving()+"',"
+					+ " \"Prijs\" = '" +artikel.getPrijs()+"'"
 			+ " WHERE \"ID\" = " 		+ artikel.getID();
-
-			
 			try(Connection con = super.getConnection()){
 				Statement stmt = con.createStatement();
 				if(stmt.executeUpdate(query) == 1){

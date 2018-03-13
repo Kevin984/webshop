@@ -28,8 +28,8 @@ public interface ProductService {
 	@PUT
 	@Path("{id}")
 	@Consumes("application/json") 
-	public Response updateProduct(@PathParam("id") int productID, 
-								   Product product);
+	public String updateProduct(@FormParam("ID") int ID, @FormParam("Naam") String naam, @FormParam("Omschrijving") String omschrijving
+			, @FormParam("Prijs") double prijs);
 	
 	@POST 
 	@Produces("application/json")

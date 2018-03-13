@@ -195,16 +195,30 @@
 		   		
 		   		$("#alter" + artikel.ID).one("click",function(){ 
 		   			//als gebruiker op wijzig artikel klikt, maak van alle gegevens input velden met daarin wel de bijhorende gegevens
-		   			$(this).parents("tr").replaceWith("<tr><form id='updateArtikelForm'>"
-		   			+   "<td><input class='form-control'   type='text' name='ID'        id='" + artikel.ID +"' value='" + artikel.ID + "' readonly></td>" 
-		   			+ 	"<td> <input class='form-control'  type='text' name='Naam'      id='" + artikel.Naam + "' value='"+artikel.Naam+"'></td>"	
-		   			+ 	"<td> <input class='form-control'  type='text' name='Omschrijving'      id='" + artikel.Omschrijving + "' value='"+artikel.Omschrijving+"'></td>"	
-		   			+ 	"<td> <input class='form-control'  type='text' name='Prijs'id='" + artikel.Prijs + "' value='"+artikel.Prijs+"'></td>"	
-		   			+   "<td> <button type='button' class='btn btn-primary' id='wijzigArtikel" + artikel.ID + "'>Wijziging opslaan</button> </td>"
-		   			+   "<td> <button type='button' class='btn btn-info' id='wijzigArtikelAnnuleren" + artikel.ID+ "'>Wijzigen annuleren</button></td>"
-		   			+		"</form></tr>");
+		   //			$(this).parents("tr").replaceWith("<tr><form id='updateArtikelForm'>"
+		   //			+   "<td><input class='form-control'   type='text' name='ID'        id='" + artikel.ID +"' value='" + artikel.ID + "' readonly></td>" 
+		   //			+ 	"<td> <input class='form-control'  type='text' name='Naam'      id='" + artikel.Naam + "' value='"+artikel.Naam+"'></td>"	
+		   //			+ 	"<td> <input class='form-control'  type='text' name='Omschrijving'      id='" + artikel.Omschrijving + "' value='"+artikel.Omschrijving+"'></td>"	
+		   //			+ 	"<td> <input class='form-control'  type='text' name='Prijs'id='" + artikel.Prijs + "' value='"+artikel.Prijs+"'></td>"	
+		   //			+   "<td> <button type='button' class='btn btn-primary' id='wijzigArtikel" + artikel.ID + "'>Wijziging opslaan</button> </td>"
+		   //			+   "<td> <button type='button' class='btn btn-info' id='wijzigArtikelAnnuleren" + artikel.ID+ "'>Wijzigen annuleren</button></td>"
+		   //			+		"</form></tr>");
 		   			
+		   		 var trid = $(this).closest('tr').attr('id');
+	   		     var replacer = $("<tr>").attr('id', trid);
+	   		     
+	   		     var formulier = $("<form id='updateForm"+trid+"'>");
+	   		     formulier.append($("<td>").append($("<input value='"+trid+"' readonly name='ID'/>"))); //inputs vullen en deze rij herhalen
+	   		     formulier.append($("<td>").append($("<input placeholder='Naam' name='Naam' required='required' type='text'/>"))); //inputs vullen en deze rij herhalen
+	   		     formulier.append($("<td>").append($("<input placeholder='Omschrijving' name='Omschrijving' type='text' required='required'/>"))); //inputs vullen en deze rij herhalen
+	   		     formulier.append($("<td>").append($("<input placeholder='Prijs' type='text' required='required' name='Prijs'/>"))); //inputs vullen en deze rij herhalen
+	   		     formulier.append($("<td>").append($("<button type='button' class='btn btn-primary' id='wijzigArtikel" + artikel.ID + "'>Wijziging opslaan</button>"))); //inputs vullen en deze rij herhalen
+	   		     formulier.append($("<td>").append($("<button type='button' class='btn btn-info' id='wijzigArtikelAnnuleren" + artikel.ID+ "'>Wijzigen annuleren</button>"))); //inputs vullen en deze rij herhalen
+
+	   		     formulier.appendTo(replacer);
+	   		     $(this).parents("tr").replaceWith(replacer);	
 		   			$("#wijzigArtikel" + artikel.ID).click(function(){
+		   			
 		   				/* var uri = "/restservices/voorraad/" + artikel.ID + "/" + artikel.Maat + "/" + artikel.Kleur;
 		   	   			$.ajax(uri, {
 		   	   				method: "PUT",
@@ -220,8 +234,32 @@
 		   	   				$(".expendable").replaceWith("<div class='alert alert-danger' id='response'> Er is iets mis gegaan! Artikel is <strong>niet</strong> gewijzigd.</div>");
 		   	   			}
 		   	   			})	*/
-		   	   	//functie hierboven in de comment werkt niet door een '403 forbidden' error, nu krijgt de gebruiker een bericht van de browser  			
-		   				alert("Deze functie werkt nog niet. Onze excuses."); 
+		   	   	//functie hierboven in de comment werkt niet door een '403 forbidden' error, nu krijgt de gebruiker een bericht van de browser  	
+		   	   	
+		   	   	   $.ajax(uri, {
+        type: "PUT",
+        data: $("updateForm" + trid).serialize(),
+     //    beforeSend: function (xhr) {
+      //       var token = window.sessionStorage.getItem("sessionToken");
+       //      xhr.setRequestHeader( 'Authorization', 'Bearer ' + token);
+        //     },
+        success: function(response){
+        	$("body").load("productbeheer.html")	
+				
+				function notification(){
+				$(".expendable").replaceWith("<div class='alert alert-success' id='response'> <strong>Artikel:</strong> " + artikel.ID + " " + artikel.Naam + " is aangepast!</div>");
+				} 
+			// laat bericht zien,  0.3 seconde na de pagina refresh
+				setTimeout(notification, 300); 
+				},
+				
+				error: function(response){
+				$(".expendable").replaceWith("<div class='alert alert-danger' id='response'> Er is iets mis gegaan! Artikel is <strong>niet</strong> aangepast.</div>");
+			}
+        
+        });
+		   	   	
+		   				//alert("Deze functie werkt nog niet. Onze excuses."); 
 		   	   		})
 		   	   		
 		   	   		$("#wijzigArtikelAnnuleren"+artikel.ID).click(function(){
@@ -231,7 +269,11 @@
 		   	   		})
 		   	})
 		   		
-		
+	
+		   	
+		   	
+		   	
+		   	
 		   		$("#delete" + artikel.ID).one("click",function(){   
 		   			var uri = ("restservices/producten/") + artikel.ID;
 		   			

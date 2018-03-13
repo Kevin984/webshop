@@ -11,6 +11,7 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -45,12 +46,32 @@ JsonArrayBuilder jab = Json.createArrayBuilder();
 
 	@Override
 	public Response deleteProduct(int productID) {
-		return null;
+		Product found = null;
+		found = productDAO.findByPK(productID);
+		
+		if(found != null) {
+			productDAO.deleteProduct(found);
+			return Response.ok().build();
+		}
+		else {
+			return Response.status(Response.Status.NOT_FOUND).build();
+		}
 	}
 
 	@Override
-	public Response updateProduct(int productID, Product product) {
-		return null;
+	@PUT
+	@Produces("application/json")
+	public String updateProduct(@FormParam("ID") int ID, @FormParam("Naam") String naam, @FormParam("Omschrijving") String omschrijving
+			, @FormParam("Prijs") double prijs) {
+		Product found = null;
+		found = productDAO.findByPK(ID);
+		if(found != null) {
+			found.setNaam(naam);
+			found.setOmschrijving(omschrijving);
+			found.setPrijs(prijs);
+		productDAO.updateArtikel(found);
+		}
+		return artikelToJson(found).build().toString();
 	}
 
 	@Override
