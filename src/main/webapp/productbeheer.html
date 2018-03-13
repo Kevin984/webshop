@@ -235,7 +235,8 @@
 		   	   			}
 		   	   			})	*/
 		   	   	//functie hierboven in de comment werkt niet door een '403 forbidden' error, nu krijgt de gebruiker een bericht van de browser  	
-		   	   	
+		   	   	     var trid = $(this).closest('tr').attr('id');
+     var uri = "restservices/producten/" + trid;
 		   	   	   $.ajax(uri, {
         type: "PUT",
         data: $("updateForm" + trid).serialize(),
