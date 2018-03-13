@@ -74,8 +74,9 @@ JsonArrayBuilder jab = Json.createArrayBuilder();
 			found.setOmschrijving(omschrijving);
 			found.setPrijs(prijs);
 		productDAO.updateArtikel(found);
-		}
 		return artikelToJson(found).build().toString();
+		}
+		throw new WebApplicationException("Product not found!");
 	}
 
 	@Override
