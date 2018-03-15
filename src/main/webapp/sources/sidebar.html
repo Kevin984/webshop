@@ -22,13 +22,10 @@ $.ajax({
 			xhr.setRequestHeader('Authorization', 'Bearer ' + token);
 		},
 		success : function (data) {
-			console.log(data);
 			var arrayLength = data.length;
 			var ul = document.getElementById('sidebarul')
 			for (var i = 0; i < arrayLength; i++) {
-    				console.log(data[0]["Naam"]);
-
-				var li = document.createElement('li');
+    			var li = document.createElement('li');
             			li.innerHTML='<a href="categorie.html?id=' + data[i]["ID"] + '">' + data[i]["Naam"] + '</a>';
 				ul.appendChild(li);
 			}
