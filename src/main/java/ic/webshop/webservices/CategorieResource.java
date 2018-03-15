@@ -99,6 +99,7 @@ public class CategorieResource implements CategorieService{
 			job.add("Naam", p.getNaam());
 			job.add("Omschrijving", p.getOmschrijving());
 			job.add("Prijs", p.getPrijs());
+			jab.add(job);
 		}
 		
 		
