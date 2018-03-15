@@ -21,6 +21,10 @@ public interface ProductService {
 	@Produces("application/json") 
 	public String getProducten();
 	
+	@GET  												 
+	@Produces("application/json") 
+	public String getProduct(@PathParam("ID") int ID);
+	
 	@DELETE
 	@Path("{ID}")  													
 	public Response deleteProduct(@PathParam("ID") int productID); 

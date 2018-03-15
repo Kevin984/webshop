@@ -19,6 +19,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
+import ic.webshop.domain.Aanbieding;
 import ic.webshop.domain.Product;
 import ic.webshop.persistence.ProductDAO;
 @Path("/producten") 
@@ -45,6 +46,28 @@ JsonArrayBuilder jab = Json.createArrayBuilder();
 	
 	}
 
+	@Override
+	@GET
+	@Path("{ID}")
+	@Produces("application/json")
+	public String getProduct(@PathParam("ID") int ID){
+		Product a = productDAO.findByPK(ID);
+		if(a == null){
+			throw new WebApplicationException("Product bestaat niet!");
+		}
+		
+		JsonObjectBuilder job = Json.createObjectBuilder();
+		job.add("ID", a.getID());
+		job.add("Naam", a.getNaam());
+//		String blob = new String(a.getBlobPlaatje(), StandardCharsets.UTF_8);
+//		job.add("Afbeelding", blob);
+//		job.add("Categorie", a.getBlobPlaatje());
+		job.add("Omschrijving", a.getOmschrijving());
+		job.add("Prijs", a.getPrijs());
+		return job.build().toString();
+	} 
+	
+	
 	@Override
 	@DELETE
 	@Path("{ID}")

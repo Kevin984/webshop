@@ -17,7 +17,14 @@ public Aanbieding(int ID, Product product, double aanbiedingPrijs, Date vanDatum
 	this.totDatum = totDatum;
 	this.reclameTekst = reclameTekst;
 }
-
+public Aanbieding(Product product, double aanbiedingPrijs, Date vanDatum, Date totDatum, String reclameTekst) {
+	
+	this.product = product;
+	this.aanbiedingPrijs = aanbiedingPrijs;
+	this.vanDatum = vanDatum;
+	this.totDatum = totDatum;
+	this.reclameTekst = reclameTekst;
+}
 public int getID() {
 	return ID;
 }
