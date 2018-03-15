@@ -94,22 +94,30 @@
 			xhr.setRequestHeader('Authorization', 'Bearer ' + token);
 		},
 		success : function (data) {
-			vanDatum = moment(data["VanDatum"], "YYYY-MM-DD").toDate();
-			totDatum = moment(data["TotDatum"], "YYYY-MM-DD").toDate();
-			huidigeDatum = new Date().toJSON().slice(0,10).replace(/-/g,'/');
-						
-						
-			console.log(vanDatum);
-			console.log(huidigeDatum);
-			console.log(totDatum);
-						
-			aanbieding = huidigeDatum > vanDatum && huidigeDatum < totDatum;
-			console.log(aanbieding)
-			
-			if (aanbieding) {			
-				reclameTekst = data["ReclameTekst"];
-				aanbiedingsprijs = data["Aanbiedingsprijs"];	
+			for (aanbiedingregel : data) {
+		
+				vanDatum = moment(aanbiedingregel["VanDatum"], "YYYY-MM-DD").toDate();
+				totDatum = moment(aanbiedingregel["TotDatum"], "YYYY-MM-DD").toDate();
+				huidigeDatum = new Date().toJSON().slice(0,10).replace(/-/g,'/');
+							
+							
+				console.log(vanDatum);
+				console.log(huidigeDatum);
+				console.log(totDatum);
+							
+				aanbieding = huidigeDatum > vanDatum && huidigeDatum < totDatum;
+				console.log(aanbieding)
+				
+				if (aanbieding) {			
+					reclameTekst = aanbiedingregel["ReclameTekst"];
+					aanbiedingsprijs = aanbiedingregel["Aanbiedingsprijs"];	
+					console.log("Dit product is in de aanbieding.");
+					break;
+				}
 			}
+			
+			console.log("Dit product is niet in de aanbieding. (wel in verleden of toekomst)");
+			
 		},
 		error : function() {
 			aanbieding = false;
