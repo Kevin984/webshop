@@ -15,10 +15,12 @@
     <link href="dashboard.css" rel="stylesheet">
 	<link href="css/bootstrap.icon-large.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
   </head>
   
   <body>
@@ -102,22 +104,7 @@
 			var button = document.createElement('button');
   			button.innerHTML = 'Voeg toe aan winkelwagen';
   			button.onclick = function(){
-  				$( function() {
-	    			$( "#dialog-confirm" ).dialog({
-	      				resizable: false,
-	      				height: "auto",
-	      				width: 400,
-	      				modal: true,
-	      				buttons: {
-	        				"Afrekenen": function() {
-	          					$( this ).dialog( "close" );
-	        				},
-	        				"Verder winkelen": function() {
-	          					$( this ).dialog( "close" );
-	        				}
-	      				}
-	      			});	
-	    		});return false;
+  				$("#dialog-confirm").dialog('open');return false;
   			};
 			document.getElementById('buttonplaceholder').appendChild(button);
 			
@@ -125,6 +112,24 @@
 		error : function() {
 			document.getElementById("productNaam").innerHTML="Dit product kon helaas niet worden gevonden.";
 		}
+	});
+	
+	$( function() {
+		$( "#dialog-confirm" ).dialog({
+	    	resizable: false,
+	      	height: "auto",
+	      	width: 400,
+	      	modal: true,
+	      	autoOpen: false,
+	      	buttons: {
+	        	"Afrekenen": function() {
+	          		$( this ).dialog( "close" );
+	        	},
+	        	"Verder winkelen": function() {
+	          		$( this ).dialog( "close" );
+	        	}
+	      	}
+	    });	
 	});
     
     </script>
