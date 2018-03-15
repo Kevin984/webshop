@@ -59,14 +59,10 @@ var id = getUrlParameter('id');
 		},
 		success : function (data) {
 			console.log(data);
-			if (id != undefined) {
-				document.getElementById("productNaam").innerHTML=data.naam;
-			} else {
-				document.getElementById("productNaam").innerHTML="Undefined of iets anders niet goed";
-			}
+			document.getElementById("productNaam").innerHTML=data["Naam"];
 		},
 		error : function() {
-			document.getElementById("productNaam").innerHTML="Er is een error";
+			document.getElementById("productNaam").innerHTML="Er is een error (wss product niet gevonden, ff checken welke response ofzo, dat dit nuttig is)";
 		}
 	});
 </script>
