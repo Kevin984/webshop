@@ -20,6 +20,20 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    
+    <style>
+    img {
+  		position: absolute;
+  		top: 25px;
+  		left: 25px;
+	}
+	#productAfbeelding {
+  		z-index: 1;
+	}
+	#aanbiedingAfbeelding {
+  		z-index: 3;
+	}
+    </style>
 
   </head>
   
@@ -140,10 +154,10 @@
 			if (aanbieding) {
 				document.getElementById("productPrijs").innerHTML="Prijs (aanbieding): " + aanbiedingsprijs;
 				document.getElementById("productAanbieding").innerHTML=reclameTekst;
-				document.getElementById("aanbiedingAfbeelding").style.visibility = 'block';
+				document.getElementById("aanbiedingAfbeelding").style.display = 'inline';
 			} else {
 				document.getElementById("productPrijs").innerHTML="Prijs: " + data["Prijs"];
-				document.getElementById("aanbiedingAfbeelding").style.visibility = 'none';
+				document.getElementById("aanbiedingAfbeelding").style.display = 'none';
 			}
 			
 			document.title = data["Naam"];
