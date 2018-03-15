@@ -1,7 +1,5 @@
 package ic.webshop.webservices;
 
-import java.util.Date;
-
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
@@ -14,12 +12,10 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
-
-import ic.webshop.domain.Aanbieding;
 import ic.webshop.domain.Adres;
-import ic.webshop.domain.Product;
 import ic.webshop.persistence.AdresDAO;
 
+@Path("/adressen") 
 public class AdresResource implements AdresService{
 private AdresDAO aDAO = new AdresDAO();
 
