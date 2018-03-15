@@ -27,13 +27,17 @@ private KlantDAO klantDAO = new KlantDAO();
 			while(dbResultSet.next()){ 
 				 int ID = dbResultSet.getInt("ID");
 				 Date openDatum = dbResultSet.getDate("OpenDatum");
-				 boolean isActief = dbResultSet.getBoolean("IsActief"); // ff kijken hoe een Y/N in db vertaald kan worden naar een boolean
-				 int klantID = dbResultSet.getInt("KlantID");
-				 int adresID = dbResultSet.getInt("AdresID");
+				 String isActief = dbResultSet.getString("IsActief"); // ff kijken hoe een Y/N in db vertaald kan worden naar een boolean
+				 boolean actief = false;
+				 if(isActief.equalsIgnoreCase("Y")) {
+					 actief = true;
+				 }
+				 int klantID = dbResultSet.getInt("Klant_ID");
+				 int adresID = dbResultSet.getInt("Adres_ID");
 				 Klant klant = klantDAO.findKlantByPK(klantID);
 				 Adres adres = adresDAO.findAdresByPK(adresID);
 				 
-				 Account account = new Account(ID, openDatum, klant,adres, isActief );
+				 Account account = new Account(ID, openDatum, klant,adres, actief );
 				 accounts.add(account);
 			}
 		}
