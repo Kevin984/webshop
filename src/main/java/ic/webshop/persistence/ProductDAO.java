@@ -53,21 +53,34 @@ private ProductCategorieDAO pcDAO = new ProductCategorieDAO();
 	//	String query = "INSERT INTO public.\"Product\" (\"ID\", \"Afbeelding\", \"Naam\", \"Omschrijving\",\"Prijs\")  VALUES(?,?,?,?,?)"; 
 		String query = "INSERT INTO public.\"Product\"(\r\n" + 
 				"	\"ID\", \"Naam\", \"Omschrijving\", \"Afbeelding\", \"Prijs\")\r\n" + 
-				"	VALUES (nextval('product_seq'::regclass), ?, ?, null, ?);";
-		
-		Categorie categorie = new Categorie(1, null, "Nieuw", "Nieuwe producten");
-		pcDAO.saveProductCategorie(artikel, categorie);
-		
+				"	VALUES (?, ?, ?, null, ?);";
+		int productID = 0;
+		String productIDquery = "SELECT nextval('product_seq'::regclass)";
+		try (Connection con = super.getConnection()) {
+			Statement stmt = con.createStatement();
+			ResultSet dbResultSet = stmt.executeQuery(productIDquery);
+			while(dbResultSet.next()){ 
+				 productID = dbResultSet.getInt("nextval");
+				 
+			}
+					
+					
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+		}	
+		artikel.setID(productID);
+
 		try (Connection con = super.getConnection()) {
 			preparedStatement = con.prepareStatement(query);
 			// eerste vraagteken = 1
 		//	preparedStatement.setInt(1, artikel.getID()); 
 		//	byte[] source = artikel.getBlobPlaatje();
 		//	ByteArrayInputStream blob = new ByteArrayInputStream(source);
-		//	preparedStatement.setBinaryStream(2, blob); 
-			preparedStatement.setString(1, artikel.getNaam()); 
-			preparedStatement.setString(2, artikel.getOmschrijving()); 
-			preparedStatement.setDouble(3, artikel.getPrijs()); 
+		//	preparedStatement.setBinaryStream(2, blob);
+			preparedStatement.setInt(1, productID);
+			preparedStatement.setString(2, artikel.getNaam()); 
+			preparedStatement.setString(3, artikel.getOmschrijving()); 
+			preparedStatement.setDouble(4, artikel.getPrijs()); 
 
 			preparedStatement.executeUpdate();	
 			preparedStatement.close();
@@ -77,6 +90,9 @@ private ProductCategorieDAO pcDAO = new ProductCategorieDAO();
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 		}	
+		
+		Categorie categorie = new Categorie(1, null, "Nieuw", "Nieuwe producten");
+		pcDAO.saveProductCategorie(artikel, categorie);
 }
 	
 	
