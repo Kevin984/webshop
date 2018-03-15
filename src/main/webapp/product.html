@@ -95,13 +95,13 @@
 		success : function (data) {
 			for (var i in data) {
 		
-				vanDatum = moment(data[i]["VanDatum"], "YYYY-MM-DD").toDate().toJSON();
+				vanDatum = moment(data[i]["VanDatum"], "YYYY-MM-DD").toDate();
 				vanDatum.setHours(vanDatum.getHours() - vanDatum.getTimezoneOffset() / 60);
-				vanDatum = vanDatum.slice(0,10).replace(/-/g,'/');
+				vanDatum = vanDatum.toJSON().slice(0,10).replace(/-/g,'/');
 				
-				totDatum = moment(data[i]["TotDatum"], "YYYY-MM-DD").toDate().toJSON();
+				totDatum = moment(data[i]["TotDatum"], "YYYY-MM-DD").toDate();
 				totDatum.setHours(totDatum.getHours() - totDatum.getTimezoneOffset() / 60);
-				totDatum = totDatum.slice(0,10).replace(/-/g,'/');
+				totDatum = totDatum.toJSON().slice(0,10).replace(/-/g,'/');
 				
 				// totDatum = moment(data[i]["TotDatum"], "YYYY-MM-DD").toDate().toJSON().slice(0,10).replace(/-/g,'/');
 				huidigeDatum = new Date().toJSON().slice(0,10).replace(/-/g,'/');
