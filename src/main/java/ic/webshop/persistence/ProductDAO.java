@@ -14,8 +14,7 @@ import ic.webshop.domain.Product;
 
 public class ProductDAO extends BaseDAO{
 	private PreparedStatement preparedStatement = null;
-private ProductCategorieDAO pcDAO;
-private CategorieDAO cDAO = new CategorieDAO();
+private ProductCategorieDAO pcDAO ;
 
 	private List<Product> selectArtikelen(String query){
 		List<Product> producten = new ArrayList<Product>();
