@@ -2,7 +2,8 @@ package ic.webshop.webservices;
 
 import java.util.ArrayList;
 
-import javax.json.Json;
+import javax.json.Json; 
+
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObjectBuilder;
