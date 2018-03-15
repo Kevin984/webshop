@@ -83,7 +83,6 @@
 	};
 
 	var id = getUrlParameter('id');
-	aanbieding = false;
 	$.noConflict();
 	
 	$.ajax({
@@ -116,7 +115,9 @@
 				}
 			}
 			
-			console.log("Dit product is niet in de aanbieding. (wel in verleden of toekomst)");
+			if (!aanbieding) {
+				console.log("Dit product is niet in de aanbieding. (wel in verleden of toekomst)");
+			}
 			
 		},
 		error : function() {
@@ -138,6 +139,7 @@
 			document.getElementById("productOmschrijving").innerHTML=data["Omschrijving"];
 			document.getElementById("productPrijs").innerHTML="Prijs: " + data["Prijs"];
 			if (aanbieding) {
+				console.log("gaat door deze loop heen");
 				document.getElementById("productPrijs").innerHTML="Prijs (aanbieding): " + aanbiedingsprijs;
 				document.getElementById("productAanbieding").innerHTML=reclameTekst;
 			} else {
