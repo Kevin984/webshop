@@ -102,20 +102,22 @@
 			var button = document.createElement('button');
   			button.innerHTML = 'Voeg toe aan winkelwagen';
   			button.onclick = function(){
-    			$( "#dialog-confirm" ).dialog({
-      				resizable: false,
-      				height: "auto",
-      				width: 400,
-      				modal: true,
-      				buttons: {
-        				"Afrekenen": function() {
-          					$( this ).dialog( "close" );
-        				},
-        				"Verder winkelen": function() {
-          					$( this ).dialog( "close" );
-        				}
-      				}
-    			});return false;
+  				$( function() {
+	    			$( "#dialog-confirm" ).dialog({
+	      				resizable: false,
+	      				height: "auto",
+	      				width: 400,
+	      				modal: true,
+	      				buttons: {
+	        				"Afrekenen": function() {
+	          					$( this ).dialog( "close" );
+	        				},
+	        				"Verder winkelen": function() {
+	          					$( this ).dialog( "close" );
+	        				}
+	      				}
+	      			});	
+	    		});return false;
   			};
 			document.getElementById('buttonplaceholder').appendChild(button);
 			
