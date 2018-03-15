@@ -38,6 +38,8 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Productinformatie</h1>
           <div class='expendable'></div>
+          <img src="/images/default_product.png" id="productAfbeelding" height="333" width="500">
+          <img src="/images/aanbiedingoverlay.png" id="aanbiedingAfbeelding" height="333" width="500" style="display: none;">
 		  <p id="productNaam"></p>
 		  <p id="productOmschrijving"></p>
 		  <p id="productPrijs"></p>
@@ -93,6 +95,7 @@
 			xhr.setRequestHeader('Authorization', 'Bearer ' + token);
 		},
 		success : function (data) {
+			aanbieding = false;
 			for (var i in data) {
 		
 				vanDatum = moment(data[i]["VanDatum"], "YYYY-MM-DD").toDate();
@@ -107,20 +110,14 @@
 				
 				huidigeDatum = new Date().toJSON().slice(0,10).replace(/-/g,'/');
 
-				aanbieding = huidigeDatum > vanDatum && huidigeDatum < totDatum;
-				
-				if (aanbieding) {			
+				if (huidigeDatum > vanDatum && huidigeDatum < totDatum) {
+					aanbieding = true;			
 					reclameTekst = data[i]["ReclameTekst"];
 					aanbiedingsprijs = data[i]["Aanbiedingsprijs"];	
 					console.log("Dit product is in de aanbieding.");
 					break;
 				}
 			}
-			
-			if (!aanbieding) {
-				console.log("Dit product is niet in de aanbieding. (wel in verleden of toekomst)");
-			}
-			
 		},
 		error : function() {
 			aanbieding = false;
@@ -143,8 +140,10 @@
 			if (aanbieding) {
 				document.getElementById("productPrijs").innerHTML="Prijs (aanbieding): " + aanbiedingsprijs;
 				document.getElementById("productAanbieding").innerHTML=reclameTekst;
+				document.getElementById("aanbiedingAfbeelding").style.visibility = 'block';
 			} else {
 				document.getElementById("productPrijs").innerHTML="Prijs: " + data["Prijs"];
+				document.getElementById("aanbiedingAfbeelding").style.visibility = 'none';
 			}
 			
 			document.title = data["Naam"];
@@ -169,6 +168,7 @@
 	      	width: 400,
 	      	modal: true,
 	      	autoOpen: false,
+	      	draggable: false,
 	      	buttons: {
 	        	"Afrekenen": function() {
 	          		$( this ).dialog( "close" );
