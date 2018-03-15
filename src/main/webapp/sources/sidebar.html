@@ -5,8 +5,8 @@
 	</h5>
 	<ul class="nav nav-pills nav-stacked">
 		<li><a href="index.html">Home</a></li>
-		
 	</ul>
+	<div id="renderList"></div>
 	<h5>
 		<i class="glyphicon glyphicon-log-out"></i>
 		<a href="#"><span id="logout">Uitloggen</span></a>
@@ -14,6 +14,11 @@
 </div>
 
 <script>
+var ul = document.createElement('ul');
+ul.setAttribute('id','proList');
+var t, tt;
+document.getElementById('renderList').appendChild(ul);
+
 $.ajax({
 		url : "https://webshopiac.herokuapp.com/restservices/categorieen",
 		method : "GET",
@@ -26,6 +31,15 @@ $.ajax({
 			var arrayLength = data.length;
 			for (var i = 0; i < arrayLength; i++) {
     				console.log(data[0]["Naam"]);
+
+				var li = document.createElement('li');
+            			li.setAttribute('class','item');
+
+           			ul.appendChild(li);
+
+            			t = document.createTextNode(element);
+
+            			li.innerHTML=li.innerHTML + element;
 			}
 		},
 		error : function() {
