@@ -26,9 +26,10 @@ private ProductDAO productDAO = new ProductDAO();
 			aanbiedingen.clear();
 			while(dbResultSet.next()){ 
 				 int ID = dbResultSet.getInt("ID");
-				 Double aanbiedingprijs = dbResultSet.getDouble("Aanbiedingprijs");
 				 Date vanDatum = dbResultSet.getDate("VanDatum");
 				 Date totDatum = dbResultSet.getDate("TotDatum");
+				 Double aanbiedingprijs = dbResultSet.getDouble("Aanbiedingsprijs");
+
 				 String reclametekst = dbResultSet.getString("Reclametekst");
 				 int productID = dbResultSet.getInt("Product_ID");				 
 				 

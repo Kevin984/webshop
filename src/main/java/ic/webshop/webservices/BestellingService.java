@@ -15,6 +15,11 @@ public interface BestellingService {
 	@Produces("application/json") 
 	public String getBestellingen();
 	
+	@GET	
+	@Path("{ID}")
+	@Produces("application/json")
+	public String getBestelling(@PathParam("ID") int ID);
+	
 	@DELETE
 	@Path("{ID}")  													
 	public Response deleteBestelling(@PathParam("ID") int productID); 
@@ -22,9 +27,9 @@ public interface BestellingService {
 	@PUT
 	@Path("{ID}")
 	@Produces("application/json") 
-	public String updateBestelling(@FormParam("ID") int ID);
+	public String updateBestelling(@PathParam("ID")int ID, @FormParam("AdresID") int adresID, @FormParam("AccountID") int accountID);
 	
 	@POST 
 	@Produces("application/json")
-	public String createBestelling(@FormParam("Naam") String nm);
+	public String createBestelling( @FormParam("AdresID") int adresID, @FormParam("AccountID") int accountIDm);
 }

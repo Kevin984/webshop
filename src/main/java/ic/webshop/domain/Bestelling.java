@@ -11,6 +11,10 @@ public class Bestelling {
 		this.account = account;
 	}
 	
+	public Bestelling(Adres adres, Account account) {
+		this.adres = adres;
+		this.account = account;
+	}
 	public void setID(int ID) {
 		this.ID = ID;
 	}

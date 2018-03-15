@@ -15,6 +15,11 @@ public interface CategorieService {
 	@Produces("application/json") 
 	public String getCategorieen();
 	
+	@GET	
+	@Path("{ID}")
+	@Produces("application/json")
+	public String getCategorie(@PathParam("ID") int ID);
+	
 	@DELETE
 	@Path("{ID}")  													
 	public Response deleteCategorie(@PathParam("ID") int productID); 
@@ -22,12 +27,10 @@ public interface CategorieService {
 	@PUT
 	@Path("{ID}")
 	@Produces("application/json") 
-	public String updateCategorie(@FormParam("ID") int ID, @FormParam("Naam") String naam, @FormParam("Omschrijving") String omschrijving
-			, @FormParam("Prijs") double prijs);
+	public String updateCategorie(@FormParam("ID") int ID, @FormParam("Naam") String naam, @FormParam("Omschrijving") String omschrijving);
 	
 	@POST 
 	@Produces("application/json")
-	public String createCategorie(@FormParam("Naam") String nm, @FormParam("Omschrijving") String omschrijving
-			, @FormParam("Prijs") double prijs);
+	public String createCategorie(@FormParam("Naam") String nm, @FormParam("Omschrijving") String omschrijving);
 
 }

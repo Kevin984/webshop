@@ -83,7 +83,7 @@ private AdresDAO aDAO = new AdresDAO();
 		aDAO.updateAdres(found);
 		return adresToJson(found).build().toString();
 		}
-		throw new WebApplicationException("Aanbieding not found!");
+		throw new WebApplicationException("Adres not found!");
 	}
 
 	@Override

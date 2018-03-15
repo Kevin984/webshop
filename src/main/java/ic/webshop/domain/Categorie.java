@@ -12,6 +12,13 @@ public class Categorie {
 		this.omschrijving = omschrijving;
 	}
 	
+	public Categorie(String afbeelding, String naam,String omschrijving) {
+
+		this.afbeelding = afbeelding;
+		this.naam = naam;
+		this.omschrijving = omschrijving;
+	}
+	
 	public int getID() {
 		return ID;
 	}

@@ -15,6 +15,13 @@ public class Bestellingsregel {
 		this.product = product;
 	}
 	
+	public Bestellingsregel(Bestelling bestelling, int aantal, double totaalprijs, Product product) {
+		this.bestelling = bestelling;
+		this.aantal = aantal;
+		this.totaalprijs = totaalprijs;
+		this.product = product;
+	}
+	
 	public int getID() {
 		return ID;
 	}

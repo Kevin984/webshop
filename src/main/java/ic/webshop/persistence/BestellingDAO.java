@@ -45,4 +45,65 @@ public class BestellingDAO extends BaseDAO{
 	public Bestelling findBestellingByPK(int ID){ 	//nog een nullpointerexception handler toevoegen? nette 404 error geven
 		return selectBestellingen("SELECT * FROM public.\"Bestelling\" WHERE \"ID\" = " + ID).get(0);
 	}
+	
+	public void saveBestelling(Bestelling bestelling){
+		String query = "INSERT INTO public.\"Bestelling\"(\r\n" + 
+				"    \"ID\", \"Adres_ID\")\r\n" + 
+				"    VALUES (nextval('bestelling_seq'::regclass), ?,?);;";
+		try (Connection con = super.getConnection()) {
+			preparedStatement = con.prepareStatement(query);
+			preparedStatement.setInt(1, bestelling.getAdres().getID()); 
+			preparedStatement.setInt(2, bestelling.getAccount().getID()); 
+			preparedStatement.executeUpdate();	
+			preparedStatement.close();
+			System.out.println("Bestelling: " + bestelling.getID()  + " saved.");
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+		}	
+}
+	
+	public boolean deleteBestelling(Bestelling bestelling){
+		boolean result = false;
+		boolean exists = findBestellingByPK(bestelling.getID()) != null;
+		
+		if(exists){	
+			String query = "DELETE FROM public.\"Bestelling\" WHERE \"ID\" IN ("+bestelling.getID()+")";	
+			try(Connection con = super.getConnection()){
+				Statement stmt = con.createStatement();
+				preparedStatement = con.prepareStatement(query);
+				if(preparedStatement.executeUpdate() == 1){     
+					result = true;
+				}
+				preparedStatement.close();
+				if(stmt.executeUpdate(query) == 1){ 
+					result = true;
+				}
+			} 
+			catch (SQLException sqle){
+				sqle.printStackTrace(); }
+		}
+			return result;
+	}
+	
+	
+	public boolean updateBestelling(Bestelling bestelling){ 
+		boolean result = false;
+		boolean exists = findBestellingByPK(bestelling.getID()) != null;
+		if(exists){ 
+			String query = "UPDATE public.\"Bestelling\" "
+			+ " SET \"Adres_ID\" = '" 		+ bestelling.getAdres().getID()		+"',"
+			+ " \"Account_ID\" = '" +bestelling.getAccount().getID()+"'"
+			+ " WHERE \"ID\" = " 	+ bestelling.getID();
+			try(Connection con = super.getConnection()){
+				Statement stmt = con.createStatement();
+				if(stmt.executeUpdate(query) == 1){
+					result = true;
+				}
+			}
+			catch(SQLException sqle){
+				sqle.printStackTrace();
+			}
+		}
+			return result;
+	}
 }

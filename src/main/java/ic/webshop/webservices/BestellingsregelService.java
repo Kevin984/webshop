@@ -14,6 +14,10 @@ public interface BestellingsregelService {
 	@GET  												 
 	@Produces("application/json") 
 	public String getBestellingsregels();
+	@GET	
+	@Path("{ID}")
+	@Produces("application/json")
+	public String getBestellingsregel(@PathParam("ID") int ID);
 	
 	@DELETE
 	@Path("{ID}")  													
@@ -22,9 +26,9 @@ public interface BestellingsregelService {
 	@PUT
 	@Path("{ID}")
 	@Produces("application/json") 
-	public String updateBestellingsregel(@FormParam("ID") int ID);
+	public String updateBestellingsregel(@PathParam("ID")int ID, @FormParam("Aantal") int aantal, @FormParam("BestellingID") int bestellingID, @FormParam("ProductID") int productID, @FormParam("Totaalprijs") double totaalprijs);
 	
 	@POST 
 	@Produces("application/json")
-	public String createBestellingsregel(@FormParam("Naam") String nm);
+	public String createBestellingsregel(@FormParam("Aantal") int aantal, @FormParam("BestellingID") int bestellingID, @FormParam("ProductID") int productID, @FormParam("Totaalprijs") double totaalprijs);
 }

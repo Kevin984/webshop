@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import ic.webshop.domain.Adres;
 import ic.webshop.domain.Bestelling;
 import ic.webshop.domain.Bestellingsregel;
 import ic.webshop.domain.Product;
@@ -47,5 +46,71 @@ private BestellingDAO bestellingDAO = new BestellingDAO();
 	
 	public Bestellingsregel findBestellingsregelByPK(int ID){ 	//nog een nullpointerexception handler toevoegen? nette 404 error geven
 		return selectBestellingsregels("SELECT * FROM public.\"Bestellingsregel\"  WHERE \"ID\" = " + ID).get(0);
+	}
+	
+	public void saveBestellingsregel(Bestellingsregel bestellingsregel){
+		String query = "INSERT INTO public.\"Bestellingsregel\"(\r\n" + 
+				"    \"ID\", \"Aantal\", \"Prijs\", \"Product_ID\", \"Bestelling_ID\")\r\n" + 
+				"    VALUES (nextval('bestellingsregel_seq'::regclass), ?, (SELECT \"Prijs\" from public.\"Product\" WHERE \"ID\" = ?) * ?, ?, ?);";
+		try (Connection con = super.getConnection()) {
+			preparedStatement = con.prepareStatement(query);
+			
+			preparedStatement.setInt(1, bestellingsregel.getAantal()); 
+			preparedStatement.setInt(2, bestellingsregel.getProduct().getID()); 
+			preparedStatement.setInt(3, bestellingsregel.getAantal()); 
+			preparedStatement.setInt(1, bestellingsregel.getProduct().getID()); 
+			preparedStatement.setInt(1, bestellingsregel.getBestelling().getID()); 	
+			preparedStatement.executeUpdate();	
+			preparedStatement.close();
+			System.out.println("bestellingsregel: " + bestellingsregel.getID()  + " saved.");
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+		}	
+}
+	
+	public boolean deleteBestellingsregel(Bestellingsregel bestellingsregel){
+		boolean result = false;
+		boolean exists = findBestellingsregelByPK(bestellingsregel.getID()) != null;
+		
+		if(exists){	
+			String query = "DELETE FROM public.\"Bestellingsregel\" WHERE \"ID\" IN ("+bestellingsregel.getID()+")";	
+			try(Connection con = super.getConnection()){
+				Statement stmt = con.createStatement();
+				preparedStatement = con.prepareStatement(query);
+				if(preparedStatement.executeUpdate() == 1){     
+					result = true;
+				}
+				preparedStatement.close();
+				if(stmt.executeUpdate(query) == 1){ 
+					result = true;
+				}
+			} 
+			catch (SQLException sqle){
+				sqle.printStackTrace(); }
+		}
+			return result;
+	}
+	
+	
+	public boolean updateBestellingsregel(Bestellingsregel bestellingsregel){ 
+		boolean result = false;
+		boolean exists = findBestellingsregelByPK(bestellingsregel.getID()) != null;
+		if(exists){ 
+			String query = "UPDATE public.\"Bestellingsregel\" "
+			+ " SET \"Aantal\" = '" 		+ bestellingsregel.getAantal()		+"',"
+			+ " \"Bestelling_ID\" = '" +bestellingsregel.getBestelling().getID()+"',"
+			+ " \"Product_ID\" = '" +bestellingsregel.getProduct().getID()+"'"			
+			+ " WHERE \"ID\" = " 	+ bestellingsregel.getID();
+			try(Connection con = super.getConnection()){
+				Statement stmt = con.createStatement();
+				if(stmt.executeUpdate(query) == 1){
+					result = true;
+				}
+			}
+			catch(SQLException sqle){
+				sqle.printStackTrace();
+			}
+		}
+			return result;
 	}
 }
