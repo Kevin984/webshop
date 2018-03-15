@@ -49,8 +49,8 @@ private ProductDAO productDAO = new ProductDAO();
 		return selectAanbiedingen("SELECT * FROM public.\"Aanbieding\" WHERE \"ID\" = " + ID).get(0);
 	}
 	
-	public Aanbieding findAanbiedingByProductID(int ID){
-		return selectAanbiedingen("SELECT * FROM public.\"Aanbieding\" WHERE \"PRODUCT_ID\" = " + ID).get(0);
+	public List<Aanbieding> findAanbiedingByProductID(int ID){
+		return selectAanbiedingen("SELECT * FROM public.\"Aanbieding\" WHERE \"PRODUCT_ID\" = " + ID);
 	}
 	
 	public void saveAanbieding(Aanbieding aanbieding){
