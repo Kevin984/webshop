@@ -98,7 +98,12 @@
 			totDatum = moment(data["TotDatum"], "YYYY-MM-DD").toDate();
 			huidigeDatum = new Date().toJSON().slice(0,10).replace(/-/g,'/');
 						
-			aanbieding = huidigeDatum > vanDatum && huidigeDatum < totDatum
+						
+			console.log(vanDatum);
+			console.log(huidigeDatum);
+			console.log(totDatum);
+						
+			aanbieding = huidigeDatum > vanDatum && huidigeDatum < totDatum;
 			console.log(aanbieding)
 			
 			if (aanbieding) {			
