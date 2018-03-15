@@ -55,19 +55,21 @@ private ProductCategorieDAO pcDAO = new ProductCategorieDAO();
 				"	\"ID\", \"Naam\", \"Omschrijving\", \"Afbeelding\", \"Prijs\")\r\n" + 
 				"	VALUES (?, ?, ?, null, ?);";
 		int productID = 0;
-		artikel.setID(productID);
 		String productIDquery = "SELECT nextval('product_seq'::regclass)";
 		try (Connection con = super.getConnection()) {
 			Statement stmt = con.createStatement();
 			ResultSet dbResultSet = stmt.executeQuery(productIDquery);
 			while(dbResultSet.next()){ 
 				 productID = dbResultSet.getInt("nextval");
+				 
 			}
 					
 					
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 		}	
+		artikel.setID(productID);
+
 		try (Connection con = super.getConnection()) {
 			preparedStatement = con.prepareStatement(query);
 			// eerste vraagteken = 1
