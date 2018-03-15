@@ -98,6 +98,12 @@
 				vanDatum = moment(data[i]["VanDatum"], "YYYY-MM-DD").toDate().toJSON().slice(0,10).replace(/-/g,'/');
 				totDatum = moment(data[i]["TotDatum"], "YYYY-MM-DD").toDate().toJSON().slice(0,10).replace(/-/g,'/');
 				huidigeDatum = new Date().toJSON().slice(0,10).replace(/-/g,'/');
+				
+				console.log(moment(data[i]["VanDatum"], "YYYY-MM-DD"));
+				console.log(moment(data[i]["VanDatum"], "YYYY-MM-DD").toDate());
+				console.log(moment(data[i]["VanDatum"], "YYYY-MM-DD").toDate().toJSON());
+				console.log(moment(data[i]["VanDatum"], "YYYY-MM-DD").toDate().toJSON().slice(0,10));
+				
 							
 							
 				console.log(vanDatum);
@@ -139,7 +145,6 @@
 			document.getElementById("productOmschrijving").innerHTML=data["Omschrijving"];
 			document.getElementById("productPrijs").innerHTML="Prijs: " + data["Prijs"];
 			if (aanbieding) {
-				console.log("gaat door deze loop heen");
 				document.getElementById("productPrijs").innerHTML="Prijs (aanbieding): " + aanbiedingsprijs;
 				document.getElementById("productAanbieding").innerHTML=reclameTekst;
 			} else {
@@ -171,9 +176,11 @@
 	      	buttons: {
 	        	"Afrekenen": function() {
 	          		$( this ).dialog( "close" );
+	          		console.log("afrekenen");
 	        	},
 	        	"Verder winkelen": function() {
 	          		$( this ).dialog( "close" );
+	          		console.log("verder winkelen");
 	        	}
 	      	}
 	    });	
@@ -181,8 +188,8 @@
     
     </script>
     
-    <div id="dialog-confirm" title="Dit product is toegevoegd!">
-  		<p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>Wilt u meteen afrekenen of eerst nog verder winkelen?</p>
+    <div id="dialog-confirm" title="Het product is toegevoegd aan uw winkelmandje!">
+  		<p>Wilt u meteen afrekenen of eerst nog verder winkelen?</p>
 	</div>
 	
   </body>
