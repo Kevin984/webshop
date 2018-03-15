@@ -23,8 +23,7 @@
       <div id="navbar_placeholder"></div>
     </nav>
 
-    
-    
+
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
@@ -32,54 +31,12 @@
         </div>
 		
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 id="ArtikelAanmakenH1" class="page-header">Artikel aanmaken</h1>
+          <h1 id="ArtikelAanmakenH1" class="page-header">Productinformatie</h1>
           <div class='expendable'></div>
-		  
-          <div class="table-responsive">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                 
-                  <th class="col-xs-2">Afbeelding</th>
-                  <th class="col-xs-2">Naam</th>
-                  <th class="col-xs-1">Omschrijving</th>
-				  <th class="col-xs-1">Prijs</th>
-				 <th></th>
-                </tr>
-              </thead>
-              
-              <tbody>
-                <tr>
-				<form id="artikelAanmaken" accept-charset="utf-8">
-                 <td> <input id="Afbeelding" type="file" class="form-control" name="Afbeelding" accept="image/gif, image/jpeg, image/png"></td>
-                  <td> <input type="text" class="form-control" id="Naam" name="Naam"/></td>
-                  <td><input type="text" class="form-control" id="Omschrijving" name="Omschrijving"/></td>
-                  <td><input type="text" class="form-control" id="Prijs" name="Prijs"/></td>
-				  <td><button type="button" class="btn btn-success" id="artikelPost">Product aanmaken</button></td>
-				  </form>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          
-              <div class="table-responsive">		  
-            <table class="table table-striped" id='voorraad'>
-              <thead>
-                <tr>
-                  <th class="col-xs-1">#ID</th>
-                  <th class="col-xs-3">Naam</th>
-                  <th class="col-xs-2">Omschrijving</th>
-				  <th class="col-xs-1">Prijs</th>
-				 <th class="col-xs-1">Wijzigen</th>
-				 <th class="col-xs-1">Verwijderen</th>
-                </tr>
-              </thead>
-              <tbody>
-              
-              </tbody>
-            </table>
-          </div>
-        </div>
+		  <p id="productNaam"></p>
+		  <p id="productOmschrijving"></p>
+		  <p id="productPrijs"></p>
+		  <p id="productAanbieding"></p>
         </div>
       </div>
     </div>
