@@ -94,10 +94,10 @@
 			xhr.setRequestHeader('Authorization', 'Bearer ' + token);
 		},
 		success : function (data) {
-			for (aanbiedingregel : data) {
+			for (var i in data) {
 		
-				vanDatum = moment(aanbiedingregel["VanDatum"], "YYYY-MM-DD").toDate();
-				totDatum = moment(aanbiedingregel["TotDatum"], "YYYY-MM-DD").toDate();
+				vanDatum = moment(data[i]["VanDatum"], "YYYY-MM-DD").toDate();
+				totDatum = moment(data[i]["TotDatum"], "YYYY-MM-DD").toDate();
 				huidigeDatum = new Date().toJSON().slice(0,10).replace(/-/g,'/');
 							
 							
@@ -109,8 +109,8 @@
 				console.log(aanbieding)
 				
 				if (aanbieding) {			
-					reclameTekst = aanbiedingregel["ReclameTekst"];
-					aanbiedingsprijs = aanbiedingregel["Aanbiedingsprijs"];	
+					reclameTekst = data[i]["ReclameTekst"];
+					aanbiedingsprijs = data[i]["Aanbiedingsprijs"];	
 					console.log("Dit product is in de aanbieding.");
 					break;
 				}
