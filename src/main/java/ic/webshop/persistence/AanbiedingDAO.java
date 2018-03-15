@@ -49,17 +49,11 @@ private ProductDAO productDAO = new ProductDAO();
 	}
 	
 	public void saveAanbieding(Aanbieding aanbieding){
-		//	String query = "INSERT INTO public.\"Product\" (\"ID\", \"Afbeelding\", \"Naam\", \"Omschrijving\",\"Prijs\")  VALUES(?,?,?,?,?)"; 
 			String query = "INSERT INTO public.\"Aanbieding\"(\r\n" + 
 					"	\"ID\", \"VanDatum\", \"TotDatum\", \"Aanbiedingsprijs\", \"Reclametekst\", \"Product_ID\")\r\n" + 
 					"	VALUES (nextval('aanbieding_seq'::regclass),?,?,?,?,?);";
 			try (Connection con = super.getConnection()) {
 				preparedStatement = con.prepareStatement(query);
-				
-			//	preparedStatement.setInt(1, artikel.getID()); 
-			//	byte[] source = artikel.getBlobPlaatje();
-			//	ByteArrayInputStream blob = new ByteArrayInputStream(source);
-			//	preparedStatement.setBinaryStream(2, blob); 
 				preparedStatement.setDate(1, (java.sql.Date) aanbieding.getVanDatum()); 
 				preparedStatement.setDate(2, (java.sql.Date) aanbieding.getTotDatum()); 
 				preparedStatement.setDouble(3, aanbieding.getAanbiedingPrijs()); 
@@ -83,28 +77,16 @@ private ProductDAO productDAO = new ProductDAO();
 			
 			if(artikelExists){
 				
-				String query = "DELETE FROM public.\"Aanbieding\" WHERE \"ID\" IN ("+aanbieding.getID()+")";
-				//delete ook product
-			/*	Product product = productDAO.findByPK(aanbieding.getProduct().getID());
-				
-				if(product != null) {
-					productDAO.deleteProduct(product);
-				}*/
-				
+				String query = "DELETE FROM public.\"Aanbieding\" WHERE \"ID\" IN ("+aanbieding.getID()+")";	
 				try(Connection con = super.getConnection()){
 					Statement stmt = con.createStatement();
-				//	preparedStatement = con.prepareStatement(query2); 
-					
-				//	preparedStatement.setInt(1, aanbieding.getID());
-				//	preparedStatement.executeUpdate();
-				//	preparedStatement.close();
+
 					
 					preparedStatement = con.prepareStatement(query);
 					if(preparedStatement.executeUpdate() == 1){     
 						result = true;
 					}
 					preparedStatement.close();
-					
 					
 					if(stmt.executeUpdate(query) == 1){ 
 						result = true;

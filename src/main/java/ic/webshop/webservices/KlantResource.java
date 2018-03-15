@@ -14,7 +14,7 @@ public class KlantResource implements KlantService{
 	}
 
 	@Override
-	public Response getKlant(int klantID) {
+	public String getKlant(int klantID) {
 		return null;
 	}
 

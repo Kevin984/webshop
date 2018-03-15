@@ -20,11 +20,11 @@ public interface KlantService {
 		@Produces("application/json") 
 		public ArrayList<Klant> getKlanten();
 		
-		@GET
-		@Path("{id}")  													 
+		@GET	
 		@Produces("application/json")
-		public Response getKlant(@PathParam("id") int klantID);
+		public String getKlant(@PathParam("ID") int ID);
 		
+
 		@DELETE
 		@Path("{id}")  													 
 		public Response deleteKlant(@PathParam("id") int klantID);

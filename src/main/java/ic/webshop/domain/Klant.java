@@ -2,12 +2,29 @@ package ic.webshop.domain;
 
 public class Klant {
 	private int ID;
+	private String naam;
 	private Adres adres;
 	private String afbeelding;
 	
-	public Klant(int ID, Adres adres) {
+	public Klant(int ID, String naam, String afbeelding, Adres adres) {
 		this.ID = ID;
+		this.naam = naam;
+		this.afbeelding = afbeelding;
 		this.adres = adres;
+	}
+	
+	public Klant(String naam, String afbeelding, Adres adres) {
+		this.naam = naam;
+		this.afbeelding = afbeelding;
+		this.adres = adres;
+	}
+	
+	public String getNaam() {
+		return naam;
+	}
+	
+	public void setNaam(String naam) {
+		this.naam = naam;
 	}
 	
 	public int getID() {

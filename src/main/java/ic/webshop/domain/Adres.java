@@ -10,7 +10,11 @@ public class Adres {
 		this.straat = straat;
 		this.straatnummer = straatnummer;
 	}
+	public Adres(String straat, String straatnummer) {
 	
+		this.straat = straat;
+		this.straatnummer = straatnummer;
+	}
 	public int getID() {
 		return ID;
 	}

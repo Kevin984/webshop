@@ -15,6 +15,10 @@ public interface AdresService {
 	@Produces("application/json") 
 	public String getAdressen();
 	
+	@GET	
+	@Produces("application/json")
+	public String getAdres(@PathParam("ID") int ID);
+	
 	@DELETE
 	@Path("{ID}")  													
 	public Response deleteAdres(@PathParam("ID") int productID); 
@@ -22,9 +26,9 @@ public interface AdresService {
 	@PUT
 	@Path("{ID}")
 	@Produces("application/json") 
-	public String updateAdres(@FormParam("ID") int ID);
+	public String updateAdres(@PathParam("ID") int ID, @FormParam("Straat") String straat, @FormParam("Straatnummer") String Straatnummer);
 	
 	@POST 
 	@Produces("application/json")
-	public String createAdres(@FormParam("Naam") String nm);
+	public String createAdres(@FormParam("Straat") String straat, @FormParam("Straatnummer") String straatnummer);
 }
