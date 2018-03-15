@@ -91,15 +91,19 @@ public class CategorieResource implements CategorieService{
 	@Path("/producten/{ID}")
 	@Produces("application/json")
 	public String getCategorieProducten(@PathParam("ID") int ID) {
-		JsonObjectBuilder job = Json.createObjectBuilder();
+		JsonArrayBuilder jab = Json.createArrayBuilder();
 
 		for(Product p : pcDAO.getProductenByCategorie(ID)) {
+			JsonObjectBuilder job = Json.createObjectBuilder();
 			job.add("ProductID", p.getID());
 			job.add("Naam", p.getNaam());
 			job.add("Omschrijving", p.getOmschrijving());
 			job.add("Prijs", p.getPrijs());
 		}
-		return job.build().toString();
+		
+		
+		JsonArray array = jab.build();
+		return array.toString();
 	}
 	
 	
