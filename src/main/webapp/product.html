@@ -60,9 +60,7 @@ var id = getUrlParameter('id');
 		success : function (data) {
 			console.log(data);
 			if (id != undefined) {
-				var text = JSON.parse(data);
-				console.log(text);
-				document.getElementById("productNaam").innerHTML=text.naam;
+				document.getElementById("productNaam").innerHTML=data.naam;
 			} else {
 				document.getElementById("productNaam").innerHTML="Undefined of iets anders niet goed";
 			}
