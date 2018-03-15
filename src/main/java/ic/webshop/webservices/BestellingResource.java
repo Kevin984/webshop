@@ -99,7 +99,7 @@ private AccountDAO accountDAO = new AccountDAO();
 	@GET
 	@Path("{ID}")
 	@Produces("application/json")
-	public String getBestelling(int ID) {
+	public String getBestelling(@PathParam("ID")int ID) {
 		Bestelling b = bDAO.findBestellingByPK(ID);
 		if(b == null){
 			throw new WebApplicationException("Bestelling bestaat niet!");
