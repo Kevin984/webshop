@@ -24,6 +24,11 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script>
+    $.get("../sources/sidebar.html", function(data) {
+		$("#sidebar_placeholder").replaceWith(data);
+	});
+	</script>
   </head>
   <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -44,21 +49,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
-            <div id="sidebar" class="well sidebar-nav">
-                 <h5><i class="glyphicon glyphicon-home"></i>
-                    <small><b>MANAGEMENT</b></small>
-                </h5>
-                <ul class="nav nav-pills nav-stacked">
-                    <li><a href="hoofdpagina.html">Home</a></li>
-                    <li><a href="kassa.html">Kassa</a></li>
-                    <li><a href="klanten.html">Klanten</a></li>
-					<li class="active"><a href="voorraad.html">Voorraad</a></li>
-					<li><a href="verkopen.html">Verkopen</a></li>
-                </ul>
-                <h5><i class="glyphicon glyphicon-log-out"></i>
-                    <a href="#"><span id="logout">Uitloggen</span></a>
-                </h5>
-            </div>
+            <div id="sidebar_placeholder"></div>
         </div>
 		
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
