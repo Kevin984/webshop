@@ -12,7 +12,7 @@ import ic.webshop.domain.Categorie;
 import ic.webshop.domain.Product;
 
 public class ProductCategorieDAO extends BaseDAO{
-/*	private PreparedStatement preparedStatement = null;
+	private PreparedStatement preparedStatement = null;
 	private ProductDAO pDAO = new ProductDAO();
 	private CategorieDAO cDAO = new CategorieDAO();
 	
@@ -105,5 +105,5 @@ public class ProductCategorieDAO extends BaseDAO{
 			}
 		}
 			return result;
-	}*/
+	}
 }
