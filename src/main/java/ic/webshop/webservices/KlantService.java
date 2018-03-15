@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -18,7 +19,7 @@ public interface KlantService {
 		
 		@GET  												 
 		@Produces("application/json") 
-		public ArrayList<Klant> getKlanten();
+		public String getKlanten();
 		
 		@GET	
 		@Produces("application/json")
@@ -32,9 +33,9 @@ public interface KlantService {
 		@PUT
 		@Path("{id}")
 		@Consumes("application/json") 
-		public Response updateKlant(@PathParam("id") int klantID, Klant klant);
+		public String updateKlant(@PathParam("ID")int ID, @FormParam("Naam") String naam, @FormParam("AdresID") int adresID);
 		
 		@POST 
 		@Consumes("application/json")
-		public Response createKlant(Klant klant);
+		public String createKlant(@FormParam("Naam") String naam, @FormParam("AdresID") int adresID);
 }

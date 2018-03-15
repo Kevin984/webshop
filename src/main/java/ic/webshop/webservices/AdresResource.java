@@ -43,7 +43,7 @@ private AdresDAO aDAO = new AdresDAO();
 	public String getAdres(@PathParam("ID")int ID) {
 		Adres a = aDAO.findAdresByPK(ID);
 		if(a == null){
-			throw new WebApplicationException("Aanbieding bestaat niet!");
+			throw new WebApplicationException("Adres bestaat niet!");
 		}
 		
 		JsonObjectBuilder job = Json.createObjectBuilder();
