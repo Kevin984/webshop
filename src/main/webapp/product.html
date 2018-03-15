@@ -97,28 +97,17 @@
 		
 				vanDatum = moment(data[i]["VanDatum"], "YYYY-MM-DD").toDate();
 				vanDatum.setHours(vanDatum.getHours() - vanDatum.getTimezoneOffset() / 60);
+				vanDatum.setMinutes(vanDatum.getMinutes() - vanDatum.getTimezoneOffset() / 60);
 				vanDatum = vanDatum.toJSON().slice(0,10).replace(/-/g,'/');
 				
 				totDatum = moment(data[i]["TotDatum"], "YYYY-MM-DD").toDate();
 				totDatum.setHours(totDatum.getHours() - totDatum.getTimezoneOffset() / 60);
+				totDatum.setMinutes(totDatum.getMinutes() - totDatum.getTimezoneOffset() / 60);
 				totDatum = totDatum.toJSON().slice(0,10).replace(/-/g,'/');
 				
-				// totDatum = moment(data[i]["TotDatum"], "YYYY-MM-DD").toDate().toJSON().slice(0,10).replace(/-/g,'/');
 				huidigeDatum = new Date().toJSON().slice(0,10).replace(/-/g,'/');
-				
-				console.log(moment(data[i]["VanDatum"], "YYYY-MM-DD"));
-				console.log(moment(data[i]["VanDatum"], "YYYY-MM-DD").toDate());
-				console.log(moment(data[i]["VanDatum"], "YYYY-MM-DD").toDate().toJSON());
-				console.log(moment(data[i]["VanDatum"], "YYYY-MM-DD").toDate().toJSON().slice(0,10));
-				
-							
-							
-				console.log(vanDatum);
-				console.log(huidigeDatum);
-				console.log(totDatum);
-							
+
 				aanbieding = huidigeDatum > vanDatum && huidigeDatum < totDatum;
-				console.log(aanbieding)
 				
 				if (aanbieding) {			
 					reclameTekst = data[i]["ReclameTekst"];
