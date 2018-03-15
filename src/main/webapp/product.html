@@ -14,8 +14,13 @@
     <link href="assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
     <link href="dashboard.css" rel="stylesheet">
 	<link href="css/bootstrap.icon-large.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
   </head>
   
   <body>
@@ -23,8 +28,7 @@
       <div id="navbar_placeholder"></div>
     </nav>
 
-    
-    
+
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
@@ -32,54 +36,13 @@
         </div>
 		
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 id="ArtikelAanmakenH1" class="page-header">Artikel aanmaken</h1>
+          <h1 class="page-header">Productinformatie</h1>
           <div class='expendable'></div>
-		  
-          <div class="table-responsive">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                 
-                  <th class="col-xs-2">Afbeelding</th>
-                  <th class="col-xs-2">Naam</th>
-                  <th class="col-xs-1">Omschrijving</th>
-				  <th class="col-xs-1">Prijs</th>
-				 <th></th>
-                </tr>
-              </thead>
-              
-              <tbody>
-                <tr>
-				<form id="artikelAanmaken" accept-charset="utf-8">
-                 <td> <input id="Afbeelding" type="file" class="form-control" name="Afbeelding" accept="image/gif, image/jpeg, image/png"></td>
-                  <td> <input type="text" class="form-control" id="Naam" name="Naam"/></td>
-                  <td><input type="text" class="form-control" id="Omschrijving" name="Omschrijving"/></td>
-                  <td><input type="text" class="form-control" id="Prijs" name="Prijs"/></td>
-				  <td><button type="button" class="btn btn-success" id="artikelPost">Product aanmaken</button></td>
-				  </form>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          
-              <div class="table-responsive">		  
-            <table class="table table-striped" id='voorraad'>
-              <thead>
-                <tr>
-                  <th class="col-xs-1">#ID</th>
-                  <th class="col-xs-3">Naam</th>
-                  <th class="col-xs-2">Omschrijving</th>
-				  <th class="col-xs-1">Prijs</th>
-				 <th class="col-xs-1">Wijzigen</th>
-				 <th class="col-xs-1">Verwijderen</th>
-                </tr>
-              </thead>
-              <tbody>
-              
-              </tbody>
-            </table>
-          </div>
-        </div>
+		  <p id="productNaam"></p>
+		  <p id="productOmschrijving"></p>
+		  <p id="productPrijs"></p>
+		  <p id="productAanbieding"></p>
+		  <div id="buttonplaceholder"></div>
         </div>
       </div>
     </div>
@@ -119,7 +82,7 @@
 	};
 
 	var id = getUrlParameter('id');
-
+	$.noConflict();
 	$.ajax({
 		url : "https://webshopiac.herokuapp.com/restservices/producten/" + id,
 		method : "GET",
@@ -128,17 +91,52 @@
 			xhr.setRequestHeader('Authorization', 'Bearer ' + token);
 		},
 		success : function (data) {
-			console.log(data);
+
 			document.getElementById("productNaam").innerHTML=data["Naam"];
 			document.getElementById("productOmschrijving").innerHTML=data["Omschrijving"];
 			document.getElementById("productPrijs").innerHTML="Prijs: " + data["Prijs"];
-			document.getElementById("productAanbieding").innerHTML="To be implemented";
+			// If product is in de aanbieding: 
+			// document.getElementById("productAanbieding").innerHTML="To be implemented";
+			// Prijs aanpassen
+			
+			document.title = data["Naam"];
+			
+			var button = document.createElement('button');
+  			button.innerHTML = 'Voeg toe aan winkelwagen';
+  			button.onclick = function(){
+  				$("#dialog-confirm").dialog('open');return false;
+  			};
+			document.getElementById('buttonplaceholder').appendChild(button);
+			
 		},
 		error : function() {
 			document.getElementById("productNaam").innerHTML="Dit product kon helaas niet worden gevonden.";
 		}
 	});
+	
+	$( function() {
+		$("#dialog-confirm").dialog({
+	    	resizable: false,
+	      	height: "auto",
+	      	width: 400,
+	      	modal: true,
+	      	autoOpen: false,
+	      	buttons: {
+	        	"Afrekenen": function() {
+	          		$( this ).dialog( "close" );
+	        	},
+	        	"Verder winkelen": function() {
+	          		$( this ).dialog( "close" );
+	        	}
+	      	}
+	    });	
+	});
     
     </script>
+    
+    <div id="dialog-confirm" title="Dit product is toegevoegd!">
+  		<p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>Wilt u meteen afrekenen of eerst nog verder winkelen?</p>
+	</div>
+	
   </body>
 </html>
