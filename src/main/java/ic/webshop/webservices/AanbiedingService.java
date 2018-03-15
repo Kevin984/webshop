@@ -21,6 +21,10 @@ public interface AanbiedingService {
 	@Produces("application/json")
 	public String getAanbieding(@PathParam("ID") int ID);
 	
+	@GET	
+	@Produces("application/json")
+	public String getAanbiedingByProductID(@PathParam("ID") int ID);
+	
 	@DELETE
 	@Path("{ID}")  													
 	public Response deleteAanbieding(@PathParam("ID") int productID); 

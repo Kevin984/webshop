@@ -86,27 +86,27 @@
 	$.noConflict();
 	
 	$.ajax({
-		url : "https://webshopiac.herokuapp.com/restservices/aanbiedingen/product" + id,
+		url : "https://webshopiac.herokuapp.com/restservices/aanbiedingen/product/" + id,
 		method : "GET",
 		beforeSend : function(xhr) {
 			var token = window.sessionStorage.getItem("sessionToken");
 			xhr.setRequestHeader('Authorization', 'Bearer ' + token);
 		},
 		success : function (data) {
-			var vanDatum = moment(data["VanDatum"], "YYYY-MM-DD").toDate();
-			var totDatum = moment(data["TotDatum"], "YYYY-MM-DD").toDate();
-			var huidigeDatum = new Date().toJSON().slice(0,10).replace(/-/g,'/');
+			vanDatum = moment(data["VanDatum"], "YYYY-MM-DD").toDate();
+			totDatum = moment(data["TotDatum"], "YYYY-MM-DD").toDate();
+			huidigeDatum = new Date().toJSON().slice(0,10).replace(/-/g,'/');
 						
-			var aanbieding = huidigeDatum > vanDatum && huidigeDatum < totDatum
+			aanbieding = huidigeDatum > vanDatum && huidigeDatum < totDatum
 			console.log(aanbieding)
 			
 			if (aanbieding) {			
-				var reclameTekst = data["ReclameTekst"];
-				var aanbiedingsprijs = data["Aanbiedingsprijs"];	
+				reclameTekst = data["ReclameTekst"];
+				aanbiedingsprijs = data["Aanbiedingsprijs"];	
 			}
 		},
 		error : function() {
-			var aanbieding = false;
+			aanbieding = false;
 			console.log("Dit product is niet in de aanbieding.");
 		}
 	});
