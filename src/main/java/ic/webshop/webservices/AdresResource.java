@@ -40,7 +40,7 @@ private AdresDAO aDAO = new AdresDAO();
 	@GET
 	@Path("{ID}")
 	@Produces("application/json")
-	public String getAdres(int ID) {
+	public String getAdres(@PathParam("ID")int ID) {
 		Adres a = aDAO.findAdresByPK(ID);
 		if(a == null){
 			throw new WebApplicationException("Aanbieding bestaat niet!");
@@ -57,7 +57,7 @@ private AdresDAO aDAO = new AdresDAO();
 	@Override
 	@DELETE
 	@Path("{ID}")
-	public Response deleteAdres(int ID) {
+	public Response deleteAdres(@PathParam("ID")int ID) {
 		Adres found = null;
 		found = aDAO.findAdresByPK(ID);
 		
