@@ -57,14 +57,15 @@ var id = getUrlParameter('id');
 			var token = window.sessionStorage.getItem("sessionToken");
 			xhr.setRequestHeader('Authorization', 'Bearer ' + token);
 		},
-		success : function (laadProductNaam) {
+		success : function (data) {
 			if (id != undefined) {
-				document.getElementById("productNaam").innerHTML="Naam";
+				var text = JSON.parse(data);
+				document.getElementById("productNaam").innerHTML=text.naam;
 			} else {
 				document.getElementById("productNaam").innerHTML="Undefined of iets anders niet goed";
 			}
 		},
-		error : function(weergeefError) {
+		error : function() {
 			document.getElementById("productNaam").innerHTML="Er is een error";
 		}
 	});
