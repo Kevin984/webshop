@@ -51,4 +51,82 @@ private KlantDAO klantDAO = new KlantDAO();
 	public Account findAccountByPK(int ID){ 	//nog een nullpointerexception handler toevoegen? nette 404 error geven
 		return selectAccounts("SELECT * FROM public.\"Account\" WHERE \"ID\" = " + ID).get(0);
 	}
+	
+	public void saveAccount(Account account){
+		String query = "INSERT INTO public.\"Account\"(\r\n" + 
+				"    \"ID\", \"OpenDatum\", \"IsActief\", \"Factuur_AdresID\", \"Klant_ID\")\r\n" + 
+				"    VALUES (nextval('account_seq'::regclass), '?', '?', ?, ?);";
+		try (Connection con = super.getConnection()) {
+			preparedStatement = con.prepareStatement(query);
+			preparedStatement.setDate(1, (java.sql.Date) account.getOpenDatum()); 
+			
+			String actief;
+			if(account.getIsActief()) {
+				actief = "Y";
+			}else {
+				actief="N";
+			}
+			preparedStatement.setString(2, actief);
+			preparedStatement.setInt(3, account.getFactuurAdres().getID());
+			preparedStatement.setInt(4, account.getKlant().getID());
+			preparedStatement.executeUpdate();	
+			preparedStatement.close();
+			System.out.println("account: " + account.getID()  + " saved.");
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+		}	
+}
+	
+	public boolean deleteAccount(Account account){
+		boolean result = false;
+		boolean exists = findAccountByPK(account.getID()) != null;
+		
+		if(exists){	
+			String query = "DELETE FROM public.\"Account\" WHERE \"ID\" IN ("+account.getID()+")";	
+			try(Connection con = super.getConnection()){
+				Statement stmt = con.createStatement();
+				preparedStatement = con.prepareStatement(query);
+				if(preparedStatement.executeUpdate() == 1){     
+					result = true;
+				}
+				preparedStatement.close();
+				if(stmt.executeUpdate(query) == 1){ 
+					result = true;
+				}
+			} 
+			catch (SQLException sqle){
+				sqle.printStackTrace(); }
+		}
+			return result;
+	}
+	
+	
+	public boolean updateAccount(Account account){ 
+		boolean result = false;
+		boolean exists = findAccountByPK(account.getID()) != null;
+		String actief;
+		if(account.getIsActief()) {
+			actief = "Y";
+		}else {
+			actief="N";
+		}
+		if(exists){ 
+			String query = "UPDATE public.\"Account\" "
+			+ " SET \"OpenDatum\" = '" 		+ account.getOpenDatum()	+"',"
+			+ " \"IsActief\" = '" +actief +"',"
+						+ " \"Factuur_AdresID\" = '" +account.getFactuurAdres().getID() +"',"
+			+ " \"Klant_ID\" = '" +account.getKlant().getID() +"'"
+			+ " WHERE \"ID\" = " 	+ account.getID();
+			try(Connection con = super.getConnection()){
+				Statement stmt = con.createStatement();
+				if(stmt.executeUpdate(query) == 1){
+					result = true;
+				}
+			}
+			catch(SQLException sqle){
+				sqle.printStackTrace();
+			}
+		}
+			return result;
+	}
 }

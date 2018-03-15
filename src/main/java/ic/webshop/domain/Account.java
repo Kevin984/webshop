@@ -17,6 +17,13 @@ public class Account {
 		this.isActief = isActief;
 	}
 	
+	public Account( Date openDatum, Klant klant, Adres adres, boolean isActief) {
+		this.openDatum = openDatum;
+		this.klant = klant;
+		this.factuuradres = adres;
+		this.isActief = isActief;
+	}
+	
 	public int getID() {
 		return ID;
 	}
@@ -43,6 +50,10 @@ public class Account {
 	
 	public Adres getFactuurAdres() {
 		return factuuradres;
+	}
+	
+	public void setFactuurAdres(Adres adres) {
+		this.factuuradres = adres;
 	}
 	
 	public void setIsActief(boolean isActief) {
