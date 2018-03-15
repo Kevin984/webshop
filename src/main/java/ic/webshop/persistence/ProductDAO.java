@@ -8,11 +8,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import ic.webshop.domain.Categorie;
 import ic.webshop.domain.Product;
 
 public class ProductDAO extends BaseDAO{
 	private PreparedStatement preparedStatement = null;
-
+private ProductCategorieDAO pcDAO = new ProductCategorieDAO();
+private CategorieDAO cDAO = new CategorieDAO();
 	private List<Product> selectArtikelen(String query){
 		List<Product> producten = new ArrayList<Product>();
 				
@@ -51,6 +54,10 @@ public class ProductDAO extends BaseDAO{
 		String query = "INSERT INTO public.\"Product\"(\r\n" + 
 				"	\"ID\", \"Naam\", \"Omschrijving\", \"Afbeelding\", \"Prijs\")\r\n" + 
 				"	VALUES (nextval('product_seq'::regclass), ?, ?, null, ?);";
+		
+		Categorie categorie = cDAO.findCategorieByPK(1);
+		pcDAO.saveProductCategorie(artikel, categorie);
+		
 		try (Connection con = super.getConnection()) {
 			preparedStatement = con.prepareStatement(query);
 			// eerste vraagteken = 1
