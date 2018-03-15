@@ -15,7 +15,7 @@ import ic.webshop.domain.Product;
 public class ProductDAO extends BaseDAO{
 	private PreparedStatement preparedStatement = null;
 private ProductCategorieDAO pcDAO = new ProductCategorieDAO();
-private CategorieDAO cDAO = new CategorieDAO();
+
 	private List<Product> selectArtikelen(String query){
 		List<Product> producten = new ArrayList<Product>();
 				
@@ -55,7 +55,7 @@ private CategorieDAO cDAO = new CategorieDAO();
 				"	\"ID\", \"Naam\", \"Omschrijving\", \"Afbeelding\", \"Prijs\")\r\n" + 
 				"	VALUES (nextval('product_seq'::regclass), ?, ?, null, ?);";
 		
-		Categorie categorie = cDAO.findCategorieByPK(1);
+		Categorie categorie = new Categorie(1, null, "Nieuw", "Nieuwe producten");
 		pcDAO.saveProductCategorie(artikel, categorie);
 		
 		try (Connection con = super.getConnection()) {
@@ -169,4 +169,6 @@ private CategorieDAO cDAO = new CategorieDAO();
 			return result;
 		
 	}
+	
+	
 }

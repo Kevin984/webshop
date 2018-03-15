@@ -13,7 +13,6 @@ import ic.webshop.domain.Product;
 
 public class ProductCategorieDAO extends BaseDAO{
 	private PreparedStatement preparedStatement = null;
-	private ProductDAO pDAO = new ProductDAO();
 	private CategorieDAO cDAO = new CategorieDAO();
 	
 	private List<Product> selectProductCategorieen(String query){
@@ -24,10 +23,16 @@ public class ProductCategorieDAO extends BaseDAO{
 			ResultSet dbResultSet = stmt.executeQuery(query);
 			producten.clear();
 			while(dbResultSet.next()){ 
-				 int ID = dbResultSet.getInt("ID");
-				 int productID = dbResultSet.getInt("Product_ID");
+			//	 int ID = dbResultSet.getInt("ID");
+			//	 int productID = dbResultSet.getInt("Product_ID");
 				 int categorieID = dbResultSet.getInt("Categorie_ID");
-				 Product product = pDAO.findByPK(productID);
+				 int prID = dbResultSet.getInt("Product_ID");
+				 String naam = dbResultSet.getString("Naam");
+				 String omschrijving = dbResultSet.getString("Omschrijving");
+			//	 String afbeelding = dbResultSet.getString("Afbeelding");
+				 double prijs = dbResultSet.getDouble("Prijs");
+				 Product product = new Product(prID, naam, omschrijving, prijs);
+				 
 				 Categorie categorie = cDAO.findCategorieByPK(categorieID);	
 				 product.voegCategorieToe(categorie);
 				 producten.add(product);
@@ -38,13 +43,15 @@ public class ProductCategorieDAO extends BaseDAO{
 		return producten; 
 	}
 	
-	public List<Product> findAll(){ return selectProductCategorieen("SELECT * FROM public.\"Product_Categorie\" ORDER BY \"ID\"");}
+	public List<Product> findAll(){ return selectProductCategorieen("SELECT * FROM public.\"Product_Categorie\" INNER JOIN  public.\"Product\" USING (\"ID\");");}
 	
-	public List<Product> getProductenByCategorie(int ID){ return selectProductCategorieen("SELECT * FROM public.\"Product_Categorie\" WHERE \"Categorie_ID\" = "+ID+ " ORDER BY \"ID\"");}
+	public List<Product> getProductenByCategorie(int ID){ return selectProductCategorieen("SELECT * FROM public.\"Product_Categorie\" INNER JOIN  public.\"Product\" USING (\"ID\") WHERE \"Categorie_ID\" = "+ID+";");}
 
 	
 	public Product findProductCategorieBypIDcID(int ID, int ID2){ 	//nog een nullpointerexception handler toevoegen? nette 404 error geven
-		return selectProductCategorieen("SELECT * FROM public.\"Product_Categorie\"  WHERE \"Product_ID\" = " + ID + " AND \"Categorie_ID\" = " + ID2 ).get(0);
+		return selectProductCategorieen("SELECT * FROM public.\"Product_Categorie\" INNER JOIN  public.\"Product\" USING (\"ID\") WHERE \"Product_ID\" = "+ID+" AND \"Categorie_ID\" = "+ID2+");").get(0);
+
+//		return selectProductCategorieen("SELECT * FROM public.\"Product_Categorie\"  WHERE \"Product_ID\" = " + ID + " AND \"Categorie_ID\" = " + ID2 ).get(0);
 	}
 	
 	public void saveProductCategorie(Product product, Categorie categorie){
@@ -57,6 +64,7 @@ public class ProductCategorieDAO extends BaseDAO{
 			preparedStatement.setInt(2, categorie.getID()); 
 			preparedStatement.executeUpdate();	
 			preparedStatement.close();
+			
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 		}	
