@@ -86,7 +86,7 @@
 	$.noConflict();
 	
 	$.ajax({
-		url : "https://webshopiac.herokuapp.com/restservices/aanbiedingen/product" + id,
+		url : "https://webshopiac.herokuapp.com/restservices/aanbiedingen/product/" + id,
 		method : "GET",
 		beforeSend : function(xhr) {
 			var token = window.sessionStorage.getItem("sessionToken");
