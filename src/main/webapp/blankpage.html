@@ -1,12 +1,3 @@
-<body>
-		<h2>Informatie over dit product</h2>
-		<p id="productNaam"></p>
-		<p id="productOmschrijving"></p>
-		<p id="productPrijs"></p>
-		<p id="productAanbieding"></p>
-		
-
-		
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     
-    <title>Productinformatie</title>
+    <title>Title</title>
     
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
@@ -58,42 +49,6 @@
     	window.sessionStorage.setItem("sessionToken", "guest");
     	window.location.href="index.html";
     })
-    
-    var getUrlParameter = function getUrlParameter(sParam) {
-    	var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-        	sURLVariables = sPageURL.split('&'),
-        	sParameterName,
-        	i;
-
-    	for (i = 0; i < sURLVariables.length; i++) {
-        	sParameterName = sURLVariables[i].split('=');
-
-        	if (sParameterName[0] === sParam) {
-            	return sParameterName[1] === undefined ? true : sParameterName[1];
-        	}
-    	}
-	};
-
-	var id = getUrlParameter('id');
-
-	$.ajax({
-		url : "https://webshopiac.herokuapp.com/restservices/producten/" + id,
-		method : "GET",
-		beforeSend : function(xhr) {
-			var token = window.sessionStorage.getItem("sessionToken");
-			xhr.setRequestHeader('Authorization', 'Bearer ' + token);
-		},
-		success : function (data) {
-			console.log(data);
-			document.getElementById("productNaam").innerHTML=data["Naam"];
-			document.getElementById("productOmschrijving").innerHTML=data["Omschrijving"];
-			document.getElementById("productPrijs").innerHTML="Prijs: " + data["Prijs"];
-			document.getElementById("productAanbieding").innerHTML="To be implemented";
-		},
-		error : function() {
-			document.getElementById("productNaam").innerHTML="Dit product kon helaas niet worden gevonden.";
-		}
-	});
     
     </script>
   </body>
