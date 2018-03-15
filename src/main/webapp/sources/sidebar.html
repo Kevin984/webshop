@@ -23,6 +23,10 @@ $.ajax({
 		},
 		success : function (data) {
 			console.log(data);
+			var arrayLength = data.length;
+			for (var i = 0; i < arrayLength; i++) {
+    				console.log(data[0]["Naam"]);
+			}
 		},
 		error : function() {
 			console.log("Error bij het ophalen van de categorieen!!!")
