@@ -26,7 +26,11 @@
   </head>
 
 	<body>
-		<p id="productNaam">test</p>
+		<h2>Product informatie</h2>
+		Naam: <p id="productNaam">Naam</p>
+		Omschrijving: <p id="productOmschrijving">Omschrijving</p>
+		Prijs: <p id="productPrijs">Prijs</p>
+		In aanbieding or nah: <p id="productAanbieding">Aanbieding</p>
 		
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
@@ -60,6 +64,9 @@ var id = getUrlParameter('id');
 		success : function (data) {
 			console.log(data);
 			document.getElementById("productNaam").innerHTML=data["Naam"];
+			document.getElementById("productOmschrijving").innerHTML=data["Omschrijving"];
+			document.getElementById("productPrijs").innerHTML=data["Prijs"];
+			document.getElementById("productAanbieding").innerHTML="To be implemented";
 		},
 		error : function() {
 			document.getElementById("productNaam").innerHTML="Er is een error (wss product niet gevonden, ff checken welke response ofzo, dat dit nuttig is)";
