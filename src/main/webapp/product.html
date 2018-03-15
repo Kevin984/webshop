@@ -1,58 +1,80 @@
-<html>
-	<head>
+<body>
+		<h2>Informatie over dit product</h2>
+		<p id="productNaam"></p>
+		<p id="productOmschrijving"></p>
+		<p id="productPrijs"></p>
+		<p id="productAanbieding"></p>
+		
+
+		
+<!DOCTYPE html>
+<html lang="en">
+  <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Product</title>
-    <!-- Bootstrap core CSS -->
+    
+    <title>Productinformatie</title>
+    
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <link href="assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-    <!-- Custom styles for this template -->
     <link href="dashboard.css" rel="stylesheet">
 	<link href="css/bootstrap.icon-large.min.css" rel="stylesheet">
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="assets/js/ie-emulation-modes-warning.js"></script>
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   </head>
+  
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div id="navbar_placeholder"></div>
+    </nav>
 
-	<body>
-		<h2>Product informatie</h2>
-		Naam: <p id="productNaam">Naam</p>
-		Omschrijving: <p id="productOmschrijving">Omschrijving</p>
-		Prijs: <p id="productPrijs">Prijs</p>
-		In aanbieding or nah: <p id="productAanbieding">Aanbieding</p>
-		
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <div id="sidebar_placeholder"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="js/bootstrap.min.js"></script>
-		
-		<script>
-var getUrlParameter = function getUrlParameter(sParam) {
-    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-        sURLVariables = sPageURL.split('&'),
-        sParameterName,
-        i;
+    <script src="assets/js/ie10-viewport-bug-workaround.js"></script>
+    
+    <script>
+    $.get("../sources/navbar.html", function(data) {
+		$("#navbar_placeholder").replaceWith(data);
+	});
+	
+	$.get("../sources/sidebar.html", function(data) {
+		$("#sidebar_placeholder").replaceWith(data);
+	});
+	
+    $("#logout").click(function(event){
+    	window.sessionStorage.setItem("sessionToken", "guest");
+    	window.location.href="index.html";
+    })
+    
+    var getUrlParameter = function getUrlParameter(sParam) {
+    	var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        	sURLVariables = sPageURL.split('&'),
+        	sParameterName,
+        	i;
 
-    for (i = 0; i < sURLVariables.length; i++) {
-        sParameterName = sURLVariables[i].split('=');
+    	for (i = 0; i < sURLVariables.length; i++) {
+        	sParameterName = sURLVariables[i].split('=');
 
-        if (sParameterName[0] === sParam) {
-            return sParameterName[1] === undefined ? true : sParameterName[1];
-        }
-    }
-};
+        	if (sParameterName[0] === sParam) {
+            	return sParameterName[1] === undefined ? true : sParameterName[1];
+        	}
+    	}
+	};
 
-var id = getUrlParameter('id');
+	var id = getUrlParameter('id');
 
 	$.ajax({
 		url : "https://webshopiac.herokuapp.com/restservices/producten/" + id,
@@ -65,15 +87,14 @@ var id = getUrlParameter('id');
 			console.log(data);
 			document.getElementById("productNaam").innerHTML=data["Naam"];
 			document.getElementById("productOmschrijving").innerHTML=data["Omschrijving"];
-			document.getElementById("productPrijs").innerHTML=data["Prijs"];
+			document.getElementById("productPrijs").innerHTML="Prijs: " + data["Prijs"];
 			document.getElementById("productAanbieding").innerHTML="To be implemented";
 		},
 		error : function() {
-			document.getElementById("productNaam").innerHTML="Er is een error (wss product niet gevonden, ff checken welke response ofzo, dat dit nuttig is)";
+			document.getElementById("productNaam").innerHTML="Dit product kon helaas niet worden gevonden.";
 		}
 	});
-</script>
-		
-	</body>
-
+    
+    </script>
+  </body>
 </html>
