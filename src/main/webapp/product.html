@@ -82,7 +82,7 @@
 	};
 
 	var id = getUrlParameter('id');
-
+	$.noConflict();
 	$.ajax({
 		url : "https://webshopiac.herokuapp.com/restservices/producten/" + id,
 		method : "GET",
@@ -115,7 +115,7 @@
 	});
 	
 	$( function() {
-		$( "#dialog-confirm" ).dialog({
+		$("#dialog-confirm").dialog({
 	    	resizable: false,
 	      	height: "auto",
 	      	width: 400,
