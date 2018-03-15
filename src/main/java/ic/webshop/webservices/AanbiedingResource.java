@@ -63,6 +63,27 @@ public class AanbiedingResource implements AanbiedingService{
 	} 
 	
 	@Override
+	@GET
+	@Path("/product/{ID}")
+	@Produces("application/json")
+	public String getAanbiedingByProductID(@PathParam("ID") int ID){
+		Aanbieding a = aDAO.findAanbiedingByProductID(ID);
+		if(a == null){
+			throw new WebApplicationException("Aanbieding bestaat niet!");
+		}
+		
+		JsonObjectBuilder job = Json.createObjectBuilder();
+		job.add("ID", a.getID());
+		job.add("VanDatum", a.getVanDatum().toString());
+		job.add("TotDatum", a.getTotDatum().toString());
+		job.add("ReclameTekst", a.getReclameTekst());
+		job.add("Aanbiedingsprijs", a.getAanbiedingPrijs());
+		job.add("ProductID", a.getProduct().getID());
+		return job.build().toString();
+	}
+	
+	
+	@Override
 	@DELETE
 	@Path("{ID}")
 	public Response deleteAanbieding(@PathParam("ID") int ID) {
