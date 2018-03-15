@@ -58,8 +58,10 @@ var id = getUrlParameter('id');
 			xhr.setRequestHeader('Authorization', 'Bearer ' + token);
 		},
 		success : function (data) {
+			console.log(data);
 			if (id != undefined) {
 				var text = JSON.parse(data);
+				console.log(text);
 				document.getElementById("productNaam").innerHTML=text.naam;
 			} else {
 				document.getElementById("productNaam").innerHTML="Undefined of iets anders niet goed";
