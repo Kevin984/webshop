@@ -14,7 +14,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import ic.webshop.domain.Klant;
 
-@Path("/klanten")
 public interface KlantService {
 		
 		@GET  												 
