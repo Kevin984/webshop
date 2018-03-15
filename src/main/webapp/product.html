@@ -14,8 +14,12 @@
     <link href="assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
     <link href="dashboard.css" rel="stylesheet">
 	<link href="css/bootstrap.icon-large.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   </head>
   
   <body>
@@ -31,7 +35,7 @@
         </div>
 		
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 id="ArtikelAanmakenH1" class="page-header">Productinformatie</h1>
+          <h1 class="page-header">Productinformatie</h1>
           <div class='expendable'></div>
 		  <p id="productNaam"></p>
 		  <p id="productOmschrijving"></p>
@@ -85,11 +89,36 @@
 			xhr.setRequestHeader('Authorization', 'Bearer ' + token);
 		},
 		success : function (data) {
-			console.log(data);
+
 			document.getElementById("productNaam").innerHTML=data["Naam"];
 			document.getElementById("productOmschrijving").innerHTML=data["Omschrijving"];
 			document.getElementById("productPrijs").innerHTML="Prijs: " + data["Prijs"];
-			document.getElementById("productAanbieding").innerHTML="To be implemented";
+			// If product is in de aanbieding: 
+			// document.getElementById("productAanbieding").innerHTML="To be implemented";
+			// Prijs aanpassen
+			
+			document.title = data["Naam"];
+			
+			var button = document.createElement('button');
+  			button.innerHTML = 'Voeg toe aan winkelwagen';
+  			button.onclick = function(){
+    			$( "#dialog-confirm" ).dialog({
+      				resizable: false,
+      				height: "auto",
+      				width: 400,
+      				modal: true,
+      				buttons: {
+        				"Afrekenen": function() {
+          					$( this ).dialog( "close" );
+        				},
+        				"Verder winkelen": function() {
+          					$( this ).dialog( "close" );
+        				}
+      				}
+    			});return false;
+  			};
+			document.getElementById('foobutton').appendChild(button);
+			
 		},
 		error : function() {
 			document.getElementById("productNaam").innerHTML="Dit product kon helaas niet worden gevonden.";
@@ -97,5 +126,10 @@
 	});
     
     </script>
+    
+    <div id="dialog-confirm" title="Dit product is toegevoegd!">
+  		<p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>Wilt u meteen afrekenen of eerst nog verder winkelen?</p>
+	</div>
+	
   </body>
 </html>
