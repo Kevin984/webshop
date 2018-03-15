@@ -51,7 +51,7 @@ var getUrlParameter = function getUrlParameter(sParam) {
 var id = getUrlParameter('id');
 
 	$.ajax({
-		url : "https://webshopiac.herokuapp.com/restservices/producten/",
+		url : "https://webshopiac.herokuapp.com/restservices/producten/" + id,
 		method : "GET",
 		beforeSend : function(xhr) {
 			var token = window.sessionStorage.getItem("sessionToken");
