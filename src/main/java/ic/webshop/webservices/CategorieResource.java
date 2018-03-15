@@ -93,7 +93,7 @@ public class CategorieResource implements CategorieService{
 	public String getCategorieProducten(@PathParam("ID") int ID) {
 		JsonArrayBuilder jab = Json.createArrayBuilder();
 
-		for(Product p : pcDAO.getProductenByCategorie(ID)) {
+		for(Product p : cDAO.getProductenByCategorie(ID)) {
 			JsonObjectBuilder job = Json.createObjectBuilder();
 			job.add("ProductID", p.getID());
 			job.add("Naam", p.getNaam());
@@ -107,6 +107,25 @@ public class CategorieResource implements CategorieService{
 		return array.toString();
 	}
 	
+	@GET
+	@Path("/producten}")
+	@Produces("application/json")
+	public String getCategorieProducten() {
+		JsonArrayBuilder jab = Json.createArrayBuilder();
+
+		for(Product p : cDAO.findAllCategorieProducten()) {
+			JsonObjectBuilder job = Json.createObjectBuilder();
+			job.add("ProductID", p.getID());
+			job.add("Naam", p.getNaam());
+			job.add("Omschrijving", p.getOmschrijving());
+			job.add("Prijs", p.getPrijs());
+			jab.add(job);
+		}
+		
+		
+		JsonArray array = jab.build();
+		return array.toString();
+	}
 	
 	private JsonObjectBuilder categorieToJson(Categorie c ){
 		JsonObjectBuilder job = Json.createObjectBuilder();

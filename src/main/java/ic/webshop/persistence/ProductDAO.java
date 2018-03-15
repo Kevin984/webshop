@@ -55,8 +55,8 @@ private CategorieDAO cDAO = new CategorieDAO();
 				"	\"ID\", \"Naam\", \"Omschrijving\", \"Afbeelding\", \"Prijs\")\r\n" + 
 				"	VALUES (nextval('product_seq'::regclass), ?, ?, null, ?);";
 		
-		Categorie categorie = new Categorie(1, null, "Nieuw", "Nieuwe producten");
-		pcDAO.saveProductCategorie(artikel, categorie);
+	//	Categorie categorie = new Categorie(1, null, "Nieuw", "Nieuwe producten");
+	//	pcDAO.saveProductCategorie(artikel, categorie);
 		
 		try (Connection con = super.getConnection()) {
 			preparedStatement = con.prepareStatement(query);
@@ -169,4 +169,6 @@ private CategorieDAO cDAO = new CategorieDAO();
 			return result;
 		
 	}
+	
+	
 }
