@@ -104,7 +104,7 @@ private BestellingDAO bestellingDAO = new BestellingDAO();
 	@GET
 	@Path("{ID}")
 	@Produces("application/json")
-	public String getBestellingsregel(int ID) {
+	public String getBestellingsregel(@PathParam("ID")int ID) {
 		Bestellingsregel b = bDAO.findBestellingsregelByPK(ID);
 		if(b == null){
 			throw new WebApplicationException("Bestellingsregel bestaat niet!");
