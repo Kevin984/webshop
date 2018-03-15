@@ -21,7 +21,8 @@ public interface ProductService {
 	@Produces("application/json") 
 	public String getProducten();
 	
-	@GET  												 
+	@GET
+	@Path("{ID}")
 	@Produces("application/json") 
 	public String getProduct(@PathParam("ID") int ID);
 	

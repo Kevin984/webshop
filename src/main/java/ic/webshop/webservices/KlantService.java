@@ -22,16 +22,16 @@ public interface KlantService {
 		public String getKlanten();
 		
 		@GET	
+		@Path("{ID}")
 		@Produces("application/json")
 		public String getKlant(@PathParam("ID") int ID);
 		
-
 		@DELETE
-		@Path("{id}")  													 
-		public Response deleteKlant(@PathParam("id") int klantID);
+		@Path("{ID}")  													 
+		public Response deleteKlant(@PathParam("ID") int klantID);
 		
 		@PUT
-		@Path("{id}")
+		@Path("{ID}")
 		@Consumes("application/json") 
 		public String updateKlant(@PathParam("ID")int ID, @FormParam("Naam") String naam, @FormParam("AdresID") int adresID);
 		

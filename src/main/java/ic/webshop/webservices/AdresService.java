@@ -16,6 +16,7 @@ public interface AdresService {
 	public String getAdressen();
 	
 	@GET	
+	@Path("{ID}")
 	@Produces("application/json")
 	public String getAdres(@PathParam("ID") int ID);
 	
