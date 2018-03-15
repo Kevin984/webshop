@@ -13,12 +13,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import ic.webshop.domain.Categorie;
+import ic.webshop.domain.Product;
 import ic.webshop.persistence.CategorieDAO;
+import ic.webshop.persistence.ProductCategorieDAO;
 
 @Path("/categorieen") 
 public class CategorieResource implements CategorieService{
 	private CategorieDAO cDAO = new CategorieDAO();
-	
+	private ProductCategorieDAO pcDAO = new ProductCategorieDAO();
 	@Override
 	public String getCategorieen() {
 		JsonArrayBuilder jab = Json.createArrayBuilder();
@@ -84,6 +86,22 @@ public class CategorieResource implements CategorieService{
 		job.add("Omschrijving", c.getOmschrijving());
 		return job.build().toString();
 	}
+	
+	@GET
+	@Path("/producten/{ID}")
+	@Produces("application/json")
+	public String getCategorieProducten(@PathParam("ID") int ID) {
+		JsonObjectBuilder job = Json.createObjectBuilder();
+
+		for(Product p : pcDAO.getProductenByCategorie(ID)) {
+			job.add("ProductID", p.getID());
+			job.add("Naam", p.getNaam());
+			job.add("Omschrijving", p.getOmschrijving());
+			job.add("Prijs", p.getPrijs());
+		}
+		return job.build().toString();
+	}
+	
 	
 	private JsonObjectBuilder categorieToJson(Categorie c ){
 		JsonObjectBuilder job = Json.createObjectBuilder();
