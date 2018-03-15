@@ -55,7 +55,7 @@ private ProductCategorieDAO pcDAO = new ProductCategorieDAO();
 				"	\"ID\", \"Naam\", \"Omschrijving\", \"Afbeelding\", \"Prijs\")\r\n" + 
 				"	VALUES (?, ?, ?, null, ?);";
 		int productID = 0;
-
+		artikel.setID(productID);
 		String productIDquery = "SELECT nextval('product_seq'::regclass)";
 		try (Connection con = super.getConnection()) {
 			Statement stmt = con.createStatement();
@@ -68,7 +68,6 @@ private ProductCategorieDAO pcDAO = new ProductCategorieDAO();
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 		}	
-		
 		try (Connection con = super.getConnection()) {
 			preparedStatement = con.prepareStatement(query);
 			// eerste vraagteken = 1
