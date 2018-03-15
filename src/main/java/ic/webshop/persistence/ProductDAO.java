@@ -61,8 +61,9 @@ private ProductCategorieDAO pcDAO = new ProductCategorieDAO();
 			ResultSet dbResultSet = stmt.executeQuery(productIDquery);
 			while(dbResultSet.next()){ 
 				 productID = dbResultSet.getInt("nextval");
-				 
+				 break;
 			}
+			dbResultSet.close();
 					
 					
 		} catch (SQLException sqle) {
@@ -81,7 +82,6 @@ private ProductCategorieDAO pcDAO = new ProductCategorieDAO();
 			preparedStatement.setString(2, artikel.getNaam()); 
 			preparedStatement.setString(3, artikel.getOmschrijving()); 
 			preparedStatement.setDouble(4, artikel.getPrijs()); 
-
 			preparedStatement.executeUpdate();	
 			preparedStatement.close();
 
