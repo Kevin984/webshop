@@ -26,8 +26,8 @@ public class BestellingDAO extends BaseDAO{
 			bestellingen.clear();
 			while(dbResultSet.next()){ 
 				 int ID = dbResultSet.getInt("ID");
-				 int adresID = dbResultSet.getInt("AdresID");
-				 int accountID = dbResultSet.getInt("AccountID");
+				 int adresID = dbResultSet.getInt("Adres_ID");
+				 int accountID = dbResultSet.getInt("Account_ID");
 				 Adres adres = adresDAO.findAdresByPK(adresID);
 				 Account account = accountDAO.findAccountByPK(accountID);
 				 
