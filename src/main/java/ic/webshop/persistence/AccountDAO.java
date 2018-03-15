@@ -33,7 +33,7 @@ private KlantDAO klantDAO = new KlantDAO();
 					 actief = true;
 				 }
 				 int klantID = dbResultSet.getInt("Klant_ID");
-				 int adresID = dbResultSet.getInt("Adres_ID");
+				 int adresID = dbResultSet.getInt("Factuur_AdresID");
 				 Klant klant = klantDAO.findKlantByPK(klantID);
 				 Adres adres = adresDAO.findAdresByPK(adresID);
 				 
