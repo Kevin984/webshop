@@ -50,6 +50,8 @@ private ProductCategorieDAO pcDAO = new ProductCategorieDAO();
 	}
 	 
 	public void saveArtikel(Product artikel){
+		System.out.println("1 Product: " + artikel.getID() + ", " + artikel.getNaam()  +", " + artikel.getOmschrijving());
+
 	//	String query = "INSERT INTO public.\"Product\" (\"ID\", \"Afbeelding\", \"Naam\", \"Omschrijving\",\"Prijs\")  VALUES(?,?,?,?,?)"; 
 		String query = "INSERT INTO public.\"Product\"(\r\n" + 
 				"	\"ID\", \"Naam\", \"Omschrijving\", \"Afbeelding\", \"Prijs\")\r\n" + 
@@ -70,6 +72,7 @@ private ProductCategorieDAO pcDAO = new ProductCategorieDAO();
 			sqle.printStackTrace();
 		}	
 		artikel.setID(productID);
+		System.out.println("2 Product: " + artikel.getID() + ", " + artikel.getNaam()  +", " + artikel.getOmschrijving());
 
 		try (Connection con = super.getConnection()) {
 			preparedStatement = con.prepareStatement(query);
@@ -90,9 +93,12 @@ private ProductCategorieDAO pcDAO = new ProductCategorieDAO();
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 		}	
-		
+		System.out.println("3 Product: " + artikel.getID() + ", " + artikel.getNaam()  +", " + artikel.getOmschrijving());
+
 		Categorie categorie = new Categorie(1, null, "Nieuw", "Nieuwe producten");
 		pcDAO.saveProductCategorie(artikel, categorie);
+		System.out.println("4 Product: " + artikel.getID() + ", " + artikel.getNaam()  +", " + artikel.getOmschrijving());
+
 }
 	
 	
