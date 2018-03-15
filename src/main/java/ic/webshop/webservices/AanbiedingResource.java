@@ -1,6 +1,7 @@
 package ic.webshop.webservices;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -67,19 +68,24 @@ public class AanbiedingResource implements AanbiedingService{
 	@Path("/product/{ID}")
 	@Produces("application/json")
 	public String getAanbiedingByProductID(@PathParam("ID") int ID){
-		Aanbieding a = aDAO.findAanbiedingByProductID(ID);
-		if(a == null){
+		JsonArrayBuilder jab = Json.createArrayBuilder();
+		List<Aanbieding> aanbiedingen = aDAO.findAanbiedingByProductID(ID);
+		if(aanbiedingen.isEmpty()){
 			throw new WebApplicationException("Aanbieding bestaat niet!");
+		} else {
+			for(Aanbieding a : aanbiedingen){ 
+				JsonObjectBuilder job = Json.createObjectBuilder();
+				job.add("ID", a.getID());
+				job.add("VanDatum", a.getVanDatum().toString());
+				job.add("TotDatum", a.getTotDatum().toString());
+				job.add("ReclameTekst", a.getReclameTekst());
+				job.add("Aanbiedingsprijs", a.getAanbiedingPrijs());
+				job.add("ProductID", a.getProduct().getID());
+				jab.add(job);
+			}
 		}
-		
-		JsonObjectBuilder job = Json.createObjectBuilder();
-		job.add("ID", a.getID());
-		job.add("VanDatum", a.getVanDatum().toString());
-		job.add("TotDatum", a.getTotDatum().toString());
-		job.add("ReclameTekst", a.getReclameTekst());
-		job.add("Aanbiedingsprijs", a.getAanbiedingPrijs());
-		job.add("ProductID", a.getProduct().getID());
-		return job.build().toString();
+		JsonArray array = jab.build();
+		return array.toString();
 	}
 	
 	
