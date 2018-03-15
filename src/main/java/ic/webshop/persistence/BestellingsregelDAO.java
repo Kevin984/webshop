@@ -28,8 +28,8 @@ private BestellingDAO bestellingDAO = new BestellingDAO();
 				 int ID = dbResultSet.getInt("ID");
 				 int aantal = dbResultSet.getInt("Aantal");
 				 double totaalprijs = dbResultSet.getDouble("Totaalprijs");
-				 int productID = dbResultSet.getInt("ProductID");
-				 int bestellingID = dbResultSet.getInt("BestellingID");
+				 int productID = dbResultSet.getInt("Product_ID");
+				 int bestellingID = dbResultSet.getInt("Bestelling_ID");
 				 
 				 Product product = productDAO.findByPK(productID);
 				 Bestelling bestelling = bestellingDAO.findBestellingByPK(bestellingID);	
