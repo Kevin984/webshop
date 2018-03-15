@@ -55,7 +55,7 @@ private CategorieDAO cDAO = new CategorieDAO();
 				"	\"ID\", \"Naam\", \"Omschrijving\", \"Afbeelding\", \"Prijs\")\r\n" + 
 				"	VALUES (nextval('product_seq'::regclass), ?, ?, null, ?);";
 		
-		Categorie categorie = cDAO.findCategorieByPK(1);
+		Categorie categorie = new Categorie(1, null, "Nieuw", "Nieuwe producten");
 		pcDAO.saveProductCategorie(artikel, categorie);
 		
 		try (Connection con = super.getConnection()) {
