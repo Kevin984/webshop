@@ -95,6 +95,8 @@ public class CategorieResource implements CategorieService{
 
 		for(Product p : pcDAO.getProductenByCategorie(ID)) {
 			JsonObjectBuilder job = Json.createObjectBuilder();
+			System.out.println("9999 Product: " + p.getID() + ", " + p.getNaam()  +", " + p.getOmschrijving());
+
 			job.add("ProductID", p.getID());
 			job.add("Naam", p.getNaam());
 			job.add("Omschrijving", p.getOmschrijving());

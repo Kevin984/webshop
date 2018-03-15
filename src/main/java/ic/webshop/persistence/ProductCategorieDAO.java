@@ -32,7 +32,7 @@ public class ProductCategorieDAO extends BaseDAO{
 			//	 String afbeelding = dbResultSet.getString("Afbeelding");
 				 double prijs = dbResultSet.getDouble("Prijs");
 				 Product product = new Product(prID, naam, omschrijving, prijs);
-				 
+				 System.out.println("888883- " + prID + naam + omschrijving + prijs);
 				 Categorie categorie = cDAO.findCategorieByPK(categorieID);	
 				 product.voegCategorieToe(categorie);
 				 producten.add(product);
@@ -43,18 +43,19 @@ public class ProductCategorieDAO extends BaseDAO{
 		return producten; 
 	}
 	
-	public List<Product> findAll(){ return selectProductCategorieen("SELECT * FROM public.\"Product_Categorie\" INNER JOIN  public.\"Product\" USING (\"ID\");");}
+	public List<Product> findAll(){ return selectProductCategorieen("SELECT * FROM public.\"Product_Categorie\" as pc INNER JOIN  public.\"Product\" as p ON pc.\"Product_ID\" = p.\"ID\";");}
 	
-	public List<Product> getProductenByCategorie(int ID){ return selectProductCategorieen("SELECT * FROM public.\"Product_Categorie\" INNER JOIN  public.\"Product\" USING (\"ID\") WHERE \"Categorie_ID\" = "+ID+";");}
+	public List<Product> getProductenByCategorie(int ID){ return selectProductCategorieen("SELECT * FROM public.\"Product_Categorie\" as pc INNER JOIN  public.\"Product\" as p ON pc.\"Product_ID\" = p.\"ID\" WHERE \"Categorie_ID\" = "+ID+";");}
 
 	
 	public Product findProductCategorieBypIDcID(int ID, int ID2){ 	//nog een nullpointerexception handler toevoegen? nette 404 error geven
-		return selectProductCategorieen("SELECT * FROM public.\"Product_Categorie\" INNER JOIN  public.\"Product\" USING (\"ID\") WHERE \"Product_ID\" = "+ID+" AND \"Categorie_ID\" = "+ID2+");").get(0);
+		return selectProductCategorieen("SELECT * FROM public.\"Product_Categorie\" as pc INNER JOIN  public.\"Product\" as p ON pc.\"Product_ID\" = p.\"ID\" WHERE \"Product_ID\" = "+ID+" AND \"Categorie_ID\" = "+ID2+");").get(0);
 
 //		return selectProductCategorieen("SELECT * FROM public.\"Product_Categorie\"  WHERE \"Product_ID\" = " + ID + " AND \"Categorie_ID\" = " + ID2 ).get(0);
 	}
 	
 	public void saveProductCategorie(Product product, Categorie categorie){
+		System.out.println("5 Product: " + product.getID() + ", " + product.getNaam()  +", " + product.getOmschrijving());
 		String query = "INSERT INTO public.\"Product_Categorie\"(\r\n" + 
 				"    \"ID\", \"Product_ID\", \"Categorie_ID\")\r\n" + 
 				"    VALUES (nextval('productcategorie_seq'::regclass), ?, ?);";
@@ -68,6 +69,8 @@ public class ProductCategorieDAO extends BaseDAO{
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 		}	
+		System.out.println("6 Product: " + product.getID() + ", " + product.getNaam()  +", " + product.getOmschrijving());
+
 }
 	
 	public boolean deleteProductCategorie(Product product, Categorie categorie){
