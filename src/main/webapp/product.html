@@ -24,6 +24,10 @@
     <style>
     img {
   		position: absolute;
+  		max-height: 20%
+  		max-width: 20%;
+    	height: auto;
+    	width: auto;
 	}
 	#productAfbeelding {
   		z-index: 1;
@@ -58,8 +62,8 @@
           <div class="table-responsive">		  
             <table class="table table-striped" id='productinfo'>
               <tbody>
-              	<tr><td id="afbeeldingCell"><img src="/images/default_product.jpg" id="productAfbeelding" height="333" width="500">
-          									<img src="/images/aanbiedingoverlay.png" id="aanbiedingAfbeelding" height="333" width="500" style="display: none;">
+              	<tr><td id="afbeeldingCell"><img src="/images/default_product.jpg" id="productAfbeelding">
+          									<img src="/images/aanbiedingoverlay.png" id="aanbiedingAfbeelding" style="display: none;">
           			</td><td id="omschrijvingCell"></td></tr>
               	<tr><td id="winkelwagenKnopCell"><div id="buttonplaceholder"></div></td><td><div id="productPrijs"></div><div id="aanbiedingPrijs"></div></td></tr>
               	<tr id="aanbiedingRij" style="visibility:hidden;"><td></td><td id="reclameTekstCell"></td></tr>
@@ -117,7 +121,7 @@
 		},
 		success : function (data) {
 		
-			document.getElementById("productPrijs").innerHTML=data["Prijs"];
+			document.getElementById("productPrijs").innerHTML=Number(data["Prijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
 			document.getElementById("aanbiedingAfbeelding").style.display = 'none';
 			document.getElementById("productPrijs").style.textDecoration = "none";
 			document.getElementById("aanbiedingPrijs").innerHTML=" ";
@@ -165,7 +169,7 @@
 
 				if (huidigeDatum > vanDatum && huidigeDatum < totDatum) {
 					reclameTekst = data[i]["ReclameTekst"];
-					aanbiedingsprijs = data[i]["Aanbiedingsprijs"];	
+					aanbiedingsprijs = Number(data[i]["Aanbiedingsprijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});	
 
 					document.getElementById("productPrijs").style.textDecoration = "line-through";
 					
