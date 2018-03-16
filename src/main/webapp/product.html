@@ -133,7 +133,7 @@
 			document.title = data["Naam"];
 			
 			var button = document.createElement('button');
-  			button.innerHTML = 'Voeg toe aan winkelwagen';
+  			button.innerHTML = 'Voeg toe aan winkelmandje';
   			button.onclick = function(){
   				$("#dialog-confirm").dialog('open');return false;
   			};
@@ -197,7 +197,7 @@
 	      	buttons: {
 	        	"Afrekenen": function() {
 	          		$( this ).dialog( "close" );
-	          		$(location).attr('href', '/winkelwagen.html')
+	          		$(location).attr('href', '/winkelmandje.html')
 	        	},
 	        	"Verder winkelen": function() {
 	          		$( this ).dialog( "close" );
