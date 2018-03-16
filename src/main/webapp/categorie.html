@@ -145,9 +145,9 @@
 								console.log("true of false:" + huidigeDatum > vanDatum && huidigeDatum < totDatum);
 												
 								if (huidigeDatum > vanDatum && huidigeDatum < totDatum) {
-									productPrijs = Number(data[i]["Aanbiedingsprijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});	
-									$("#categorie").append("<tr onclick='goToProductPage(" + productID + ")'><td>" + productNaam + "</td><td>" + productOmschrijving + "</td><td style='color: #388724;'>" + productPrijs 
-									+ " (Aanbieding!)<td><button type='button' class='btn btn-warning' id='goToProduct" + productID
+									aanbiedingPrijs = Number(data[i]["Aanbiedingsprijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});	
+									$("#categorie").append("<tr onclick='goToProductPage(" + productID + ")'><td>" + productNaam + "</td><td>" + productOmschrijving + "</td><td><p style='text-decoration: line-through;'>" + productPrijs 
+									+ "</p><p style='color: #388724;'>" + aanbiedingPrijs + "</p><td><button type='button' class='btn btn-warning' id='goToProduct" + productID
 									+ "'>Bekijk artikel</button></td></tr>");  		  
 								} else {
 									$("#categorie").append("<tr onclick='goToProductPage(" + productID + ")'><td>" + productNaam + "</td><td>" + productOmschrijving + "</td><td>" + productPrijs 
