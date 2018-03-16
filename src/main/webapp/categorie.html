@@ -99,7 +99,8 @@
 
 		},
 		error : function() {
-			document.getElementById("categorieNaam").innerHTML="Deze categorie bestaat niet of er is iets misgegaan.";
+			//document.getElementById("categorieNaam").innerHTML="Deze categorie bestaat niet of er is iets misgegaan.";
+			window.location="/sources/404.html";
 		}
 	});
 	
@@ -107,19 +108,22 @@
 		url: "restservices/categorieen/producten/" + id,
 		method: "GET",
 		success: function (producten) {
-			console.log(producten.length());
-		
-			$.each(producten, function(i, product){ 
-				var productID = product["ProductID"];
-				var productNaam = product["Naam"];
-				var productOmschrijving = product["Omschrijving"];
-				var productPrijs = product["Prijs"];
-				
-							
-				$("#categorie").append("<tr onclick='goToProductPage(" + productID + ")'><td>" + productNaam + "</td><td>" + productOmschrijving + "</td><td>" + productPrijs 
-				+ "<td><button type='button' class='btn btn-warning' id='goToProduct" + productID
-				+ "'>Bekijk artikel</button></td></tr>");  		  
-			});
+			if (producten.length !== 0) {
+				$.each(producten, function(i, product){ 
+					var productID = product["ProductID"];
+					var productNaam = product["Naam"];
+					var productOmschrijving = product["Omschrijving"];
+					var productPrijs = product["Prijs"];
+					
+								
+					$("#categorie").append("<tr onclick='goToProductPage(" + productID + ")'><td>" + productNaam + "</td><td>" + productOmschrijving + "</td><td>" + productPrijs 
+					+ "<td><button type='button' class='btn btn-warning' id='goToProduct" + productID
+					+ "'>Bekijk artikel</button></td></tr>");  		  
+				});
+			} else {
+				document.getElementById("categorieOmschrijving").innerHTML += "<br>Er bestaan op dit moment geen artikelen in deze categorie.";
+				document.getElementById("categorie").style.visibility = "hidden";
+			}
 		}
 	});
 	
