@@ -74,8 +74,8 @@
     })
     
     for (var i = 0; i < localStorage.length; i++){
-    	artikelID = Number(JSON.parse(localStorage.getItem(localStorage.key(0)))["productID"]);
-    	aantal = Number(JSON.parse(localStorage.getItem(localStorage.key(0)))["amount"]);
+    	artikelID = Number(JSON.parse(localStorage.getItem(localStorage.key(i)))["productID"]);
+    	aantal = Number(JSON.parse(localStorage.getItem(localStorage.key(i)))["amount"]);
     	
 		$.ajax({
 			url : "https://webshopiac.herokuapp.com/restservices/producten/" + artikelID,
