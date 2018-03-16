@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     
-    <title>Productinformatie</title>
+    <title> </title>
     
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
@@ -56,6 +56,20 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Productinformatie</h1>
           <div class='expendable'></div>
+          
+          <div class="table-responsive">		  
+            <table class="table table-striped" id='productinfo'>
+              <thead>
+                <tr>
+                  <th class="col-xs-1">Kolom 1</th>
+                  <th class="col-xs-2">Kolom 2</th>
+                </tr>
+              </thead>
+              <tbody>
+              
+              </tbody>
+            </table>
+          </div>
           
           <div>
           	<img src="/images/default_product.jpg" id="productAfbeelding" height="333" width="500">
@@ -171,6 +185,10 @@
 
 			document.getElementById("productNaam").innerHTML=data["Naam"];
 			document.getElementById("productOmschrijving").innerHTML=data["Omschrijving"];
+			
+			$("#productinfo").append("<tr><td><p>rij 1 kolom 1</p></td><td><p>rij 1 kolom 2</p></td></tr>");
+
+			$("#productinfo").append("<tr><td><p>rij 2 kolom 1</p></td><td><p>rij 2 kolom 2</p></td></tr>");
 						
 			document.title = data["Naam"];
 			
