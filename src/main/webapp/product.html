@@ -33,8 +33,9 @@
 	#aanbiedingAfbeelding {
   		z-index: 3;
 	}
-	#imageDiv {
+	#infoDiv {
 		margin-top: 50px;
+		position: relative;
 	}
     </style>
 
@@ -57,16 +58,18 @@
           <div class='expendable'></div>
           
           <div>
-		  <p id="productNaam"></p>
-		  <p id="productOmschrijving"></p>
-		  <h3 id="productPrijs"></h3><h3 id="aanbiedingPrijs"></h3>
-		  <p id="productAanbieding"></p>
+          	<img src="/images/default_product.jpg" id="productAfbeelding" height="333" width="500">
+          	<img src="/images/aanbiedingoverlay.png" id="aanbiedingAfbeelding" height="333" width="500" style="display: none;">
+          </div>
+          
+          <div id="infoDiv">
+		  	<p id="productNaam"></p>
+		  	<p id="productOmschrijving"></p>
+		  	<h3 id="productPrijs"></h3><h3 id="aanbiedingPrijs"></h3>
+		  	<p id="productAanbieding"></p>
 		  </div>
 		  
-		  <div id="imageDiv">
-          <img src="/images/default_product.jpg" id="productAfbeelding" height="333" width="500">
-          <img src="/images/aanbiedingoverlay.png" id="aanbiedingAfbeelding" height="333" width="500" style="display: none;">
-          </div>
+		  
           
 		  <div id="buttonplaceholder"></div>
         </div>
