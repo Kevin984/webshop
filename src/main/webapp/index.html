@@ -7,7 +7,7 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Welkom!</title>
+    <title>Webshop</title>
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
@@ -37,7 +37,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="hoofdpagina.html">Jeans & Lifestyle</a>
+          <a class="navbar-brand" href="hoofdpagina.html">Welkom op onze webshop!</a>
         </div>
         
       </div>
@@ -89,7 +89,7 @@
             </div>
           </div>
 
-          <h2 class="sub-header">Het nieuwe voorraadsysteem</h2>
+          <h2 class="sub-header">Onze huidige aanbiedingen!</h2>
           <div class="table-responsive">
                  
 					
@@ -98,10 +98,9 @@
                 <tr>
                   <th class="col-xs-3">Naam</th>
                   <th class="col-xs-3">Omschrijving</th>
-                  <th class="col-xs-1">Oude prijs</th>
-				  <th class="col-xs-1">Nieuwe Prijs</th>
-				      <th class="col-xs-1">Van</th>
-				  <th class="col-xs-1">Tot</th>
+                  <th class="col-xs-1">Standaardprijs</th>
+				  <th class="col-xs-1">Tijdelijke prijs</th>
+				  <th class="col-xs-1">Hoelang nog</th>
                 </tr>
               </thead>
               <tbody>
@@ -143,19 +142,45 @@
 						method: "GET",
 		
 						success: function (product) {
-						 var begin = aanbieding.VanDatum;
-						 var eind = aanbieding.TotDatum;
-						 var vD = begin.split("-");
-						 var tD = eind.split("-");
-						 var vDatum = new Date(vD[0], parseInt(vD[1])-1, vD[2]);
-					 	 var tDatum = new Date(tD[0], parseInt(tD[1])-1, tD[2]);
+						 //var begin = aanbieding.VanDatum;
+						 //var eind = aanbieding.TotDatum;
+						 id = aanbieding.ID;
+						 //var vD = begin.split("-");
+						 //var tD = eind.split("-");
+						 //var vDatum = new Date(vD[0], parseInt(vD[1])-1, vD[2]);
+					 	 //var tDatum = new Date(tD[0], parseInt(tD[1])-1, tD[2]);
+					 	 
 					 	 
 					 	 if(today > vDatum && today < tDatum){
-					 		$("#voorraad").append("<tr id='"+ aanbieding.ID +"'><td>" + product.Naam + "</td><td>" + product.Omschrijving + "</td><td>" + product.Prijs 
-							   		+ "</td>><td>€" + aanbieding.Aanbiedingsprijs + "</td>" + "<td>" + aanbieding.VanDatum + "</td>" + "<td>" + aanbieding.TotDatum + "</td>"
+					 		$("#voorraad").append("<tr id='"+ id +"'><td>" + product.Naam + "</td><td>" + product.Omschrijving + "</td><td>" + product.Prijs 
+							   		+ "</td>><td>€" + aanbieding.Aanbiedingsprijs + "</td>" + "<td id='timer" + id + "'>" + aanbieding.TotDatum + "</td>"
 							   		+ "<td><button type='button' class='btn btn-warning' id='goToProduct" + aanbieding.ProductID
 							   		+ "'>Ga naar product</button></td></tr>");  		  
 					 	 }
+					 	 
+					 	 
+					 	 function showRemaining() {
+        					totDatum = moment(aanbieding.TotDatum, "YYYY-MM-DD").toDate();
+						 	huidigeDatum = new Date()
+					        var verschil = totDatum - huidigedatum;
+					        if (verschil < 0) {
+					            clearInterval(timer);
+					            document.getElementById("timer" + id).innerHTML = 'Voorbij!';
+					            return;
+					        }
+					        var days = Math.floor(distance / 24);
+					        var hours = Math.floor((distance % _day) / 60);
+					        var minutes = Math.floor((distance % _hour) / 60);
+					        var seconds = Math.floor((distance % _minute) / 1000);
+					
+					        document.getElementById("timer" + id).innerHTML = days + 'days ';
+					        document.getElementById("timer" + id).innerHTML += hours + 'hrs ';
+					        document.getElementById("timer" + id).innerHTML += minutes + 'mins ';
+					        document.getElementById("timer" + id).innerHTML += seconds + 'secs';
+					    }
+					
+					    timer = setInterval(showRemaining, 1000);
+					 	 
 					 	 
 					 	 $("tr").click(function(){
 					 		 window.location="product.html?id="+product.ID;
@@ -163,9 +188,9 @@
 					 	 
 					 	 $("tr").hover(function(){
 					 	 	 document.getElementById("voorraad").style.cursor = "pointer";
-					 	 	 document.getElementById(#aanbieding.ID).style.backgroundColor='#c1dcff';
+					 	 	 document.getElementById(id).style.backgroundColor='#c1dcff';
 					 	 }, function() {
-					 	 	document.getElementById(#aanbieding.ID).style.backgroundColor="";
+					 	 	document.getElementById(id).style.backgroundColor="";
 					 	 })
 					 	 
 						}
