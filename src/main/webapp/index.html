@@ -64,9 +64,9 @@
                 <tr>
                   <th class="col-xs-3">Naam</th>
                   <th class="col-xs-3">Omschrijving</th>
-                  <th class="col-xs-1">Standaardprijs</th>
-				  <th class="col-xs-1">Huidige prijs</th>
-				  <th class="col-xs-1">Tot wanneer</th>
+                  <th class="col-xs-1">Prijs</th>
+				  <th class="col-xs-1">Korting</th>
+				  <th class="col-xs-1">Geldig t/m</th>
                 </tr>
               </thead>
               <tbody>
@@ -116,8 +116,17 @@
 						var tDatum = new Date(tD[0], parseInt(tD[1])-1, tD[2]);
 					 	  
 						if(today > vDatum && today < tDatum){
-					 		$("#voorraad").append("<tr onclick='goToProductPage(" + aanbieding.ProductID + ")'><td>" + product.Naam + "</td><td>" + product.Omschrijving + "</td><td>" + product.Prijs 
-							+ "</td>><td>€" + aanbieding.Aanbiedingsprijs + "</td>" + "<td>" + aanbieding.TotDatum + "</td>"
+							
+							var productPrijs = Number(product.Prijs).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
+							var aanbiedingPrijs = Number(aanbieding.Aanbiedingsprijs).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
+							var korting = (product.Prijs - aanbieding.Aanbiedingsprijs) / product.Prijs * 100;
+						
+							console.log(productPrijs);
+							console.log(aanbiedingPrijs);
+							console.log(korting);
+							
+					 		$("#voorraad").append("<tr onclick='goToProductPage(" + aanbieding.ProductID + ")'><td>" + product.Naam + "</td><td>" + product.Omschrijving + "</td><td><p style='text-decoration: line-through; display:inline;'>" + productPrijs 
+									+ "</p><p style='color: #388724; display:inline;'> " + aanbiedingPrijs + "</p></td><td>" + korting + "</td>" + "<td>" + aanbieding.TotDatum + "</td>"
 							+ "<td><button type='button' class='btn btn-warning' id='goToProduct" + aanbieding.ProductID
 							+ "'>Bekijk artikel</button></td></tr>");  
 						}		  
