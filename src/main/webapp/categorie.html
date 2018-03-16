@@ -92,15 +92,15 @@
 		url : "https://webshopiac.herokuapp.com/restservices/categorieen/" + id,
 		method : "GET",
 		success : function (data) {
-			document.getElementById("categorieNaam").innerHTML=data["Naam"] + " artikelen";
+			document.getElementById("categorieNaam").innerHTML="Artikelen uit de " + data["Naam"] + " categorie.";
 			document.getElementById("categorieOmschrijving").innerHTML=data["Omschrijving"];
 			
-			document.title = data["Naam"] + " artikelen";
+			document.title = data["Naam"];
 
 		},
 		error : function() {
 			//document.getElementById("categorieNaam").innerHTML="Deze categorie bestaat niet of er is iets misgegaan.";
-			window.location="/sources/404.html";
+			window.location="/404.html";
 		}
 	});
 	
@@ -121,7 +121,7 @@
 					+ "'>Bekijk artikel</button></td></tr>");  		  
 				});
 			} else {
-				document.getElementById("categorieOmschrijving").innerHTML += "<br>Er bestaan op dit moment geen artikelen in deze categorie.";
+				document.getElementById("categorieOmschrijving").innerHTML += "<br><br><b>Er zijn op dit moment helaas geen artikelen in deze categorie.</b>";
 				document.getElementById("categorie").style.visibility = "hidden";
 			}
 		}
