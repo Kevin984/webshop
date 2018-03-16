@@ -137,12 +137,6 @@
 								totDatum = totDatum.toJSON().slice(0,10).replace(/-/g,'/');
 								
 								huidigeDatum = new Date().toJSON().slice(0,10).replace(/-/g,'/');
-								
-								console.log(vanDatum);
-								console.log(huidigeDatum);
-								console.log(totDatum);
-								
-								console.log("true of false:" + huidigeDatum > vanDatum && huidigeDatum < totDatum);
 												
 								if (huidigeDatum > vanDatum && huidigeDatum < totDatum) {
 									aanbiedingPrijs = Number(data[i]["Aanbiedingsprijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});	
