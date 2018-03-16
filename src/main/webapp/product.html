@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     
-    <title>Productinformatie</title>
+    <title> </title>
     
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
@@ -186,12 +186,9 @@
 			document.getElementById("productNaam").innerHTML=data["Naam"];
 			document.getElementById("productOmschrijving").innerHTML=data["Omschrijving"];
 			
-			$("#productinfo").append("<tr><td>" + data['Omschrijving'] + "</td><td><img src='/images/default_product.jpg' id='productAfbeelding' height='333' width='500'>
-          	<img src='/images/aanbiedingoverlay.png' id='aanbiedingAfbeelding' height='333' width='500' style='display: none;'></td></tr>");
+			$("#productinfo").append("<tr><td><p>rij 1 kolom 1</p></td><td><p>rij 1 kolom 2</p></td></tr>");
 
-			$("#productinfo").append("<tr><td>" + data['Omschrijving'] + "</td><td>" + data['Prijs'] + "</td></tr>");
-
-			
+			$("#productinfo").append("<tr><td><p>rij 2 kolom 1</p></td><td><p>rij 2 kolom 2</p></td></tr>");
 						
 			document.title = data["Naam"];
 			
