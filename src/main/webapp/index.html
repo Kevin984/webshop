@@ -166,7 +166,9 @@
 					 	 
 					 	 $("tr").hover(function(){
 					 	 	 document.getElementById("voorraad").style.cursor = "pointer";
-					 	 	 document.getElementById('0').style.backgroundColor='#003F87';
+					 	 	 document.getElementById(aanbieding.ID).style.backgroundColor='#bcdbff';
+					 	 }, function() {
+					 	 	document.getElementById(aanbieding.ID).style.backgroundColor=transparent;
 					 	 })
 					 	 
 						}
