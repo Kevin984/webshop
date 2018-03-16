@@ -31,6 +31,10 @@
 	#aanbiedingAfbeelding {
   		z-index: 3;
 	}
+	
+	#productinfo {
+		height:auto;
+	}
     </style>
 
   </head>
@@ -163,7 +167,6 @@
 					reclameTekst = data[i]["ReclameTekst"];
 					aanbiedingsprijs = data[i]["Aanbiedingsprijs"];	
 
-					document.getElementById("productPrijs").innerHTML= data["Prijs"];
 					document.getElementById("productPrijs").style.textDecoration = "line-through";
 					
 					document.getElementById("aanbiedingPrijs").innerHTML=aanbiedingsprijs;
