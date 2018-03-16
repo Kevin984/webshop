@@ -189,13 +189,15 @@
 	$( function() {
 		var productid = getUrlParameter('id');
 	
-		var artikel = { 'productID': productid, 'amount': 1 };
+		var artikel = {'productID': productid, 'amount': 1};
 		
 		if (localStorage.getItem(productid) === null) {
   			localStorage.setItem(productid, JSON.stringify(artikel));
   			console.log("added");
 		} else {
-			localStorage[productid]['amount'] += 1;
+			var huidigArtikel = JSON.parse(localStorage[productid]);
+			huidigArtikel['amount'] += 1;
+			localStorage.setItem(productid, JSON.stringify(huidigArtikel));
 			console.log("exists, amount + 1");
 		}
 	

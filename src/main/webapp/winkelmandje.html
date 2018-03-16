@@ -67,9 +67,12 @@
     	window.location.href="index.html";
     })
     
-    var retrievedObject = localStorage.getItem('testObject');
-	console.log('retrievedObject: ', JSON.parse(retrievedObject));
-	//document.getElementById(
+    //var retrievedObject = localStorage.getItem('testObject');
+	//console.log('retrievedObject: ', JSON.parse(retrievedObject));
+	
+	$.each(localStorage, function(i){ 
+		console.log(localStorage[i]);
+	}
     
     </script>
   </body>
