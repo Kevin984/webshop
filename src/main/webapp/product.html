@@ -24,18 +24,12 @@
     <style>
     img {
   		position: absolute;
-  		top: 25px;
-  		left: 25px;
 	}
 	#productAfbeelding {
   		z-index: 1;
 	}
 	#aanbiedingAfbeelding {
   		z-index: 3;
-	}
-	#infoDiv {
-		margin-top: 50px;
-		position: relative;
 	}
     </style>
 
@@ -54,38 +48,20 @@
         </div>
 		
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Productinformatie</h1>
+          <h1 id="productNaam" class="page-header">Productinformatie</h1>
           <div class='expendable'></div>
           
           <div class="table-responsive">		  
             <table class="table table-striped" id='productinfo'>
-              <thead>
-                <tr>
-                  <th class="col-xs-1">Kolom 1</th>
-                  <th class="col-xs-2">Kolom 2</th>
-                </tr>
-              </thead>
               <tbody>
-              
+              	<tr><td id="afbeeldingCell"><img src="/images/default_product.jpg" id="productAfbeelding" height="333" width="500">
+          									<img src="/images/aanbiedingoverlay.png" id="aanbiedingAfbeelding" height="333" width="500" style="display: none;">
+          			</td><td id="omschrijvingCell"></td></tr>
+              	<tr><td id="winkelwagenKnopCell"><div id="buttonplaceholder"></div></td><td><div id="productPrijs"></div><div id="aanbiedingPrijs"></div></td></tr>
+              	<tr id="aanbiedingRij" style="visibility:hidden;"><td></td><td id="reclameTekstCell"></td></tr>
               </tbody>
             </table>
           </div>
-          
-          <div>
-          	<img src="/images/default_product.jpg" id="productAfbeelding" height="333" width="500">
-          	<img src="/images/aanbiedingoverlay.png" id="aanbiedingAfbeelding" height="333" width="500" style="display: none;">
-          </div>
-          
-          <div id="infoDiv">
-		  	<p id="productNaam"></p>
-		  	<p id="productOmschrijving"></p>
-		  	<h3 id="productPrijs"></h3><h3 id="aanbiedingPrijs"></h3>
-		  	<p id="productAanbieding"></p>
-		  </div>
-		  
-		  
-          
-		  <div id="buttonplaceholder"></div>
         </div>
       </div>
     </div>
@@ -129,6 +105,39 @@
 	$.noConflict();
 	
 	$.ajax({
+		url : "https://webshopiac.herokuapp.com/restservices/producten/" + id,
+		method : "GET",
+		beforeSend : function(xhr) {
+			var token = window.sessionStorage.getItem("sessionToken");
+			xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+		},
+		success : function (data) {
+		
+			document.getElementById("productPrijs").innerHTML=data["Prijs"];
+			document.getElementById("aanbiedingAfbeelding").style.display = 'none';
+			document.getElementById("productPrijs").style.textDecoration = "none";
+			document.getElementById("aanbiedingPrijs").innerHTML=" ";
+			document.getElementById("reclameTekstCell").innerHTML=" ";
+
+			document.getElementById("productNaam").innerHTML=data["Naam"];
+			document.getElementById("omschrijvingCell").innerHTML=data["Omschrijving"];
+						
+			document.title = data["Naam"];
+			
+			var button = document.createElement('button');
+  			button.innerHTML = 'Voeg toe aan winkelwagen';
+  			button.onclick = function(){
+  				$("#dialog-confirm").dialog('open');return false;
+  			};
+			document.getElementById('buttonplaceholder').appendChild(button);
+			
+		},
+		error : function() {
+			document.getElementById("productNaam").innerHTML="Dit product kon helaas niet worden gevonden.";
+		}
+	});
+	
+	$.ajax({
 		url : "https://webshopiac.herokuapp.com/restservices/aanbiedingen/product/" + id,
 		method : "GET",
 		beforeSend : function(xhr) {
@@ -160,12 +169,9 @@
 					document.getElementById("aanbiedingPrijs").innerHTML=aanbiedingsprijs;
 					document.getElementById("aanbiedingPrijs").style.color = "#00cc00";
 					
-					document.getElementById("productAanbieding").innerHTML=reclameTekst;
+					document.getElementById("reclameTekstCell").innerHTML=reclameTekst;
 					document.getElementById("aanbiedingAfbeelding").style.display = 'inline';
 					break;
-				} else {
-					document.getElementById("productPrijs").innerHTML="Prijs: " + data["Prijs"];
-					document.getElementById("aanbiedingAfbeelding").style.display = 'none';
 				}
 			}
 		},
@@ -174,36 +180,6 @@
 		}
 	});
 	
-	$.ajax({
-		url : "https://webshopiac.herokuapp.com/restservices/producten/" + id,
-		method : "GET",
-		beforeSend : function(xhr) {
-			var token = window.sessionStorage.getItem("sessionToken");
-			xhr.setRequestHeader('Authorization', 'Bearer ' + token);
-		},
-		success : function (data) {
-
-			document.getElementById("productNaam").innerHTML=data["Naam"];
-			document.getElementById("productOmschrijving").innerHTML=data["Omschrijving"];
-			
-			$("#productinfo").append("<tr><td><p>rij 1 kolom 1</p></td><td><p>rij 1 kolom 2</p></td></tr>");
-
-			$("#productinfo").append("<tr><td><p>rij 2 kolom 1</p></td><td><p>rij 2 kolom 2</p></td></tr>");
-						
-			document.title = data["Naam"];
-			
-			var button = document.createElement('button');
-  			button.innerHTML = 'Voeg toe aan winkelwagen';
-  			button.onclick = function(){
-  				$("#dialog-confirm").dialog('open');return false;
-  			};
-			document.getElementById('buttonplaceholder').appendChild(button);
-			
-		},
-		error : function() {
-			document.getElementById("productNaam").innerHTML="Dit product kon helaas niet worden gevonden.";
-		}
-	});
 	
 	$( function() {
 		$("#dialog-confirm").dialog({
