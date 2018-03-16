@@ -82,16 +82,6 @@
 			method : "GET",
 			
 			success : function (data) {
-				normalePrijsNoFormat = data["Prijs"];
-				normalePrijs = Number(data["Prijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
-			
-				document.getElementById("productPrijs").innerHTML=normalePrijs;
-				document.getElementById("productPrijs").style.textDecoration = "none";
-				document.getElementById("aanbiedingPrijs").innerHTML=" ";
-	
-				document.getElementById("productNaam").innerHTML=data["Naam"];
-				document.getElementById("omschrijvingCell").innerHTML=data["Omschrijving"];
-	  			
 	  			$("#winkelmand").append("<tr id='"+ artikelID +"'><td>" + data["Naam"] + "</td><td>" + data["Omschrijving"] + "</td><td>" + data["Prijs"] + "</td>"
 	  						+ "<td>" + aantal + "</td>"
 					   		+ "<td><button type='button' class='btn btn-warning' id='delete" + artikelID
