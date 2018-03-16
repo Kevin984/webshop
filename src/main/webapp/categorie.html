@@ -94,6 +94,9 @@
 		success : function (data) {
 			document.getElementById("categorieNaam").innerHTML=data["Naam"];
 			document.getElementById("categorieOmschrijving").innerHTML=data["Omschrijving"];
+			
+			document.title = data["Naam"];
+
 		},
 		error : function() {
 			document.getElementById("categorieNaam").innerHTML="Deze categorie bestaat niet of er is iets misgegaan.";
@@ -110,9 +113,9 @@
 				var productOmschrijving = product["Omschrijving"];
 				var productPrijs = product["Prijs"];
 				
-				var windowLocation = "'product.html?id=" + productID + "'";
+				var windowLocation = "'product.html?id=productID + "'";
 							
-				$("#categorie").append("<tr onclick='window.location=" + windowLocation + ";'><td>" + productNaam + "</td><td>" + productOmschrijving + "</td><td>" + productPrijs 
+				$("#categorie").append("<tr onclick='window.location=/product.html?id=2;'><td>" + productNaam + "</td><td>" + productOmschrijving + "</td><td>" + productPrijs 
 				+ "<td><button type='button' class='btn btn-warning' id='goToProduct" + productID
 				+ "'>Ga naar product</button></td></tr>");  		  
 			});
