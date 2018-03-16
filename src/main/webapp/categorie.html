@@ -99,7 +99,6 @@
 
 		},
 		error : function() {
-			//document.getElementById("categorieNaam").innerHTML="Deze categorie bestaat niet of er is iets misgegaan.";
 			window.location="/404.html";
 		}
 	});
@@ -110,19 +109,58 @@
 		success: function (producten) {
 			if (producten.length !== 0) {
 				$.each(producten, function(i, product){ 
+					
 					var productID = product["ProductID"];
 					var productNaam = product["Naam"];
 					var productOmschrijving = product["Omschrijving"];
-					var productPrijs = product["Prijs"];
+					var productPrijs = Number(product["Prijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
 					
+					var isInAanbieding = false;
+				
+					$.ajax({
+						url : "https://webshopiac.herokuapp.com/restservices/aanbiedingen/product/" + productID,
+						method : "GET",
+						success : function (data) {
+							for (var i in data) {
+						
+								vanDatum = moment(data[i]["VanDatum"], "YYYY-MM-DD").toDate();
+								vanDatum.setHours(vanDatum.getHours() - vanDatum.getTimezoneOffset() / 60);
+								vanDatum.setMinutes(vanDatum.getMinutes() - vanDatum.getTimezoneOffset() / 60);
+								vanDatum = vanDatum.toJSON().slice(0,10).replace(/-/g,'/');
 								
-					$("#categorie").append("<tr onclick='goToProductPage(" + productID + ")'><td>" + productNaam + "</td><td>" + productOmschrijving + "</td><td>" + productPrijs 
-					+ "<td><button type='button' class='btn btn-warning' id='goToProduct" + productID
-					+ "'>Bekijk artikel</button></td></tr>");  		  
+								totDatum = moment(data[i]["TotDatum"], "YYYY-MM-DD").toDate();
+								totDatum.setHours(totDatum.getHours() - totDatum.getTimezoneOffset() / 60);
+								totDatum.setMinutes(totDatum.getMinutes() - totDatum.getTimezoneOffset() / 60);
+								totDatum = totDatum.toJSON().slice(0,10).replace(/-/g,'/');
+								
+								huidigeDatum = new Date().toJSON().slice(0,10).replace(/-/g,'/');
+				
+								if (huidigeDatum > vanDatum && huidigeDatum < totDatum) {
+									productPrijs = Number(data[i]["Aanbiedingsprijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});	
+									isInAanbieding = true;
+									break;
+								}
+							}
+						},
+						error : function() {
+							//console.log("Dit product is niet in de aanbieding.");
+						}
+					});
+								
+					if (isInAanbieding) {
+						$("#categorie").append("<tr onclick='goToProductPage(" + productID + ")'><td>" + productNaam + "</td><td>" + productOmschrijving + "</td><td style='color: #388724;'>" + productPrijs 
+						+ " (Aanbieding!)<td><button type='button' class='btn btn-warning' id='goToProduct" + productID
+						+ "'>Bekijk artikel</button></td></tr>");  		  
+					} else {
+						$("#categorie").append("<tr onclick='goToProductPage(" + productID + ")'><td>" + productNaam + "</td><td>" + productOmschrijving + "</td><td>" + productPrijs 
+						+ "<td><button type='button' class='btn btn-warning' id='goToProduct" + productID
+						+ "'>Bekijk artikel</button></td></tr>");  		  
+					}
+					
 				});
 			} else {
-				document.getElementById("categorieOmschrijving").innerHTML += "<br><br><b>Er zijn op dit moment helaas geen artikelen in deze categorie.</b>";
 				document.getElementById("categorie").style.visibility = "hidden";
+				document.getElementById("categorieOmschrijving").innerHTML = "<b>Er zijn op dit moment helaas geen artikelen in deze categorie.</b>";
 			}
 		}
 	});
