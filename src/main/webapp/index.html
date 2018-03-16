@@ -169,10 +169,10 @@
 					            document.getElementById("timer" + id).innerHTML = 'Voorbij!';
 					            return;
 					        }
-					        var days = Math.floor(distance / 24);
-					        var hours = Math.floor((distance % _day) / 60);
-					        var minutes = Math.floor((distance % _hour) / 60);
-					        var seconds = Math.floor((distance % _minute) / 1000);
+					        var days = Math.floor(verschil / 24);
+					        var hours = Math.floor((verschil % _day) / 60);
+					        var minutes = Math.floor((verschil % _hour) / 60);
+					        var seconds = Math.floor((verschil % _minute) / 1000);
 					
 					        document.getElementById("timer" + id).innerHTML = days + 'days ';
 					        document.getElementById("timer" + id).innerHTML += hours + 'hrs ';
