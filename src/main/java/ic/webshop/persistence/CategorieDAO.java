@@ -43,7 +43,7 @@ public class CategorieDAO extends BaseDAO{
 	public void saveCategorie(Categorie categorie){
 		String query = "INSERT INTO public.\"Categorie\"(\r\n" + 
 				"    \"ID\", \"Naam\", \"Omschrijving\", \"Afbeelding\")\r\n" + 
-				"    VALUES (nextval('categorie_seq'::regclass), '?', '?', null);";
+				"    VALUES (nextval('categorie_seq'::regclass), ?, ?, null);";
 		try (Connection con = super.getConnection()) {
 			preparedStatement = con.prepareStatement(query);
 			preparedStatement.setString(1, categorie.getNaam()); 

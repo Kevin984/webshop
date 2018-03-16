@@ -18,11 +18,14 @@ import ic.webshop.domain.Categorie;
 import ic.webshop.domain.Product;
 import ic.webshop.persistence.CategorieDAO;
 import ic.webshop.persistence.ProductCategorieDAO;
+import ic.webshop.persistence.ProductDAO;
 
 @Path("/categorieen") 
 public class CategorieResource implements CategorieService{
 	private CategorieDAO cDAO = new CategorieDAO();
 	private ProductCategorieDAO pcDAO = new ProductCategorieDAO();
+	private ProductDAO pDAO = new ProductDAO();
+	
 	@Override
 	public String getCategorieen() {
 		JsonArrayBuilder jab = Json.createArrayBuilder();
@@ -51,6 +54,20 @@ public class CategorieResource implements CategorieService{
 			return Response.status(Response.Status.NOT_FOUND).build();
 		}
 	}
+	
+	@DELETE
+	@Path("producten/{ID}") 
+	public Response deleteProductCategorie(@PathParam("ID") int ID) {
+		Categorie found = null;
+		found = cDAO.findCategorieByPK(ID);
+		if(found != null) {
+			cDAO.deleteCategorie(found);
+			return Response.ok().build();
+		}
+		else {
+			return Response.status(Response.Status.NOT_FOUND).build();
+		}
+	}
 
 	@Override
 	@PUT
@@ -67,7 +84,7 @@ public class CategorieResource implements CategorieService{
 		}
 		throw new WebApplicationException("Aanbieding not found!");
 	}
-
+	
 	@Override
 	@POST 
 	@Produces("application/json")
@@ -94,6 +111,17 @@ public class CategorieResource implements CategorieService{
 		return job.build().toString();
 	}
 	
+	
+	@POST 
+	@Path("/producten")
+	@Produces("application/json")
+	public String createProductCategorie(@FormParam("selectProduct") int pID, @FormParam("selectCategorie") int cID) {
+		Product product = pDAO.findByPK(pID);
+		Categorie categorie = cDAO.findCategorieByPK(cID);		
+		pcDAO.saveProductCategorie(product, categorie);
+		return productCategorieToJson(product, categorie).build().toString();
+	}
+	
 	@GET
 	@Path("/producten/{ID}")
 	@Produces("application/json")
@@ -117,6 +145,13 @@ public class CategorieResource implements CategorieService{
 	}
 	
 	
+	
+	private JsonObjectBuilder productCategorieToJson(Product p, Categorie c ){
+		JsonObjectBuilder job = Json.createObjectBuilder();
+		job.add("ProductID", p.getID());
+		job.add("CategorieID", c.getID());
+		return job;
+	}
 	private JsonObjectBuilder categorieToJson(Categorie c ){
 		JsonObjectBuilder job = Json.createObjectBuilder();
 		job.add("ID", c.getID());
