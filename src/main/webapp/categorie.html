@@ -120,7 +120,7 @@
 					var productOmschrijving = product["Omschrijving"];
 					productPrijs = Number(product["Prijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
 					
-					var isInAanbieding = false;
+					isInAanbieding = false;
 				
 					$.ajax({
 						url : "https://webshopiac.herokuapp.com/restservices/aanbiedingen/product/" + productID,
@@ -150,7 +150,6 @@
 									console.log("gaat door deze loop");
 									productPrijs = Number(data[i]["Aanbiedingsprijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});	
 									isInAanbieding = true;
-									break;
 								}
 							}
 						},
