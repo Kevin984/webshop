@@ -186,10 +186,10 @@
 			document.getElementById("productNaam").innerHTML=data["Naam"];
 			document.getElementById("productOmschrijving").innerHTML=data["Omschrijving"];
 			
-			$("#productinfo").append("<tr><td>" + data["Omschrijving"] + "</td><td><img src="/images/default_product.jpg" id="productAfbeelding" height="333" width="500">
-          	<img src="/images/aanbiedingoverlay.png" id="aanbiedingAfbeelding" height="333" width="500" style="display: none;"></td></tr>");
+			$("#productinfo").append("<tr><td>" + data['Omschrijving'] + "</td><td><img src='/images/default_product.jpg' id='productAfbeelding' height='333' width='500'>
+          	<img src='/images/aanbiedingoverlay.png' id='aanbiedingAfbeelding' height='333' width='500' style='display: none;'></td></tr>");
 
-			$("#productinfo").append("<tr><td>" + data["Omschrijving"] + "</td><td>" + data["Prijs"] + "</td></tr>");
+			$("#productinfo").append("<tr><td>" + data['Omschrijving'] + "</td><td>" + data['Prijs'] + "</td></tr>");
 
 			
 						
