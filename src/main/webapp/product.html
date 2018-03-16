@@ -57,6 +57,20 @@
           <h1 class="page-header">Productinformatie</h1>
           <div class='expendable'></div>
           
+          <div class="table-responsive">		  
+            <table class="table table-striped" id='productinfo'>
+              <thead>
+                <tr>
+                  <th class="col-xs-1">Kolom 1</th>
+                  <th class="col-xs-2">Kolom 2</th>
+                </tr>
+              </thead>
+              <tbody>
+              
+              </tbody>
+            </table>
+          </div>
+          
           <div>
           	<img src="/images/default_product.jpg" id="productAfbeelding" height="333" width="500">
           	<img src="/images/aanbiedingoverlay.png" id="aanbiedingAfbeelding" height="333" width="500" style="display: none;">
@@ -171,6 +185,13 @@
 
 			document.getElementById("productNaam").innerHTML=data["Naam"];
 			document.getElementById("productOmschrijving").innerHTML=data["Omschrijving"];
+			
+			$("#productinfo").append("<tr><td>" + data["Omschrijving"] + "</td><td><img src="/images/default_product.jpg" id="productAfbeelding" height="333" width="500">
+          	<img src="/images/aanbiedingoverlay.png" id="aanbiedingAfbeelding" height="333" width="500" style="display: none;"></td></tr>");
+
+			$("#productinfo").append("<tr><td>" + data["Omschrijving"] + "</td><td>" + data["Prijs"] + "</td></tr>");
+
+			
 						
 			document.title = data["Naam"];
 			
