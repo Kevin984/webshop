@@ -63,10 +63,11 @@
             <table class="table table-striped" id='productinfo'>
               <tbody>
               	<tr style="height: 350px;"><td id="afbeeldingCell" style="width:300px;"><img src="/images/default_product.jpg" id="productAfbeelding">
-          									<img src="/images/aanbiedingoverlay.png" id="aanbiedingAfbeelding" style="display: none;">
-          			</td><td id="omschrijvingCell"></td></tr>
-              	<tr><td id="winkelwagenKnopCell" style="text-align:center;"><div id="buttonplaceholder"></div></td><td style="font-size: 40px;"><div id="productPrijs" style="display:inline;"></div><div id="aanbiedingPrijs" style="display:inline;"></div></td></tr>
-              	<tr id="aanbiedingRij" style="visibility:hidden;"><td></td><td id="reclameTekstCell"></td></tr>
+          									<img src="/images/aanbiedingoverlay.png" id="aanbiedingAfbeelding" style="display: none;"></td></tr>
+          		<tr><td style="font-size: 40px;"><div id="productPrijs" style="display:inline;"></div><div id="aanbiedingPrijs" style="display:inline;"></div></td></tr>
+              	<tr><td id="winkelwagenKnopCell" style="text-align:center;"><div id="buttonplaceholder"></div></td></tr>
+              	<tr><td id="omschrijvingCell"></td></tr>
+              	<tr id="aanbiedingRij" style="visibility:hidden;"><td id="reclameTekstCell"></td></tr>
               </tbody>
             </table>
           </div>
@@ -137,7 +138,6 @@
 			
 			var button = document.createElement('button');
   			button.innerHTML = 'Voeg toe aan winkelwagen';
-  			button.style.height = "50px";
   			button.onclick = function(){
   				$("#dialog-confirm").dialog('open');return false;
   			};
@@ -176,9 +176,9 @@
 					aanbiedingsprijs = Number(data[i]["Aanbiedingsprijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});	
 
 					document.getElementById("productPrijs").style.textDecoration = "line-through";
-					document.getElementById("productPrijs").innerHTML=normalePrijs + " ";
+					document.getElementById("productPrijs").innerHTML=normalePrijs;
 					// document.getElementById("nuvoormaar").innerHTML=" Nu voor maar: ";
-					document.getElementById("aanbiedingPrijs").innerHTML=aanbiedingsprijs;
+					document.getElementById("aanbiedingPrijs").innerHTML=" " + aanbiedingsprijs;
 					document.getElementById("aanbiedingPrijs").style.color = "#388724";
 					
 					document.getElementById("reclameTekstCell").innerHTML=reclameTekst;
