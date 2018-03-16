@@ -166,7 +166,7 @@
 					        var verschil = totDatum - huidigeDatum;
 					        if (verschil < 0) {
 					            clearInterval(timer);
-					            document.getElementById("timer" + id).innerHTML = 'Voorbij!';
+					            document.getElementById("timer2").innerHTML = 'Voorbij!';
 					            return;
 					        }
 					        var days = Math.floor(verschil / 24);
@@ -174,10 +174,10 @@
 					        var minutes = Math.floor((verschil % 60) / 60);
 					        var seconds = Math.floor((verschil % 60) / 1000);
 					
-					        document.getElementById("timer" + id).innerHTML = days + 'days ';
-					        document.getElementById("timer" + id).innerHTML += hours + 'hrs ';
-					        document.getElementById("timer" + id).innerHTML += minutes + 'mins ';
-					        document.getElementById("timer" + id).innerHTML += seconds + 'secs';
+					        document.getElementById("timer2").innerHTML = days + 'days ';
+					        document.getElementById("timer2").innerHTML += hours + 'hrs ';
+					        document.getElementById("timer2").innerHTML += minutes + 'mins ';
+					        document.getElementById("timer2").innerHTML += seconds + 'secs';
 					    }
 					
 					    timer = setInterval(showRemaining, 1000);
