@@ -121,7 +121,10 @@
 							var productPrijs = Number(product.Prijs).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
 							var aanbiedingPrijs = Number(aanbieding.Aanbiedingsprijs).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
 							var korting = parseFloat(Math.round((product.Prijs - aanbieding.Aanbiedingsprijs) / product.Prijs * 100 * 100) / 100).toFixed(2);
-							var eindDatum = aanbieding.TotDatum.toString("dd MMM yyyy");
+							var eindDatum = aanbieding.TotDatum.toDate().toString("dd MMM yyyy");
+							
+							console.log(aanbieding.TotDatum);
+							console.log(eindDatum);
 							
 					 		$("#voorraad").append("<tr onclick='goToProductPage(" + aanbieding.ProductID + ")'><td>" + product.Naam + "</td><td>" + product.Omschrijving + "</td><td><p style='text-decoration: line-through; display:inline;'>" + productPrijs 
 									+ "</p><p style='color: #388724; display:inline;'> " + aanbiedingPrijs + "</p></td><td>" + korting + "%</td>" + "<td>" + eindDatum + "</td>"
