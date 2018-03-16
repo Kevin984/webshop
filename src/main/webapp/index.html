@@ -93,56 +93,21 @@
           <div class="table-responsive">
                  
 					
-                <div class="col-md-9">
-                    <div class="col-md-6 wow fadeInRight delay-02s">
-                      
-                        <div class="icon-text">
-                            <h3 class="txt-tl">Makkelijk te gebruiken</h3>
-                            <p class="txt-para">Er is gekozen voor een makkelijk leesbaar design. Mocht je er toch niet uitkomen kun je hier altijd tips lezen! </p>
-							 <hr class="botm-line">
-                        </div>
-                    </div>
-                    <div class="col-md-6 wow fadeInRight delay-02s">
-                       
-                        <div class="icon-text">
-                            <h3 class="txt-tl">Bootstrap</h3>
-                            <p class="txt-para">Voor het design van het nieuwe systeem is er gebruik gemaakt van Bootstrap. Mooi he?</p>
-							 <hr class="botm-line">
-                        </div>
-                    </div>
-                    <div class="col-md-6 wow fadeInRight delay-04s">
-                     
-                        <div class="icon-text">
-                            <h3 class="txt-tl">Klanten database</h3>
-                            <p class="txt-para">In het nieuwe systeem houden we ook klanten bij. Hoe meer een klant koopt, hoe meer korting! </p>
-							 <hr class="botm-line">
-                        </div>
-                    </div>
-                    <div class="col-md-6 wow fadeInRight delay-04s">
-                       
-                        <div class="icon-text">
-                            <h3 class="txt-tl">Verkopen inzien</h3>
-                            <p class="txt-para">Verkopen van elke klant inzien? Dat kan! Klik op de grote paarse knop boven 'Verkopen'. </p>
-							 <hr class="botm-line">
-                        </div>
-                    </div>
-                    <div class="col-md-6 wow fadeInRight delay-06s">
-                       
-                        <div class="icon-text">
-                            <h3 class="txt-tl">Makkelijk artikelen zoeken</h3>
-                            <p class="txt-para">In de navigatiebar van de voorraad kun je snel artikelen opzoeken op naam, artikelnummer, maat, merk of kleur! </p>
-							 <hr class="botm-line">
-                        </div>
-                    </div>
-                    <div class="col-md-6 wow fadeInRight delay-06s">
-                       
-                        <div class="icon-text">
-                            <h3 class="txt-tl">Snelle links</h3>
-                            <p class="txt-para">In het hoofdmenu aan de linker kant zijn er een aantal snelle links beschikbaar om snel tussen artikelen te navigeren. </p>
-							 <hr class="botm-line">
-                        </div>
-                    </div>
-               
+               <table class="table table-striped" id='voorraad'>
+              <thead>
+                <tr>
+                  <th class="col-xs-3">Naam</th>
+                  <th class="col-xs-3">Omschrijving</th>
+                  <th class="col-xs-1">Oude prijs</th>
+				  <th class="col-xs-1">Nieuwe Prijs</th>
+				      <th class="col-xs-1">Van</th>
+				  <th class="col-xs-1">Tot</th>
+                </tr>
+              </thead>
+              <tbody>
+              
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -161,8 +126,73 @@
     
     <script>   $("#logout").click(function(event){
     	window.sessionStorage.setItem("sessionToken", "guest");
-    	window.location.href="index.html";
-    	
-    })</script>
+    	window.location.href="index.html";    	
+    })
+    
+  
+    
+    $.ajax({
+		url: "restservices/aanbiedingen",
+		method: "GET",
+		success: function (voorraad) {
+			var today = new Date();
+
+			$.each(voorraad, function(i, aanbieding){ 
+				 $.ajax({
+						url: "restservices/producten/"+aanbieding.ProductID,
+						method: "GET",
+		
+						success: function (product) {
+						 var begin = aanbieding.VanDatum;
+						 var eind = aanbieding.TotDatum;
+						 var vD = begin.split("-");
+						 var tD = eind.split("-");
+						 var vDatum = new Date(vD[0], parseInt(vD[1])-1, vD[2]);
+					 	 var tDatum = new Date(tD[0], parseInt(tD[1])-1, tD[2]);
+						 
+					 	 
+					 	
+					 	 
+					 	 if(today > vDatum && today < tDatum){
+					 		$("#voorraad").append("<tr id='"+aanbieding.ID+"'><td>" + product.Naam + "</td><td>" + product.Omschrijving + "</td><td>" + product.Prijs 
+							   		+ "</td>><td>€" + aanbieding.Aanbiedingsprijs + "</td>" + "<td>" + aanbieding.VanDatum + "</td>" + "<td>" + aanbieding.TotDatum + "</td>"
+							   		+ "<td><button type='button' class='btn btn-warning' id='goToProduct" + aanbieding.ProductID
+							   		+ "'>Ga naar product</button></td></tr>");  		  
+					 	 }
+					 	 
+					 	 $("tr").click(function(){
+					 		 window.location="product.html?id="+product.ID;
+					 	 })
+						}
+						});
+				
+		})
+		}
+		});
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    </script>
   </body>
 </html>
