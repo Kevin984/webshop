@@ -190,7 +190,7 @@
 		var artikel = { 'productID': id, 'amount': 1 };
 		
 		if (localStorage.getItem(id) === null) {
-  			localStorage.setItem(id', JSON.stringify(artikel));
+  			localStorage.setItem(id, JSON.stringify(artikel));
 		} else {
 			localStorage[id]['amount'] += 1;
 		}
