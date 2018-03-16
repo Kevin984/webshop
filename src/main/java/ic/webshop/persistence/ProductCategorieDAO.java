@@ -49,7 +49,7 @@ public class ProductCategorieDAO extends BaseDAO{
 
 	
 	public Product findProductCategorieBypIDcID(int ID, int ID2){ 	//nog een nullpointerexception handler toevoegen? nette 404 error geven
-		return selectProductCategorieen("SELECT * FROM public.\"Product_Categorie\" as pc INNER JOIN  public.\"Product\" as p ON pc.\"Product_ID\" = p.\"ID\" WHERE \"Product_ID\" = "+ID+" AND \"Categorie_ID\" = "+ID2+");").get(0);
+		return selectProductCategorieen("SELECT * FROM public.\"Product_Categorie\" as pc INNER JOIN  public.\"Product\" as p ON pc.\"Product_ID\" = p.\"ID\" WHERE \"Product_ID\" = "+ID+" AND \"Categorie_ID\" = "+ID2+";").get(0);
 
 //		return selectProductCategorieen("SELECT * FROM public.\"Product_Categorie\"  WHERE \"Product_ID\" = " + ID + " AND \"Categorie_ID\" = " + ID2 ).get(0);
 	}
@@ -96,6 +96,48 @@ public class ProductCategorieDAO extends BaseDAO{
 			return result;
 	}
 	
+	
+	public boolean deleteProductCategorieByCategorieID( Categorie categorie){
+		boolean result = false;
+boolean exists = true;		
+		if(exists){	
+			String query = "DELETE FROM public.\"Product_Categorie\" WHERE \"Categorie_ID\" IN ("+categorie.getID()+")";	
+			try(Connection con = super.getConnection()){
+				Statement stmt = con.createStatement();
+				preparedStatement = con.prepareStatement(query);
+					result = true;
+				preparedStatement.close();
+				if(stmt.executeUpdate(query) == 1){ 
+					result = true;
+				}
+			} 
+			catch (SQLException sqle){
+				sqle.printStackTrace(); }
+		}
+			return result;
+	}
+	
+	public boolean deleteProductCategorieByProductID(Product product){
+		boolean result = false;
+		boolean exists = true;
+		
+		if(exists){	
+			String query = "DELETE FROM public.\"Product_Categorie\" WHERE \"Product_ID\" IN ("+product.getID()+")";	
+			try(Connection con = super.getConnection()){
+				Statement stmt = con.createStatement();
+				preparedStatement = con.prepareStatement(query);
+					result = true;
+				
+				preparedStatement.close();
+				if(stmt.executeUpdate(query) == 1){ 
+					result = true;
+				}
+			} 
+			catch (SQLException sqle){
+				sqle.printStackTrace(); }
+		}
+			return result;
+	}
 	
 	public boolean updateProductCategorie(Product product, Categorie categorie){ 
 		boolean result = false;

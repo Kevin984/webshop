@@ -47,6 +47,7 @@ public class CategorieResource implements CategorieService{
 		Categorie found = null;
 		found = cDAO.findCategorieByPK(ID);
 		if(found != null) {
+			pcDAO.deleteProductCategorieByCategorieID(found);
 			cDAO.deleteCategorie(found);
 			return Response.ok().build();
 		}
@@ -56,12 +57,15 @@ public class CategorieResource implements CategorieService{
 	}
 	
 	@DELETE
-	@Path("producten/{ID}") 
-	public Response deleteProductCategorie(@PathParam("ID") int ID) {
+	@Path("producten/{ID}/{ProductID}") 
+	public Response deleteProductCategorie(@PathParam("ID") int ID, @PathParam("ProductID") int pID) {
 		Categorie found = null;
+		Product pfound = null;
 		found = cDAO.findCategorieByPK(ID);
-		if(found != null) {
-			cDAO.deleteCategorie(found);
+		pfound = pDAO.findByPK(pID);
+		
+		if(found != null && pfound != null) {
+			pcDAO.deleteProductCategorie(pfound, found);
 			return Response.ok().build();
 		}
 		else {
@@ -113,9 +117,9 @@ public class CategorieResource implements CategorieService{
 	
 	
 	@POST 
-	@Path("/producten")
+	@Path("/producten/{selectCategorie}")
 	@Produces("application/json")
-	public String createProductCategorie(@FormParam("selectProduct") int pID, @FormParam("selectCategorie") int cID) {
+	public String createProductCategorie(@PathParam("selectCategorie") int catID, @FormParam("selectProduct") int pID, @FormParam("selectCategorie") int cID) {
 		Product product = pDAO.findByPK(pID);
 		Categorie categorie = cDAO.findCategorieByPK(cID);		
 		pcDAO.saveProductCategorie(product, categorie);
