@@ -135,18 +135,18 @@
 							$("#categorie").append("<tr id='"+ productID +"'><td>" + productNaam + "</td><td>" + productOmschrijving + "</td><td>" + productPrijs 
 							+ "<td><button type='button' class='btn btn-warning' id='goToProduct" + productID
 							+ "'>Ga naar product</button></td></tr>");  		  
-					 		}
+					 		
 					 	 
 					 	 $("tr").click(function(){
 					 		 window.location="product.html?id="+productID;
-					 	 })
+					 	 });
 					 	 
 					 	 $("tr").hover(function(){
 					 	 	 document.getElementById("categorie").style.cursor = "pointer";
 					 	 	 //document.getElementById(id).style.backgroundColor='#c1dcff';
 					 	 }, function() {
 					 	 	//document.getElementById(id).style.backgroundColor="";
-					 	 })
+					 	 });
 					 	 
 						}
 						});
