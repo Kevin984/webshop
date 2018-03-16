@@ -62,9 +62,9 @@
                <table class="table table-striped" id='voorraad'>
               <thead>
                 <tr>
-                  <th class="col-xs-3">Naam</th>
+                  <th class="col-xs-2">Naam</th>
                   <th class="col-xs-3">Omschrijving</th>
-                  <th class="col-xs-1">Prijs</th>
+                  <th class="col-xs-2">Prijs</th>
 				  <th class="col-xs-1">Korting</th>
 				  <th class="col-xs-1">Geldig t/m</th>
                 </tr>
@@ -124,7 +124,7 @@
 							var korting = parseFloat(Math.round((product.Prijs - aanbieding.Aanbiedingsprijs) / product.Prijs * 100 * 100) / 100).toFixed(2);
 							//var eindDatum = (aanbieding.TotDatum).toDate().toString("dd MMM yyyy");
 							
-							var eindDatum = moment(aanbieding.TotDatum, "dd MMM yyyy").toDate();
+							var eindDatum = moment(aanbieding.TotDatum, "YYYY-MM-DD").toDate().toString("dd MMM yyyy");
 							
 							console.log(aanbieding.TotDatum);
 							console.log(eindDatum);

@@ -124,7 +124,6 @@
 			document.getElementById("productPrijs").innerHTML=normalePrijs;
 			document.getElementById("aanbiedingAfbeelding").style.display = 'none';
 			document.getElementById("productPrijs").style.textDecoration = "none";
-			// document.getElementById("nuvoormaar").innerHTML=" ";
 			document.getElementById("aanbiedingPrijs").innerHTML=" ";
 			document.getElementById("reclameTekstCell").innerHTML=" ";
 
@@ -167,11 +166,12 @@
 				if (huidigeDatum > vanDatum && huidigeDatum < totDatum) {
 					reclameTekst = data[i]["ReclameTekst"];
 					aanbiedingsprijs = Number(data[i]["Aanbiedingsprijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});	
+					
+					var korting = parseFloat(Math.round((normalePrijs - aanbiedingsprijs) / normalePrijs * 100 * 100) / 100).toFixed(2);
 
 					document.getElementById("productPrijs").style.textDecoration = "line-through";
 					document.getElementById("productPrijs").innerHTML=normalePrijs;
-					// document.getElementById("nuvoormaar").innerHTML=" Nu voor maar: ";
-					document.getElementById("aanbiedingPrijs").innerHTML=" " + aanbiedingsprijs;
+					document.getElementById("aanbiedingPrijs").innerHTML=" " + aanbiedingsprijs + "<br>(" + korting + "% korting)";
 					document.getElementById("aanbiedingPrijs").style.color = "#388724";
 					
 					document.getElementById("reclameTekstCell").innerHTML=reclameTekst;
