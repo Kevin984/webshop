@@ -187,8 +187,13 @@
 	
 	
 	$( function() {
-		var testObject = { 'one': 1, 'two': 2, 'three': 3 };
-		localStorage.setItem('testObject', JSON.stringify(testObject));
+		var artikel = { 'productID': id, 'amount': 1 };
+		
+		if (localStorage.getItem(id) === null) {
+  			localStorage.setItem(id', JSON.stringify(artikel));
+		} else {
+			localStorage[id]['amount'] += 1;
+		}
 	
 		$("#dialog-confirm").dialog({
 	    	resizable: false,
