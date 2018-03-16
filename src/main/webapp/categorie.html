@@ -93,11 +93,15 @@
 		url : "https://webshopiac.herokuapp.com/restservices/categorieen/" + id,
 		method : "GET",
 		success : function (data) {
-			document.getElementById("categorieNaam").innerHTML="Artikelen uit de " + data["Naam"] + " categorie.";
-			document.getElementById("categorieOmschrijving").innerHTML=data["Omschrijving"];
-			
-			document.title = data["Naam"];
-
+			if (data["Naam"] === "Nieuw") {
+				document.getElementById("categorieNaam").innerHTML="Nieuwe artikelen";
+				document.title = "Nieuwe artikelen";
+				document.getElementById("categorieOmschrijving").innerHTML="De meest recent toegevoegde artikelen";
+			} else {
+				document.getElementById("categorieNaam").innerHTML="Artikelen uit de " + data["Naam"] + " categorie.";
+				document.title = data["Naam"];
+				document.getElementById("categorieOmschrijving").innerHTML=data["Omschrijving"];
+			}
 		},
 		error : function() {
 			window.location="/404.html";
@@ -114,7 +118,7 @@
 					var productID = product["ProductID"];
 					var productNaam = product["Naam"];
 					var productOmschrijving = product["Omschrijving"];
-					var productPrijs = Number(product["Prijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
+					productPrijs = Number(product["Prijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
 					
 					var isInAanbieding = false;
 				
@@ -135,7 +139,11 @@
 								totDatum = totDatum.toJSON().slice(0,10).replace(/-/g,'/');
 								
 								huidigeDatum = new Date().toJSON().slice(0,10).replace(/-/g,'/');
-				
+								
+								console.log(vanDatum);
+								console.log(huidigeDatum);
+								console.log(totDatum);
+												
 								if (huidigeDatum > vanDatum && huidigeDatum < totDatum) {
 									productPrijs = Number(data[i]["Aanbiedingsprijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});	
 									isInAanbieding = true;
@@ -147,6 +155,9 @@
 							//console.log("Dit product is niet in de aanbieding.");
 						}
 					});
+					
+					console.log(isInAanbieding);
+					console.log(productPrijs);
 								
 					if (isInAanbieding) {
 						$("#categorie").append("<tr onclick='goToProductPage(" + productID + ")'><td>" + productNaam + "</td><td>" + productOmschrijving + "</td><td style='color: #388724;'>" + productPrijs 
