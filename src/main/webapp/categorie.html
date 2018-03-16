@@ -55,10 +55,6 @@ var id = getUrlParameter('id');
 	$.ajax({
 		url : "https://webshopiac.herokuapp.com/restservices/categorieen/" + id,
 		method : "GET",
-		beforeSend : function(xhr) {
-			var token = window.sessionStorage.getItem("sessionToken");
-			xhr.setRequestHeader('Authorization', 'Bearer ' + token);
-		},
 		success : function (data) {
 			console.log(data);
 			document.getElementById("categorieNaam").innerHTML=data["Naam"];

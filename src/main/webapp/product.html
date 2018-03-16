@@ -116,10 +116,7 @@
 	$.ajax({
 		url : "https://webshopiac.herokuapp.com/restservices/producten/" + id,
 		method : "GET",
-		beforeSend : function(xhr) {
-			var token = window.sessionStorage.getItem("sessionToken");
-			xhr.setRequestHeader('Authorization', 'Bearer ' + token);
-		},
+		
 		success : function (data) {
 		
 			normalePrijs = Number(data["Prijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
@@ -152,10 +149,6 @@
 	$.ajax({
 		url : "https://webshopiac.herokuapp.com/restservices/aanbiedingen/product/" + id,
 		method : "GET",
-		beforeSend : function(xhr) {
-			var token = window.sessionStorage.getItem("sessionToken");
-			xhr.setRequestHeader('Authorization', 'Bearer ' + token);
-		},
 		success : function (data) {
 			for (var i in data) {
 		
