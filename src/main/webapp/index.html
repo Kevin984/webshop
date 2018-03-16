@@ -163,7 +163,7 @@
 					 	 function showRemaining() {
         					totDatum = moment(aanbieding.TotDatum, "YYYY-MM-DD").toDate();
 						 	huidigeDatum = new Date()
-					        var verschil = totDatum - huidigedatum;
+					        var verschil = totDatum - huidigeDatum;
 					        if (verschil < 0) {
 					            clearInterval(timer);
 					            document.getElementById("timer" + id).innerHTML = 'Voorbij!';
