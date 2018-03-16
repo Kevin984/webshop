@@ -118,10 +118,8 @@
 					var productID = product["ProductID"];
 					var productNaam = product["Naam"];
 					var productOmschrijving = product["Omschrijving"];
-					productPrijs = Number(product["Prijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
-					
-					isInAanbieding = false;
-				
+					var productPrijs = Number(product["Prijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
+									
 					$.ajax({
 						url : "https://webshopiac.herokuapp.com/restservices/aanbiedingen/product/" + productID,
 						method : "GET",
@@ -147,9 +145,14 @@
 								console.log("true of false:" + huidigeDatum > vanDatum && huidigeDatum < totDatum);
 												
 								if (huidigeDatum > vanDatum && huidigeDatum < totDatum) {
-									console.log("gaat door deze loop");
 									productPrijs = Number(data[i]["Aanbiedingsprijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});	
-									isInAanbieding = true;
+									$("#categorie").append("<tr onclick='goToProductPage(" + productID + ")'><td>" + productNaam + "</td><td>" + productOmschrijving + "</td><td style='color: #388724;'>" + productPrijs 
+									+ " (Aanbieding!)<td><button type='button' class='btn btn-warning' id='goToProduct" + productID
+									+ "'>Bekijk artikel</button></td></tr>");  		  
+								} else {
+									$("#categorie").append("<tr onclick='goToProductPage(" + productID + ")'><td>" + productNaam + "</td><td>" + productOmschrijving + "</td><td>" + productPrijs 
+									+ "<td><button type='button' class='btn btn-warning' id='goToProduct" + productID
+									+ "'>Bekijk artikel</button></td></tr>");
 								}
 							}
 						},
@@ -157,20 +160,6 @@
 							//console.log("Dit product is niet in de aanbieding.");
 						}
 					});
-					
-					console.log(isInAanbieding);
-					console.log(productPrijs);
-								
-					if (isInAanbieding) {
-						$("#categorie").append("<tr onclick='goToProductPage(" + productID + ")'><td>" + productNaam + "</td><td>" + productOmschrijving + "</td><td style='color: #388724;'>" + productPrijs 
-						+ " (Aanbieding!)<td><button type='button' class='btn btn-warning' id='goToProduct" + productID
-						+ "'>Bekijk artikel</button></td></tr>");  		  
-					} else {
-						$("#categorie").append("<tr onclick='goToProductPage(" + productID + ")'><td>" + productNaam + "</td><td>" + productOmschrijving + "</td><td>" + productPrijs 
-						+ "<td><button type='button' class='btn btn-warning' id='goToProduct" + productID
-						+ "'>Bekijk artikel</button></td></tr>");  		  
-					}
-					
 				});
 			} else {
 				document.getElementById("categorie").style.visibility = "hidden";
