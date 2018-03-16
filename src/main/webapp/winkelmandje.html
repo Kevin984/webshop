@@ -28,6 +28,23 @@
         <div class="col-sm-3 col-md-2 sidebar">
             <div id="sidebar_placeholder"></div>
         </div>
+        
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 id="productNaam" class="page-header">Winkelmandje</h1>
+          <div class='expendable'></div>
+          <div class="table-responsive">		  
+            <table class="table table-striped" id='winkelmandjetabel'>
+              <thead>
+                <tr>
+                  <th class="col-xs-2">Test</th>
+                </tr>
+              </thead>
+              <tbody>
+              
+              </tbody>
+            </table>
+           </div>
+         </div>
       </div>
     </div>
 
@@ -49,6 +66,10 @@
     	window.sessionStorage.setItem("sessionToken", "guest");
     	window.location.href="index.html";
     })
+    
+    var retrievedObject = localStorage.getItem('testObject');
+	console.log('retrievedObject: ', JSON.parse(retrievedObject));
+	//document.getElementById(
     
     </script>
   </body>
