@@ -142,18 +142,18 @@
 						method: "GET",
 		
 						success: function (product) {
-						 //var begin = aanbieding.VanDatum;
-						 //var eind = aanbieding.TotDatum;
+						 var begin = aanbieding.VanDatum;
+						 var eind = aanbieding.TotDatum;
 						 id = aanbieding.ID;
-						 //var vD = begin.split("-");
-						 //var tD = eind.split("-");
-						 //var vDatum = new Date(vD[0], parseInt(vD[1])-1, vD[2]);
-					 	 //var tDatum = new Date(tD[0], parseInt(tD[1])-1, tD[2]);
+						 var vD = begin.split("-");
+						 var tD = eind.split("-");
+						 var vDatum = new Date(vD[0], parseInt(vD[1])-1, vD[2]);
+					 	 var tDatum = new Date(tD[0], parseInt(tD[1])-1, tD[2]);
 					 	 
 					 	 
 					 	 if(today > vDatum && today < tDatum){
 					 		$("#voorraad").append("<tr id='"+ id +"'><td>" + product.Naam + "</td><td>" + product.Omschrijving + "</td><td>" + product.Prijs 
-							   		+ "</td>><td>€" + aanbieding.Aanbiedingsprijs + "</td>" + "<td id='timer" + id + "'>" + aanbieding.TotDatum + "</td>"
+							   		+ "</td>><td>€" + aanbieding.Aanbiedingsprijs + "</td>" + "<td id='timer" + id + "'></td>"
 							   		+ "<td><button type='button' class='btn btn-warning' id='goToProduct" + aanbieding.ProductID
 							   		+ "'>Ga naar product</button></td></tr>");  		  
 					 	 }
