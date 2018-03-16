@@ -123,31 +123,32 @@
 	});
 	
 	$.ajax({
-						url: "restservices/categorieen/producten/" + id,
-						method: "GET",
-						success: function (producten) {
-						$.each(producten, function(i, product){ 
-							var productID = product["ProductID"];
-							var productNaam = product["Naam"];
-							var productOmschrijving = product["Omschrijving"];
-							var productPrijs = product["Prijs"];
+		url: "restservices/categorieen/producten/" + id,
+		method: "GET",
+		success: function (producten) {
+			$.each(producten, function(i, product){ 
+				var productID = product["ProductID"];
+				var productNaam = product["Naam"];
+				var productOmschrijving = product["Omschrijving"];
+				var productPrijs = product["Prijs"];
 							
-							$("#categorie").append("<tr id='"+ productID +"'><td>" + productNaam + "</td><td>" + productOmschrijving + "</td><td>" + productPrijs 
-							+ "<td><button type='button' class='btn btn-warning' id='goToProduct" + productID
-							+ "'>Ga naar product</button></td></tr>");  		  
-					 		
+				$("#categorie").append("<tr id='"+ productID +"'><td>" + productNaam + "</td><td>" + productOmschrijving + "</td><td>" + productPrijs 
+				+ "<td><button type='button' class='btn btn-warning' id='goToProduct" + productID
+				+ "'>Ga naar product</button></td></tr>");  		  
+					 			 	 
+				$("tr").click(function(){
+					window.location="product.html?id="+productID;
+				});
 					 	 
-					 	 $("tr").click(function(){
-					 		 window.location="product.html?id="+productID;
-					 	 });
-					 	 
-					 	 $("tr").hover(function(){
-					 	 	 document.getElementById("categorie").style.cursor = "pointer";
-					 	 	 //document.getElementById(id).style.backgroundColor='#c1dcff';
-					 	 }, function() {
-					 	 	//document.getElementById(id).style.backgroundColor="";
-					 	 });
-						});
+				$("tr").hover(function(){
+					document.getElementById("categorie").style.cursor = "pointer";
+					//document.getElementById(id).style.backgroundColor='#c1dcff';
+				}, function() {
+					//document.getElementById(id).style.backgroundColor="";
+				});
+			});
+		}
+	});
 	
     
     </script>
