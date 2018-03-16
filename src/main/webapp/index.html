@@ -116,10 +116,10 @@
 						var tDatum = new Date(tD[0], parseInt(tD[1])-1, tD[2]);
 					 	  
 						if(today > vDatum && today < tDatum){
-					 		$("#voorraad").append("<tr onclick='goToProductPage(" + aanbieding.productID + ")'><td>" + product.Naam + "</td><td>" + product.Omschrijving + "</td><td>" + product.Prijs 
+					 		$("#voorraad").append("<tr onclick='goToProductPage(" + aanbieding.ProductID + ")'><td>" + product.Naam + "</td><td>" + product.Omschrijving + "</td><td>" + product.Prijs 
 							+ "</td>><td>€" + aanbieding.Aanbiedingsprijs + "</td>" + "<td>" + aanbieding.TotDatum + "</td>"
 							+ "<td><button type='button' class='btn btn-warning' id='goToProduct" + aanbieding.ProductID
-							+ "'>Ga naar product</button></td></tr>");  
+							+ "'>Bekijk artikel</button></td></tr>");  
 						}		  
 					}
 				});

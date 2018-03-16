@@ -92,10 +92,10 @@
 		url : "https://webshopiac.herokuapp.com/restservices/categorieen/" + id,
 		method : "GET",
 		success : function (data) {
-			document.getElementById("categorieNaam").innerHTML=data["Naam"];
+			document.getElementById("categorieNaam").innerHTML=data["Naam"] + " artikelen";
 			document.getElementById("categorieOmschrijving").innerHTML=data["Omschrijving"];
 			
-			document.title = data["Naam"];
+			document.title = data["Naam"] + " artikelen";
 
 		},
 		error : function() {
@@ -107,6 +107,8 @@
 		url: "restservices/categorieen/producten/" + id,
 		method: "GET",
 		success: function (producten) {
+			console.log(producten.length());
+		
 			$.each(producten, function(i, product){ 
 				var productID = product["ProductID"];
 				var productNaam = product["Naam"];
@@ -116,7 +118,7 @@
 							
 				$("#categorie").append("<tr onclick='goToProductPage(" + productID + ")'><td>" + productNaam + "</td><td>" + productOmschrijving + "</td><td>" + productPrijs 
 				+ "<td><button type='button' class='btn btn-warning' id='goToProduct" + productID
-				+ "'>Ga naar product</button></td></tr>");  		  
+				+ "'>Bekijk artikel</button></td></tr>");  		  
 			});
 		}
 	});
