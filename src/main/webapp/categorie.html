@@ -113,16 +113,17 @@
 				var productOmschrijving = product["Omschrijving"];
 				var productPrijs = product["Prijs"];
 				
-				//var windowLocation = "'product.html?id=productID + "'";
 							
-				$("#categorie").append("<tr onclick='window.location='/product.html?id=2';'><td>" + productNaam + "</td><td>" + productOmschrijving + "</td><td>" + productPrijs 
+				$("#categorie").append("<tr onclick='goToProductPage(" + productID + ")'><td>" + productNaam + "</td><td>" + productOmschrijving + "</td><td>" + productPrijs 
 				+ "<td><button type='button' class='btn btn-warning' id='goToProduct" + productID
 				+ "'>Ga naar product</button></td></tr>");  		  
 			});
 		}
 	});
 	
-    
+	function goToProductPage(prodID) {
+		window.location="product.html?id=" + prodID;
+	}
     </script>
   </body>
 </html>
