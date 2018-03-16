@@ -64,7 +64,7 @@
               <tbody>
               	<tr style="height: 300px;"><td id="afbeeldingCell" style="width:300px;"><img src="/images/default_product.jpg" id="productAfbeelding">
           									<img src="/images/aanbiedingoverlay.png" id="aanbiedingAfbeelding" style="display: none;"></td></tr>
-          		<tr><td style="font-size: 40px;"><div id="productPrijs" style="display:inline;"></div><div id="aanbiedingPrijs" style="display:inline;"></div></td></tr>
+          		<tr><td style="font-size: 30px;"><div id="productPrijs" style="display:inline;"></div><div id="aanbiedingPrijs" style="display:inline;"></div></td></tr>
               	<tr><td id="winkelwagenKnopCell"><div id="buttonplaceholder"></div></td></tr>
               	<tr><td id="omschrijvingCell"></td></tr>
               	<tr id="aanbiedingRij"><td id="reclameTekstCell"></td></tr>
@@ -118,7 +118,7 @@
 		method : "GET",
 		
 		success : function (data) {
-		
+			normalePrijsNoFormat = data["Prijs"];
 			normalePrijs = Number(data["Prijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
 		
 			document.getElementById("productPrijs").innerHTML=normalePrijs;
@@ -167,11 +167,11 @@
 					reclameTekst = data[i]["ReclameTekst"];
 					aanbiedingsprijs = Number(data[i]["Aanbiedingsprijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});	
 					
-					var korting = parseFloat(Math.round((normalePrijs - aanbiedingsprijs) / normalePrijs * 100 * 100) / 100).toFixed(2);
+					var korting = parseFloat(Math.round((normalePrijsNoFormat - aanbiedingsprijs) / normalePrijsNoFormat * 100 * 100) / 100).toFixed(2);
 
 					document.getElementById("productPrijs").style.textDecoration = "line-through";
 					document.getElementById("productPrijs").innerHTML=normalePrijs;
-					document.getElementById("aanbiedingPrijs").innerHTML=" " + aanbiedingsprijs + "<br>(" + korting + "% korting)";
+					document.getElementById("aanbiedingPrijs").innerHTML=" " + data[i]["Aanbiedingsprijs"] + "<br>(" + korting + "% korting)";
 					document.getElementById("aanbiedingPrijs").style.color = "#388724";
 					
 					document.getElementById("reclameTekstCell").innerHTML=reclameTekst;
