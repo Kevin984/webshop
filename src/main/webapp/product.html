@@ -24,12 +24,20 @@
     <style>
     img {
   		position: absolute;
+  		width: 250px;
+  		height: 250px;
+  		margin-top: 25px;
+  		margin-left: 25px;
 	}
 	#productAfbeelding {
   		z-index: 1;
 	}
 	#aanbiedingAfbeelding {
   		z-index: 3;
+	}
+	
+	#productinfo {
+		height:auto;
 	}
     </style>
 
@@ -48,16 +56,16 @@
         </div>
 		
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 id="productNaam" class="page-header">Productinformatie</h1>
+          <h1 id="productNaam" class="page-header"> </h1>
           <div class='expendable'></div>
           
           <div class="table-responsive">		  
             <table class="table table-striped" id='productinfo'>
               <tbody>
-              	<tr><td id="afbeeldingCell"><img src="/images/default_product.jpg" id="productAfbeelding" height="333" width="500">
-          									<img src="/images/aanbiedingoverlay.png" id="aanbiedingAfbeelding" height="333" width="500" style="display: none;">
+              	<tr style="height: 350px;"><td id="afbeeldingCell" style="width:300px;"><img src="/images/default_product.jpg" id="productAfbeelding">
+          									<img src="/images/aanbiedingoverlay.png" id="aanbiedingAfbeelding" style="display: none;">
           			</td><td id="omschrijvingCell"></td></tr>
-              	<tr><td id="winkelwagenKnopCell"><div id="buttonplaceholder"></div></td><td><div id="productPrijs"></div><div id="aanbiedingPrijs"></div></td></tr>
+              	<tr><td id="winkelwagenKnopCell" style="text-align:center;"><div id="buttonplaceholder"></div></td><td style="font-size: 40px;"><div id="productPrijs" style="display:inline;"></div><div id="aanbiedingPrijs" style="display:inline;"></div></td></tr>
               	<tr id="aanbiedingRij" style="visibility:hidden;"><td></td><td id="reclameTekstCell"></td></tr>
               </tbody>
             </table>
@@ -113,9 +121,12 @@
 		},
 		success : function (data) {
 		
-			document.getElementById("productPrijs").innerHTML=data["Prijs"];
+			normalePrijs = Number(data["Prijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
+		
+			document.getElementById("productPrijs").innerHTML=normalePrijs;
 			document.getElementById("aanbiedingAfbeelding").style.display = 'none';
 			document.getElementById("productPrijs").style.textDecoration = "none";
+			// document.getElementById("nuvoormaar").innerHTML=" ";
 			document.getElementById("aanbiedingPrijs").innerHTML=" ";
 			document.getElementById("reclameTekstCell").innerHTML=" ";
 
@@ -126,6 +137,7 @@
 			
 			var button = document.createElement('button');
   			button.innerHTML = 'Voeg toe aan winkelwagen';
+  			button.style.height = "50px";
   			button.onclick = function(){
   				$("#dialog-confirm").dialog('open');return false;
   			};
@@ -161,13 +173,13 @@
 
 				if (huidigeDatum > vanDatum && huidigeDatum < totDatum) {
 					reclameTekst = data[i]["ReclameTekst"];
-					aanbiedingsprijs = data[i]["Aanbiedingsprijs"];	
+					aanbiedingsprijs = Number(data[i]["Aanbiedingsprijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});	
 
-					document.getElementById("productPrijs").innerHTML= data["Prijs"];
 					document.getElementById("productPrijs").style.textDecoration = "line-through";
-					
+					document.getElementById("productPrijs").innerHTML=normalePrijs + " ";
+					// document.getElementById("nuvoormaar").innerHTML=" Nu voor maar: ";
 					document.getElementById("aanbiedingPrijs").innerHTML=aanbiedingsprijs;
-					document.getElementById("aanbiedingPrijs").style.color = "#00cc00";
+					document.getElementById("aanbiedingPrijs").style.color = "#388724";
 					
 					document.getElementById("reclameTekstCell").innerHTML=reclameTekst;
 					document.getElementById("aanbiedingAfbeelding").style.display = 'inline';
