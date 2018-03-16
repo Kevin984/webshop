@@ -33,6 +33,9 @@
 	#aanbiedingAfbeelding {
   		z-index: 3;
 	}
+	#infoDiv {
+		margin-top: 50px;
+	}
     </style>
 
   </head>
@@ -56,7 +59,7 @@
           <img src="/images/default_product.jpg" id="productAfbeelding" height="333" width="500">
           <img src="/images/aanbiedingoverlay.png" id="aanbiedingAfbeelding" height="333" width="500" style="display: none;">
           </div>
-          <div>
+          <div id="infoDiv">
 		  <p id="productNaam"></p>
 		  <p id="productOmschrijving"></p>
 		  <p id="productPrijs"></p>
@@ -113,7 +116,6 @@
 			xhr.setRequestHeader('Authorization', 'Bearer ' + token);
 		},
 		success : function (data) {
-			aanbieding = false;
 			for (var i in data) {
 		
 				vanDatum = moment(data[i]["VanDatum"], "YYYY-MM-DD").toDate();
@@ -129,16 +131,20 @@
 				huidigeDatum = new Date().toJSON().slice(0,10).replace(/-/g,'/');
 
 				if (huidigeDatum > vanDatum && huidigeDatum < totDatum) {
-					aanbieding = true;			
 					reclameTekst = data[i]["ReclameTekst"];
 					aanbiedingsprijs = data[i]["Aanbiedingsprijs"];	
-					console.log("Dit product is in de aanbieding.");
+
+					document.getElementById("productPrijs").innerHTML="Prijs (aanbieding): " + aanbiedingsprijs;
+					document.getElementById("productAanbieding").innerHTML=reclameTekst;
+					document.getElementById("aanbiedingAfbeelding").style.display = 'inline';
 					break;
+				} else {
+					document.getElementById("productPrijs").innerHTML="Prijs: " + data["Prijs"];
+					document.getElementById("aanbiedingAfbeelding").style.display = 'none';
 				}
 			}
 		},
 		error : function() {
-			aanbieding = false;
 			console.log("Dit product is niet in de aanbieding.");
 		}
 	});
@@ -154,16 +160,7 @@
 
 			document.getElementById("productNaam").innerHTML=data["Naam"];
 			document.getElementById("productOmschrijving").innerHTML=data["Omschrijving"];
-			document.getElementById("productPrijs").innerHTML="Prijs: " + data["Prijs"];
-			if (aanbieding) {
-				document.getElementById("productPrijs").innerHTML="Prijs (aanbieding): " + aanbiedingsprijs;
-				document.getElementById("productAanbieding").innerHTML=reclameTekst;
-				document.getElementById("aanbiedingAfbeelding").style.display = 'inline';
-			} else {
-				document.getElementById("productPrijs").innerHTML="Prijs: " + data["Prijs"];
-				document.getElementById("aanbiedingAfbeelding").style.display = 'none';
-			}
-			
+						
 			document.title = data["Naam"];
 			
 			var button = document.createElement('button');
@@ -190,11 +187,10 @@
 	      	buttons: {
 	        	"Afrekenen": function() {
 	          		$( this ).dialog( "close" );
-	          		console.log("afrekenen");
+	          		$(location).attr('href', '/winkelwagen.html')
 	        	},
 	        	"Verder winkelen": function() {
 	          		$( this ).dialog( "close" );
-	          		console.log("verder winkelen");
 	        	}
 	      	}
 	    });	
