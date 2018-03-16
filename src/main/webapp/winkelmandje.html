@@ -30,21 +30,27 @@
         </div>
         
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 id="productNaam" class="page-header">Winkelmandje</h1>
+          <h1 id="categorieNaam" class="page-header"> </h1>
+          <p id="categorieOmschrijving"> </p>
           <div class='expendable'></div>
-          <div class="table-responsive">		  
-            <table class="table table-striped" id='winkelmandjetabel'>
+		  
+              <div class="table-responsive">		  
+            <table class="table table-striped" id='winkelmand'>
               <thead>
                 <tr>
-                  <th class="col-xs-2">Test</th>
+                  <th class="col-xs-2">Naam</th>
+                  <th class="col-xs-3">Omschrijving</th>
+				  <th class="col-xs-2">Prijs</th>
+				  <th class="col-xs-1">Aantal</th>
+				  <th class="col-xs-1">Verwijder artikel</th>
                 </tr>
               </thead>
               <tbody>
               
               </tbody>
             </table>
-           </div>
-         </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -68,9 +74,35 @@
     })
     
     for (var i = 0; i < localStorage.length; i++){
-    	console.log(localStorage.getItem(localStorage.key(i)));
+    	artikelID = Number(JSON.parse(localStorage.getItem(localStorage.key(0)))["productID"]);
+    	aantal = Number(JSON.parse(localStorage.getItem(localStorage.key(0)))["amount"]);
+    	
+		$.ajax({
+			url : "https://webshopiac.herokuapp.com/restservices/producten/" + artikelID,
+			method : "GET",
+			
+			success : function (data) {
+				normalePrijsNoFormat = data["Prijs"];
+				normalePrijs = Number(data["Prijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
+			
+				document.getElementById("productPrijs").innerHTML=normalePrijs;
+				document.getElementById("productPrijs").style.textDecoration = "none";
+				document.getElementById("aanbiedingPrijs").innerHTML=" ";
+	
+				document.getElementById("productNaam").innerHTML=data["Naam"];
+				document.getElementById("omschrijvingCell").innerHTML=data["Omschrijving"];
+	  			
+	  			$("#winkelmand").append("<tr id='"+ artikelID +"'><td>" + data["Naam"] + "</td><td>" + data["Omschrijving"] + "</td><td>" + data["Prijs"] + "</td>"
+	  						+ "<td>" + aantal + "</td>"
+					   		+ "<td><button type='button' class='btn btn-warning' id='delete" + artikelID
+					   		+ "'>Verwijder artikel</button></td>></tr>");
+				
+			},
+			error : function() {
+				document.getElementById("productNaam").innerHTML="Er is iets misgegaan.";
+			}
+		});
 	}
-    
     </script>
   </body>
 </html>

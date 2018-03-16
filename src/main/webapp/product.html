@@ -135,6 +135,17 @@
 			var button = document.createElement('button');
   			button.innerHTML = 'Voeg toe aan winkelmandje';
   			button.onclick = function(){
+  				var productid = getUrlParameter('id');
+	
+				var artikel = {'productID': productid, 'amount': 1};
+				
+				if (localStorage.getItem(productid) === null) {
+		  			localStorage.setItem(productid, JSON.stringify(artikel));
+				} else {
+					var huidigArtikel = JSON.parse(localStorage[productid]);
+					huidigArtikel['amount'] += 1;
+					localStorage.setItem(productid, JSON.stringify(huidigArtikel));
+				}
   				$("#dialog-confirm").dialog('open');return false;
   			};
 			document.getElementById('buttonplaceholder').appendChild(button);
@@ -187,20 +198,6 @@
 	
 	
 	$( function() {
-		var productid = getUrlParameter('id');
-	
-		var artikel = {'productID': productid, 'amount': 1};
-		
-		if (localStorage.getItem(productid) === null) {
-  			localStorage.setItem(productid, JSON.stringify(artikel));
-  			console.log("added");
-		} else {
-			var huidigArtikel = JSON.parse(localStorage[productid]);
-			huidigArtikel['amount'] += 1;
-			localStorage.setItem(productid, JSON.stringify(huidigArtikel));
-			console.log("exists, amount + 1");
-		}
-	
 		$("#dialog-confirm").dialog({
 	    	resizable: false,
 	      	height: "auto",
