@@ -143,8 +143,11 @@
 								console.log(vanDatum);
 								console.log(huidigeDatum);
 								console.log(totDatum);
+								
+								console.log("true of false:" + huidigeDatum > vanDatum && huidigeDatum < totDatum);
 												
 								if (huidigeDatum > vanDatum && huidigeDatum < totDatum) {
+									console.log("gaat door deze loop");
 									productPrijs = Number(data[i]["Aanbiedingsprijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});	
 									isInAanbieding = true;
 									break;
