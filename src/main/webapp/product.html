@@ -56,16 +56,16 @@
         </div>
 		
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 id="productNaam" class="page-header">Productinformatie</h1>
+          <h1 id="productNaam" class="page-header"> </h1>
           <div class='expendable'></div>
           
           <div class="table-responsive">		  
             <table class="table table-striped" id='productinfo'>
               <tbody>
-              	<tr><td id="afbeeldingCell"><img src="/images/default_product.jpg" id="productAfbeelding">
+              	<tr style="height: 350px;"><td id="afbeeldingCell"><img src="/images/default_product.jpg" id="productAfbeelding">
           									<img src="/images/aanbiedingoverlay.png" id="aanbiedingAfbeelding" style="display: none;">
           			</td><td id="omschrijvingCell"></td></tr>
-              	<tr><td id="winkelwagenKnopCell"><div id="buttonplaceholder"></div></td><td><div id="productPrijs"></div><div id="aanbiedingPrijs"></div></td></tr>
+              	<tr><td id="winkelwagenKnopCell"><div id="buttonplaceholder"></div></td><td style="font-size: 40px;"><div id="productPrijs" style="display:inline;"></div><div id="nuvoormaar" style="display:inline;"></div><div id="aanbiedingPrijs" style="display:inline;"></div></td></tr>
               	<tr id="aanbiedingRij" style="visibility:hidden;"><td></td><td id="reclameTekstCell"></td></tr>
               </tbody>
             </table>
@@ -121,9 +121,12 @@
 		},
 		success : function (data) {
 		
-			document.getElementById("productPrijs").innerHTML=Number(data["Prijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
+			normalePrijs = Number(data["Prijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
+		
+			document.getElementById("productPrijs").innerHTML=normalePrijs;
 			document.getElementById("aanbiedingAfbeelding").style.display = 'none';
 			document.getElementById("productPrijs").style.textDecoration = "none";
+			document.getElementById("nuvoormaar").innerHTML=" ";
 			document.getElementById("aanbiedingPrijs").innerHTML=" ";
 			document.getElementById("reclameTekstCell").innerHTML=" ";
 
@@ -172,7 +175,8 @@
 					aanbiedingsprijs = Number(data[i]["Aanbiedingsprijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});	
 
 					document.getElementById("productPrijs").style.textDecoration = "line-through";
-					
+					document.getElementById("productPrijs").innerHTML=normalePrijs;
+					document.getElementById("nuvoormaar").innerHTML=" Nu voor maar: ";
 					document.getElementById("aanbiedingPrijs").innerHTML=aanbiedingsprijs;
 					document.getElementById("aanbiedingPrijs").style.color = "#00cc00";
 					
