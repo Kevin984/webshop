@@ -164,6 +164,7 @@
 	          		$( this ).dialog( "close" );
 	        	},
 	        	"Verwijderen": function() {
+	        		var artikelID = $("#dialog_confirm").data('productid')
 	        		deleteArtikel(artikelID)
 	          		$( this ).dialog( "close" );
 	        	}
@@ -188,7 +189,7 @@
 	});
 	
 	function showDeleteConfirmationDialog(ArtikelID) {
-		$("#dialog-confirm").dialog('open');
+		$("#dialog-confirm").data('productid', ArtikelID).dialog('open');
 	}
 	
 	function confirmDelete() {
@@ -211,7 +212,7 @@
 		document.getElementById("winkelmandOmschrijving").innerHTML = "<b>Je hebt op dit moment geen artikelen in je winkelmandje!<br>Klik <a href='/categorie.html?id=1'>hier</a> om de meest recente artikelen te bekijken.</b>";
     	}
     	
-    	confirmDelete(artikelID);
+    	confirmDelete();
 	};
 	
 	function wijzigAantalArtikel(artikelID){
