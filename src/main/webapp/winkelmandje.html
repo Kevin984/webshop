@@ -133,7 +133,6 @@
 				colorStyle = "style='color:" + color + "';"
 				
 	  			$("#winkelmand").append("<tr id='"+ data["ID"] +"'><td>" + data["Naam"] + "</td><td>" + data["Omschrijving"] + "</td><td " + colorStyle + " >" + prijs + "</td>"
-	  			//+ "<td><input type='number' value='" + aantal + "' min='1' max='100'></td>"
 	  			+ "<td>" + aantal + "</td>"
 	  			+ "<td><button type='button' class='btn btn-warning' onclick='wijzigAantalArtikel(" + data["ID"]
 				+ ")'>Wijzig aantal</button></td>"
