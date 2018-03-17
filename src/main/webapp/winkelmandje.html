@@ -116,7 +116,7 @@
 				});
 	  			$("#winkelmand").append("<tr id='"+ artikelID +"'><td>" + data["Naam"] + "</td><td>" + data["Omschrijving"] + "</td><td>" + huidigePrijsArtikel + "</td>"
 	  			+ "<td><input type='number' value='" + aantal + "' min='1' max='100'></td>"
-				+ "<td><button type='button' class='btn btn-warning' onclick='deleteArtikel(" + data["ProductID"]
+				+ "<td><button type='button' class='btn btn-warning' onclick='deleteArtikel(" + data["ID"]
 				+ ")'>Verwijder artikel</button></td>></tr>");
 			},
 			error : function() {
