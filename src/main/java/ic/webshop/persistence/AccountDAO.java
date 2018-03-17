@@ -48,8 +48,12 @@ private KlantDAO klantDAO = new KlantDAO();
 	
 	public List<Account> findAll(){ return selectAccounts("SELECT * FROM public.\"Account\" ORDER BY \"ID\"");}
 	
-	public Account findAccountByPK(int ID){ 	//nog een nullpointerexception handler toevoegen? nette 404 error geven
+	public Account findAccountByPK(int ID){ 	
 		return selectAccounts("SELECT * FROM public.\"Account\" WHERE \"ID\" = " + ID).get(0);
+	}
+	
+	public Account findAccountByUsername(String username){ 	
+		return selectAccounts("SELECT * FROM public.\"Account\" WHERE \"Username\" = '" + username+"'").get(0);
 	}
 	
 	public void saveAccount(Account account){
