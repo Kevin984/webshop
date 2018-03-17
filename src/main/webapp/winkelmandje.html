@@ -138,7 +138,7 @@
 				
 				colorStyle = "style='color:" + color + "';"
 				
-	  			$("#winkelmand").append("<tr id='"+ data["ID"] +"'><td>" + data["Naam"] + "</td><td>" + data["Omschrijving"] + "</td><td " + colorStyle + " >" + prijs + "</td>"
+	  			$("#winkelmand").append("<tr id='"+ data["ID"] +"'><td>" + data["Naam"] + "</td><td>" + data["Omschrijving"] + "</td><td " + colorStyle + " id='priceof"+ data["ID"] +"'>" + prijs + "</td>"
 	  			+ "<td id='amountof"+ data["ID"] +"'>" + aantal + "</td>"
 	  			+ "<td><button type='button' class='btn btn-warning' onclick='showChangeDialog(" + data["ID"]
 				+ ")'>Wijzig aantal</button></td>"
@@ -242,7 +242,41 @@
 	
 	function changeAmountOfProducts(artIDforChange) {
 		var amount = document.getElementById("aantalToChange").value;
-		document.getElementById("amountof" + artIDforChange).innerHTML = amount;
+		
+		showError = false;
+				
+		if (amount % 1 !== 0) {
+			document.getElementById("errormessage").innerHTML = "Voer een geheel aantal in.";
+			showError = true;
+		} else if (amount < 1) {
+			document.getElementById("errormessage").innerHTML = "Voer een aantal in van minimaal 1.";
+			showError = true;
+		} else if (amount > 20) {
+			document.getElementById("errormessage").innerHTML = "Voer een aantal in van maximaal 20.";
+			showError = true;
+		} else {
+			document.getElementById("successmessage").innerHTML = "Aantal gewijzigd naar " + amount + "!";
+			var huidigArtikel = JSON.parse(localStorage[artIDforChange]);
+			huidigArtikel['amount'] = amount;
+			localStorage.setItem(artIDforChange, JSON.stringify(huidigArtikel));
+			$("#dialog-changesuccess").dialog('open');return false;
+			
+			var oldTotalWorthOfItem = Number(JSON.parse(localStorage.getItem(artIDforChange))["priceNoFormat"]) * document.getElementById("amountof" + artIDforChange).innerHTML;
+			var totalWorthOfItem = Number(JSON.parse(localStorage.getItem(artIDforChange))["priceNoFormat"]) * amount);
+			totalPrice -= oldTotalWorthOfItem;
+			totalPrice += totalWorthOfItem
+			totalPriceFormatted = totalPrice.toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
+			totalWorthOfItemFormatted = totalWorthOfItem.toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
+			
+    		document.getElementById("winkelmandjeTotal").innerHTML = totalPriceFormatted;
+    		document.getElementById("amountof" + artIDforChange).innerHTML = amount;
+    		document.getElementById("priceof" + artIDforChange).innerHTML = totalWorthOfItemFormatted;
+		}
+		
+		if (showError) {
+			$("#dialog-changeerror").dialog('open');return false;
+			showError = false;
+		}
 	};
 	
 	function goToProductPage(artikelID) {
@@ -266,6 +300,14 @@
 	<div id="dialog-changeamount" title="Wijzig aantal">
   		<p>Hoeveel exemplaren van dit artikel wilt u?</p>
   		<input id='aantalToChange' type='number' value='1' min='1' max='20'>
+	</div>
+	
+	<div id="dialog-changeerror" title="Onjuiste invoer.">
+    	<p id="errormessage"> </p>
+	</div>
+	
+	<div id="dialog-changesuccess" title="Aantal gewijzigd">
+    	<p id="successmessage"> </p>
 	</div>
     
   </body>
