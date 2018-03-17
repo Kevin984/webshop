@@ -75,18 +75,18 @@
     })
     
     for (var j = 0; j < localStorage.length; j++){
-    	artikelID = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["productID"]);
-    	aantal = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["amount"]);
+    	//artikelID = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["productID"]);
+    	//aantal = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["amount"]);
     	
 		$.ajax({
-			url : "https://webshopiac.herokuapp.com/restservices/producten/" + artikelID,
+			url : "https://webshopiac.herokuapp.com/restservices/producten/" + Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["productID"]),
 			method : "GET",
 			success : function (data) {
 				huidigePrijsArtikel = Number(data["Prijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});	
 				huidigePrijsArtikelNoFormat = data["Prijs"];
 				
 				$.ajax({
-					url : "https://webshopiac.herokuapp.com/restservices/aanbiedingen/product/" + artikelID,
+					url : "https://webshopiac.herokuapp.com/restservices/aanbiedingen/product/" + Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["productID"]),
 					method : "GET",
 					success : function (data) {
 						for (var i in data) {
@@ -104,6 +104,7 @@
 							huidigeDatum = new Date().toJSON().slice(0,10).replace(/-/g,'/');
 			
 							if (huidigeDatum > vanDatum && huidigeDatum < totDatum) {
+								console.log("aanbieding, prijs is: " + data[i]["Aanbiedingsprijs"]);
 								huidigePrijsArtikel = Number(data[i]["Aanbiedingsprijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});	
 								huidigePrijsArtikelNoFormat = data[i]["Aanbiedingsprijs"];
 								break;
@@ -115,7 +116,7 @@
 					}
 				});
 	  			$("#winkelmand").append("<tr id='"+ data["ID"] +"'><td>" + data["Naam"] + "</td><td>" + data["Omschrijving"] + "</td><td>" + huidigePrijsArtikel + "</td>"
-	  			//+ "<td><input type='number' value='" + aantal + "' min='1' max='100'></td>"
+	  			//+ "<td><input type='number' value='" + Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["amount"]) + "' min='1' max='100'></td>"
 	  			+ "<td>" + aantal + "</td>"
 				+ "<td><button type='button' class='btn btn-warning' onclick='deleteArtikel(" + data["ID"]
 				+ ")'>Verwijder artikel</button></td>></tr>");
