@@ -76,7 +76,6 @@
     
     for (var i = 0; i < localStorage.length; i++){
     	artikelID = Number(JSON.parse(localStorage.getItem(localStorage.key(i)))["productID"]);
-    	aantal = Number(JSON.parse(localStorage.getItem(localStorage.key(i)))["amount"]);
     	
 		$.ajax({
 			url : "https://webshopiac.herokuapp.com/restservices/producten/" + artikelID,
@@ -115,7 +114,7 @@
 					}
 				});
 	  			$("#winkelmand").append("<tr id='"+ data["ID"] +"'><td>" + data["Naam"] + "</td><td>" + data["Omschrijving"] + "</td><td>" + huidigePrijsArtikel + "</td>"
-	  			+ "<td><input type='number' value='" + aantal + "' min='1' max='100'></td>"
+	  			+ "<td><input type='number' value='" + Number(JSON.parse(localStorage.getItem(localStorage.key(i)))["amount"]); + "' min='1' max='100'></td>"
 				+ "<td><button type='button' class='btn btn-warning' onclick='deleteArtikel(" + data["ID"]
 				+ ")'>Verwijder artikel</button></td>></tr>");
 			},
