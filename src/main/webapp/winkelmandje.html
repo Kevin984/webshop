@@ -165,11 +165,8 @@
 	        	},
 	        	"Verwijderen": function() {
 	        		var artikelID = $(this).data('productid');
-	        		console.log(artikelID);
-	        		console.log($(this).data('productid'));
-					console.log($(this).data);
+					$( this ).dialog( "close" );
 	        		deleteArtikel(artikelID);
-	          		$( this ).dialog( "close" );
 	        	}
 	      	}
 	    });	
