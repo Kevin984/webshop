@@ -149,30 +149,34 @@
   				
 				var amount = document.getElementById("aantalArtikelen").value;
 				
-				if (amount % 1 !== 0) {
-					amount = 1;
-					document.getElementById("errormessage").innerHTML = "U heeft geen geheel aantal ingevoerd. Dit artikel is 1 keer toegevoegd. In uw winkelmandje kunt u dit nog wijzigen.";
-				} else if (amount < 1) {
-					amount = 1;
-					document.getElementById("errormessage").innerHTML = "U heeft een aantal lager dan de min ingevoerd. Dit artikel is 1 keer toegevoegd. In uw winkelmandje kunt u dit nog wijzigen.";
-				} else if (amount > 20) {
-					amount = 20;
-					document.getElementById("errormessage").innerHTML = "U heeft een aantal hoger dan de max ingevoerd. Dit artikel is 20 keer toegevoegd. In uw winkelmandje kunt u dit nog wijzigen.";
-
-				} else {
-					document.getElementById("errormessage").innerHTML = "Dit artikel is " + amount + " keer toegevoegd. In uw winkelmandje kunt u dit nog wijzigen.";
-				}
-	
 				var artikel = {'productID': productid, 'amount': amount, 'price': prijs, 'priceNoFormat': prijsNoFormat, 'discount': discount};
 				
-				if (localStorage.getItem(productid) === null) {
-		  			localStorage.setItem(productid, JSON.stringify(artikel));
+				if (amount % 1 !== 0) {
+					document.getElementById("errormessage").innerHTML = "Voer een geheel aantal in en probeer het opnieuw.";
+					showError = true;
+				} else if (amount < 1) {
+					document.getElementById("errormessage").innerHTML = "Voer een aantal in van minimaal 1 en probeer het opnieuw.";
+					showError = true;
+				} else if (amount > 20) {
+					document.getElementById("errormessage").innerHTML = "Voer een aantal in van maximaal 20 en probeer het opnieuw.";
+					showError = true;
 				} else {
-					var huidigArtikel = JSON.parse(localStorage[productid]);
-					huidigArtikel['amount'] += 1;
-					localStorage.setItem(productid, JSON.stringify(huidigArtikel));
+					document.getElementById("successmessage").innerHTML = "Dit artikel is " + amount + " keer toegevoegd! In uw winkelmandje kunt u dit nog wijzigen.";
+					if (localStorage.getItem(productid) === null) {
+			  			localStorage.setItem(productid, JSON.stringify(artikel));
+					} else {
+						var huidigArtikel = JSON.parse(localStorage[productid]);
+						huidigArtikel['amount'] += 1;
+						localStorage.setItem(productid, JSON.stringify(huidigArtikel));
+					}
+	  				$("#dialog-confirm").dialog('open');return false;
 				}
-  				$("#dialog-confirm").dialog('open');return false;
+				
+				if (showError) {
+	  				$("#dialog-error").dialog('open');return false;
+	  				showError = false;
+				}
+	
   			};
 			document.getElementById('buttonplaceholder').appendChild(button);
 			
@@ -243,12 +247,32 @@
 	      	}
 	    });	
 	});
+	
+	$( function() {
+		$("#dialog-error").dialog({
+	    	resizable: false,
+	      	height: "auto",
+	      	width: 400,
+	      	modal: true,
+	      	autoOpen: false,
+	      	draggable: false,
+	      	buttons: {
+	        	"OK": function() {
+	          		$( this ).dialog( "close" );
+	        	}
+	      	}
+	    });	
+	});
     
     </script>
     
     <div id="dialog-confirm" title="Het product is toegevoegd aan uw winkelmandje!">
-    	<p id="errormessage"> </p>
+    	<p id="successmessage"> </p>
   		<p>Wilt u meteen afrekenen of eerst nog verder winkelen?</p>
+	</div>
+	
+	<div id="dialog-error" title="U heeft een verkeerd aantal geselecteerd.">
+    	<p id="errormessage"> </p>
 	</div>
 	
   </body>
