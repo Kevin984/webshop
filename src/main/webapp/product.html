@@ -157,6 +157,8 @@
 				
 				var artikel = {'productID': productid, 'amount': amount, 'price': prijs, 'priceNoFormat': prijsNoFormat, 'discount': discount};
 				
+				showError = false;
+				
 				if (amount % 1 !== 0) {
 					document.getElementById("errormessage").innerHTML = "Voer een geheel aantal in.";
 					showError = true;
@@ -169,6 +171,7 @@
 					} else {
 						document.getElementById("errormessage").innerHTML = "Voer een aantal in van maximaal 20.";
 					}
+					showError = true;
 				} else {
 					document.getElementById("successmessage").innerHTML = amount + " keer artikel '" + data["Naam"] + "' toegevoegd!";
 					if (localStorage.getItem(productid) === null) {
