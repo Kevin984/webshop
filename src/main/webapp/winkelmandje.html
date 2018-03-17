@@ -208,6 +208,38 @@
 	    });	
 	});
 	
+	$( function() {
+		$("#dialog-changesuccess").dialog({
+	    	resizable: false,
+	      	height: "auto",
+	      	width: 400,
+	      	modal: true,
+	      	autoOpen: false,
+	      	draggable: false,
+	      	buttons: {
+	        	"OK": function() {
+	          		$( this ).dialog( "close" );
+	        	}
+	      	}
+	    });	
+	});
+	
+	$( function() {
+		$("#dialog-changeerror").dialog({
+	    	resizable: false,
+	      	height: "auto",
+	      	width: 400,
+	      	modal: true,
+	      	autoOpen: false,
+	      	draggable: false,
+	      	buttons: {
+	        	"OK": function() {
+	          		$( this ).dialog( "close" );
+	        	}
+	      	}
+	    });	
+	});
+	
 	function showDeleteConfirmationDialog(ArtikelID) {
 		$("#dialog-confirm").data('productid', ArtikelID).dialog('open');
 	}
