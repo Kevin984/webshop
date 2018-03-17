@@ -85,6 +85,7 @@
     <script src="js/moment.min.js"></script>
     
     <script>
+    $.noConflict();
     $.get("../sources/navbar.html", function(data) {
 		$("#navbar_placeholder").replaceWith(data);
 	});
@@ -186,7 +187,7 @@
 	    });	
 	});
 	
-	function showDeleteConfirmationDialog() {
+	function showDeleteConfirmationDialog(ArtikelID) {
 		$("#dialog-confirm").dialog('open');
 	}
 	
