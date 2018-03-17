@@ -138,7 +138,7 @@
 				colorStyle = "style='color:" + color + "';"
 				
 	  			$("#winkelmand").append("<tr id='"+ data["ID"] +"'><td>" + data["Naam"] + "</td><td>" + data["Omschrijving"] + "</td><td " + colorStyle + " >" + prijs + "</td>"
-	  			+ "<td>" + aantal + "</td>"
+	  			+ "<td><input id='aantalArtikelen' onchange='wijzigAantalArtikel(" + data["ID"] + "," + $( this ).value + ")' type='number' value='" + aantal + "' min='1' max='20'></td>"
 	  			+ "<td><button type='button' class='btn btn-warning' onclick='wijzigAantalArtikel(" + data["ID"]
 				+ ")'>Wijzig aantal</button></td>"
 				+ "<td><button type='button' class='btn btn-warning' onclick='showDeleteConfirmationDialog(" + data["ID"]
@@ -216,8 +216,9 @@
     	confirmDelete();
 	};
 	
-	function wijzigAantalArtikel(artikelID){
-		console.log("wijzig aantal van product met id " + artikelID);
+	function wijzigAantalArtikel(artikelID, nieuwAantal){
+		console.log("wijzig aantal van product met id " + artikelID + " naar " + nieuwAantal);
+		
 	};
 	
 	function goToProductPage(artikelID) {
