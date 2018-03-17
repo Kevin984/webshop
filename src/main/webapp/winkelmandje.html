@@ -150,16 +150,6 @@
 		});
 	};
 	
-	function showDeleteConfirmationDialog() {
-		$("#dialog-confirm").dialog('open');
-	}
-	
-	function confirmDelete() {
-		$("#dialog-deleted").dialog('open');
-	}
-	
-
-	
 	$( function() {
 		$("#dialog-confirm").dialog({
 	    	resizable: false,
@@ -169,7 +159,11 @@
 	      	autoOpen: false,
 	      	draggable: false,
 	      	buttons: {
-	        	"OK": function() {
+	        	"Annuleren": function() {
+	          		$( this ).dialog( "close" );
+	        	},
+	        	"Verwijderen": function() {
+	        		deleteArtikel(artikelID)
 	          		$( this ).dialog( "close" );
 	        	}
 	      	}
@@ -191,6 +185,14 @@
 	      	}
 	    });	
 	});
+	
+	function showDeleteConfirmationDialog() {
+		$("#dialog-confirm").dialog('open');
+	}
+	
+	function confirmDelete() {
+		$("#dialog-deleted").dialog('open');
+	}
 	
 	function deleteArtikel(artikelID){
 		var totalWorthOfItem = Number(JSON.parse(localStorage.getItem(artikelID))["priceNoFormat"]) * Number(JSON.parse(localStorage.getItem(artikelID))["amount"]);
