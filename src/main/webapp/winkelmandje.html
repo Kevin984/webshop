@@ -104,8 +104,11 @@
 							totDatum = totDatum.toJSON().slice(0,10).replace(/-/g,'/');
 							
 							huidigeDatum = new Date().toJSON().slice(0,10).replace(/-/g,'/');
+							
+							inDeAanbieding = false;
 			
 							if (huidigeDatum > vanDatum && huidigeDatum < totDatum) {
+								inDeAanbieding = true;
 								console.log("aanbieding, prijs is: " + data[i]["Aanbiedingsprijs"]);
 								huidigePrijsArtikel = Number(data[i]["Aanbiedingsprijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});	
 								huidigePrijsArtikelNoFormat = data[i]["Aanbiedingsprijs"];
@@ -117,13 +120,17 @@
 						//console.log("Dit product is niet in de aanbieding.");
 					}
 				});
+				
+				console.log(huidigePrijsArtikel);
+				console.log(inDeAanbieding);
+				
 	  			$("#winkelmand").append("<tr id='"+ data["ID"] +"'><td>" + data["Naam"] + "</td><td>" + data["Omschrijving"] + "</td><td>" + huidigePrijsArtikel + "</td>"
 	  			//+ "<td><input type='number' value='" + aantal + "' min='1' max='100'></td>"
 	  			+ "<td>" + aantal + "</td>"
 	  			+ "<td><button type='button' class='btn btn-warning' onclick='wijzigAantalArtikel(" + data["ID"]
-				+ ")'>Wijzig aantal</button></td>></tr>"
+				+ ")'>Wijzig aantal</button></td>"
 				+ "<td><button type='button' class='btn btn-warning' onclick='deleteArtikel(" + data["ID"]
-				+ ")'>Verwijder artikel</button></td>></tr>"
+				+ ")'>Verwijder artikel</button></td>"
 				+ "<td><button type='button' class='btn btn-warning' onclick='goToProductPage(" + data["ID"]
 				+ ")'>Bekijk artikel</button></td></tr>");  
 			},
