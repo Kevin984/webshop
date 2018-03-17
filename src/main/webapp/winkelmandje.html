@@ -240,7 +240,7 @@
 		$("#dialog-changeamount").data('productid', artIDforChange).dialog('open');
 	};
 	
-	function changeAmountOfProducts() {
+	function changeAmountOfProducts(artIDforChange) {
 		var amount = document.getElementById("aantalToChange").value;
 		document.getElementById("amountof" + artIDforChange).innerHTML = amount;
 	};
