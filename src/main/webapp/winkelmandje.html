@@ -58,6 +58,7 @@
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="js/bootstrap.min.js"></script>
     <script src="assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="js/moment.min.js"></script>
     
     <script>
     $.get("../sources/navbar.html", function(data) {
@@ -114,9 +115,15 @@
 					}
 				});
 	  			$("#winkelmand").append("<tr id='"+ artikelID +"'><td>" + data["Naam"] + "</td><td>" + data["Omschrijving"] + "</td><td>" + huidigePrijsArtikel + "</td>"
-	  			+ "<td>" + aantal + "</td>"
+	  			+ "<td><input type='number' value='" + aantal + "' min='1' max='100'></td>"
 				+ "<td><button type='button' class='btn btn-warning' id='delete" + artikelID
 				+ "'>Verwijder artikel</button></td>></tr>");
+				
+				var button = document.getElementById("delete" + artikelID);
+				button.onclick = function(){
+	  				console.log(artikelID);return false;
+	  			};
+  			
 			},
 			error : function() {
 				document.getElementById("productNaam").innerHTML="Er is iets misgegaan.";
