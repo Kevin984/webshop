@@ -76,9 +76,9 @@
     	window.location.href="index.html";
     })
     
-    var huidigePrijsArtikel;
-    var artikelID;
-    var aantal;
+    var huidigePrijsArtikel = -1;
+    var artikelID = -1;
+    var aantal = -1;
     
     for (j = 0; j < localStorage.length; j++){
     	artikelID = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["productID"]);
