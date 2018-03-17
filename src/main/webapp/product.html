@@ -136,8 +136,16 @@
   			button.innerHTML = 'Voeg toe aan winkelmandje';
   			button.onclick = function(){
   				var productid = getUrlParameter('id');
+  				
+  				if (document.getElementById("aanbiedingPrijs").innerHTML == " ") {
+  					prijs = document.getElementById("productPrijs").innerHTML;
+  					discount = "false";
+  				} else {
+  					prijs = document.getElementById("aanbiedingPrijs").innerHTML;
+  					discount = "true";
+  				}
 	
-				var artikel = {'productID': productid, 'amount': 1};
+				var artikel = {'productID': productid, 'amount': 1, 'price': prijs, 'discount': discount};
 				
 				if (localStorage.getItem(productid) === null) {
 		  			localStorage.setItem(productid, JSON.stringify(artikel));

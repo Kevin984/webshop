@@ -76,59 +76,30 @@
     	window.location.href="index.html";
     })
     
-    var huidigePrijsArtikel = -1;
-    var artikelID = -1;
-    var aantal = -1;
-    
     for (j = 0; j < localStorage.length; j++){
-    	var artikelID = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["productID"]);
-    	var aantal = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["amount"]);
+    	artikelID = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["productID"]);
+    	aantal = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["amount"]);
+    	prijs = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["price"]);
+    	aanbieding = JSON.parse(localStorage.getItem(localStorage.key(j)))["discount"] == "true";
     	
+   		fromStorageToTable(artikelID, aantal, prijs, aanbieding);
+	}
+	
+	function fromStorageToTable(artikelID, aantal, prijs, aanbieding) {
 		$.ajax({
 			url : "https://webshopiac.herokuapp.com/restservices/producten/" + artikelID,
 			method : "GET",
 			success : function (data) {
-				var huidigePrijsArtikel = Number(data["Prijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});	
+			
+				if (aanbieding) {
+				 	var color = "#388724";
+				} else {
+					var color = "000000";	
+				}
 				
-				console.log("https://webshopiac.herokuapp.com/restservices/aanbiedingen/product/" + artikelID);
+				colorStyle = "style='color:" + color + ";"
 				
-				$.ajax({
-					url : "https://webshopiac.herokuapp.com/restservices/aanbiedingen/product/" + artikelID,
-					method : "GET",
-					success : function (data) {
-						for (var i in data) {
-							console.log("aanbieding gevonden");
-					
-							vanDatum = moment(data[i]["VanDatum"], "YYYY-MM-DD").toDate();
-							vanDatum.setHours(vanDatum.getHours() - vanDatum.getTimezoneOffset() / 60);
-							vanDatum.setMinutes(vanDatum.getMinutes() - vanDatum.getTimezoneOffset() / 60);
-							vanDatum = vanDatum.toJSON().slice(0,10).replace(/-/g,'/');
-							
-							totDatum = moment(data[i]["TotDatum"], "YYYY-MM-DD").toDate();
-							totDatum.setHours(totDatum.getHours() - totDatum.getTimezoneOffset() / 60);
-							totDatum.setMinutes(totDatum.getMinutes() - totDatum.getTimezoneOffset() / 60);
-							totDatum = totDatum.toJSON().slice(0,10).replace(/-/g,'/');
-							
-							huidigeDatum = new Date().toJSON().slice(0,10).replace(/-/g,'/');
-							
-							console.log(vanDatum);
-							console.log(huidigeDatum);
-							console.log(totDatum);
-										
-							if (huidigeDatum > vanDatum && huidigeDatum < totDatum) {
-								console.log("aanbieding, prijs is: " + data[i]["Aanbiedingsprijs"]);
-								var huidigePrijsArtikel = Number(data[i]["Aanbiedingsprijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});	
-							}
-						}
-					},
-					error : function() {
-						//console.log("Dit product is niet in de aanbieding.");
-					}
-				});
-				
-				console.log(huidigePrijsArtikel);
-				
-	  			$("#winkelmand").append("<tr id='"+ data["ID"] +"'><td>" + data["Naam"] + "</td><td>" + data["Omschrijving"] + "</td><td>" + huidigePrijsArtikel + "</td>"
+	  			$("#winkelmand").append("<tr id='"+ data["ID"] +"'><td>" + data["Naam"] + "</td><td>" + data["Omschrijving"] + "</td><td " + colorStyle + " >" + prijs + "</td>"
 	  			//+ "<td><input type='number' value='" + aantal + "' min='1' max='100'></td>"
 	  			+ "<td>" + aantal + "</td>"
 	  			+ "<td><button type='button' class='btn btn-warning' onclick='wijzigAantalArtikel(" + data["ID"]
@@ -142,7 +113,7 @@
 				document.getElementById("productNaam").innerHTML="Er is iets misgegaan.";
 			}
 		});
-	}
+	};
 	
 	function deleteArtikel(artikelID){
 		localStorage.removeItem(artikelID);
