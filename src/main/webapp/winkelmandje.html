@@ -141,7 +141,7 @@
 	};
 	
 	function deleteArtikel(artikelID){
-		var totalWorthOfItem = Number(JSON.parse(localStorage.getItem(artikelID))["priceNoFormat"]) * Number(JSON.parse(localStorage.getItem(artikelID))["amount"]));
+		var totalWorthOfItem = Number(JSON.parse(localStorage.getItem(artikelID))["priceNoFormat"]) * Number(JSON.parse(localStorage.getItem(artikelID))["amount"]);
 		totalPrice -= totalWorthOfItem;
 		totalPriceFormatted = totalPrice.toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
     	document.getElementById("winkelmandjeTotal").innerHTML = totalPriceFormatted;
