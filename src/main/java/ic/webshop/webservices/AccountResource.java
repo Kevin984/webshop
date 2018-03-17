@@ -157,4 +157,29 @@ private AdresDAO adresDAO = new AdresDAO();
 	}
 
 
+	@GET
+	@Path("{username}")
+//	@Produces("application/json")
+	public String getAccountByUsername(@PathParam("username") String username) {
+		Account a = aDAO.findAccountByUsername(username);
+		if(a == null){
+			throw new WebApplicationException("Account bestaat niet!");
+		}
+		
+		JsonObjectBuilder job = Json.createObjectBuilder();
+		job.add("ID", a.getID());
+		job.add("OpenDatum", a.getOpenDatum().toString());
+		String actief;
+		if(a.getIsActief()) {
+			actief = "Y";
+		}else {
+			actief="N";
+		}
+		job.add("IsActief", actief);
+		job.add("FactuurAdresID", a.getFactuurAdres().getID());
+		job.add("KlantID", a.getKlant().getID());
+		return job.build().toString();
+	}
+	
+	
 }

@@ -88,18 +88,15 @@ input[type="password"] {
   <div class = "container">
 	<div class="wrapper">
 <form method="post" action="hoofdpagina.html" id="loginform" class="form-signin">
-<h3 class="form-signin-heading">Welkom bij Jeans & Lifestyle!</h3>
+<h3 class="form-signin-heading">Welkom bij de Webshop!</h3>
 			  <hr class="colorgraph"><br>
 			  <div class="expendable"></div>
-<input type="text" class="form-control" required=""  name="username" autofocus="" />
+<input type="text" class="form-control" required=""  id="username" name="username" autofocus="" />
 <input type="password" class="form-control" required="" name="password" />
 <input type="button" class="btn btn-lg btn-primary btn-block" value="login" id="login" />
 </form>
 </div>
 </div>
-
-
-
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
@@ -116,7 +113,12 @@ input[type="password"] {
     	var data = $("#loginform").serialize();
     	$.post("restservices/authentication", data, function(response) {
     		//geef gebruiker een token voor rechten
-    	window.sessionStorage.setItem("sessionToken", response); 
+    	
+    	var username = $("#username").val();	
+    		console.log(username);
+    	window.sessionStorage.setItem("sessionToken", response);
+    	window.sessionStorage.setItem("loggedInUsername", username); 
+
     	window.location.href="index.html";
     	}).fail(function(jqXHR, textStatus, errorThrown) {
     	console.log(textStatus);
