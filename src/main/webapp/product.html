@@ -152,13 +152,13 @@
 				var artikel = {'productID': productid, 'amount': amount, 'price': prijs, 'priceNoFormat': prijsNoFormat, 'discount': discount};
 				
 				if (amount % 1 !== 0) {
-					document.getElementById("errormessage").innerHTML = "Voer een geheel getal in.";
+					document.getElementById("errormessage").innerHTML = "Voer een geheel aantal in.";
 					showError = true;
 				} else if (amount < 1) {
-					document.getElementById("errormessage").innerHTML = "Voer een getal in van minimaal 1.";
+					document.getElementById("errormessage").innerHTML = "Voer een aantal in van minimaal 1.";
 					showError = true;
 				} else if (amount > 20) {
-					document.getElementById("errormessage").innerHTML = "Voer een getal in van maximaal 20.";
+					document.getElementById("errormessage").innerHTML = "Voer een aantal in van maximaal 20.";
 					showError = true;
 				} else {
 					document.getElementById("successmessage").innerHTML = amount + " keer artikel '" + data["Naam"] + "' toegevoegd!";
@@ -271,7 +271,7 @@
   		<p>Wilt u door naar bestellen of verder winkelen?</p>
 	</div>
 	
-	<div id="dialog-error" title="Verkeerd aantal.">
+	<div id="dialog-error" title="Onjuiste invoer.">
     	<p id="errormessage"> </p>
 	</div>
 	
