@@ -291,8 +291,6 @@
 			var huidigArtikel = JSON.parse(localStorage[artIDforChange]);
 			huidigArtikel['amount'] = amount;
 			localStorage.setItem(artIDforChange, JSON.stringify(huidigArtikel));
-			$("#dialog-changesuccess").dialog('open');return false;
-			
 			var oldTotalWorthOfItem = Number(JSON.parse(localStorage.getItem(artIDforChange))["priceNoFormat"]) * document.getElementById("amountof" + artIDforChange).innerHTML;
 			var totalWorthOfItem = Number(JSON.parse(localStorage.getItem(artIDforChange))["priceNoFormat"]) * amount;
 			totalPrice -= oldTotalWorthOfItem;
@@ -303,6 +301,7 @@
     		document.getElementById("winkelmandjeTotal").innerHTML = totalPriceFormatted;
     		document.getElementById("amountof" + artIDforChange).innerHTML = amount;
     		document.getElementById("priceof" + artIDforChange).innerHTML = totalWorthOfItemFormatted;
+			$("#dialog-changesuccess").dialog('open');return false;
 		}
 		
 		if (showError) {
