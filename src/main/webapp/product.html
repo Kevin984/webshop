@@ -89,11 +89,6 @@
 	$.get("../sources/sidebar.html", function(data) {
 		$("#sidebar_placeholder").replaceWith(data);
 	});
-	
-    $("#logout").click(function(event){
-    	window.sessionStorage.setItem("sessionToken", "guest");
-    	window.location.href="index.html";
-    })
     
     var getUrlParameter = function getUrlParameter(sParam) {
     	var sPageURL = decodeURIComponent(window.location.search.substring(1)),
