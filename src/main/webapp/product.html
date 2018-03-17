@@ -108,6 +108,7 @@
 	var id = getUrlParameter('id');
 	$.noConflict();
 	normalePrijsNoFormat = 0;
+	normalePrijs = "€0.00";
 	
 	$.ajax({
 		url : "restservices/producten/" + id,

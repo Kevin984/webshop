@@ -104,9 +104,10 @@
     for (j = 0; j < localStorage.length; j++){
     	artikelID = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["productID"]);
     	aantal = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["amount"]);
-    	prijs = (Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["priceNoFormat"]) * aantal).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
+    	prijsNoFormat = (Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["priceNoFormat"]) * aantal);
+    	prijs = prijsNoFormat.toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
     	aanbieding = JSON.parse(localStorage.getItem(localStorage.key(j)))["discount"] == "true";
-    	totalPrice += prijs;
+    	totalPrice += p
     	
     	totalPriceFormatted = totalPrice.toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
     	
