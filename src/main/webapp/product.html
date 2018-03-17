@@ -65,7 +65,7 @@
               	<tr style="height: 300px;"><td id="afbeeldingCell" style="width:300px;"><img src="/images/default_product.jpg" id="productAfbeelding">
           									<img src="/images/aanbiedingoverlay.png" id="aanbiedingAfbeelding" style="display: none;"></td></tr>
           		<tr><td style="font-size: 30px;"><div id="productPrijs" style="display:inline;"></div><div id="aanbiedingPrijs" style="display:inline;"></div></td></tr>
-              	<tr><td id="winkelwagenKnopCell"><div id="buttonplaceholder"></div></td></tr>
+              	<tr><td id="winkelwagenKnopCell"><p>Aantal: </p><input id='aantalArtikelen' type='number' value='1' min='1' max='100'><div id="buttonplaceholder"></div></td></tr>
               	<tr><td id="omschrijvingCell"></td></tr>
               	<tr id="aanbiedingRij"><td id="reclameTekstCell"></td></tr>
               </tbody>
@@ -160,7 +160,6 @@
 				}
   				$("#dialog-confirm").dialog('open');return false;
   			};
-  			document.getelementById('buttonplaceholder').innerHTML = "Aantal: <input id='aantalArtikelen' type='number' value='1' min='1' max='100'>";
 			document.getElementById('buttonplaceholder').appendChild(button);
 			
 		},
