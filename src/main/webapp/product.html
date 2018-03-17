@@ -177,8 +177,8 @@
 				if (huidigeDatum > vanDatum && huidigeDatum < totDatum) {
 					reclameTekst = data[i]["ReclameTekst"];
 					aanbiedingsprijs = Number(data[i]["Aanbiedingsprijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});	
-					
-					var korting = parseFloat(Math.round((normalePrijsNoFormat - aanbiedingsprijs) / normalePrijsNoFormat * 100 * 100) / 100).toFixed(2);
+
+					var korting = parseFloat(Math.round((normalePrijsNoFormat - data[i]["Aanbiedingsprijs"]) / normalePrijsNoFormat * 100 * 100) / 100).toFixed(2);
 
 					document.getElementById("productPrijs").style.textDecoration = "line-through";
 					document.getElementById("productPrijs").innerHTML=normalePrijs;
