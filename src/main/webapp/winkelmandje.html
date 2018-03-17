@@ -57,14 +57,14 @@
             <table class="table table-striped" id='totaal'>
               <thead>
                 <tr>
+                  <th class="col-xs-5"> </th>
                   <th class="col-xs-1">Totale prijs</th>
                   <th class="col-xs-1">Afrekenen</th>
                 </tr>
               </thead>
               <tbody>
               	<tr>
-              		<td id="winkelmandjeTotal"></td><td><button type='button' class='btn btn-warning' onclick='checkout()'>Afrekenen</button></td>
-              	
+              		<td></td><td id="winkelmandjeTotal"></td><td><button type='button' class='btn btn-warning' onclick='checkout()'>Afrekenen</button></td>
               	</tr>
               </tbody>
             </table>
@@ -101,9 +101,11 @@
     	aantal = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["amount"]);
     	prijs = JSON.parse(localStorage.getItem(localStorage.key(j)))["price"];
     	aanbieding = JSON.parse(localStorage.getItem(localStorage.key(j)))["discount"] == "true";
-    	totalPrice += (Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["priceNoFormat"]) * aantal).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
+    	totalPrice += Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["priceNoFormat"]) * aantal;
     	
-    	document.getElementById("winkelmandjeTotal").innerHTML = totalPrice;
+    	totalPriceFormatted = totalPrice).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
+    	
+    	document.getElementById("winkelmandjeTotal").innerHTML = totalPriceFormatted;
     	
    		fromStorageToTable(artikelID, aantal, prijs, aanbieding);
 	}
