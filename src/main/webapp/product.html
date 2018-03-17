@@ -152,21 +152,21 @@
 				var artikel = {'productID': productid, 'amount': amount, 'price': prijs, 'priceNoFormat': prijsNoFormat, 'discount': discount};
 				
 				if (amount % 1 !== 0) {
-					document.getElementById("errormessage").innerHTML = "Voer een geheel aantal in en probeer het opnieuw.";
+					document.getElementById("errormessage").innerHTML = "Voer een geheel getal in.";
 					showError = true;
 				} else if (amount < 1) {
-					document.getElementById("errormessage").innerHTML = "Voer een aantal in van minimaal 1 en probeer het opnieuw.";
+					document.getElementById("errormessage").innerHTML = "Voer een getal in van minimaal 1.";
 					showError = true;
 				} else if (amount > 20) {
-					document.getElementById("errormessage").innerHTML = "Voer een aantal in van maximaal 20 en probeer het opnieuw.";
+					document.getElementById("errormessage").innerHTML = "Voer een getal in van maximaal 20.";
 					showError = true;
 				} else {
-					document.getElementById("successmessage").innerHTML = "Dit artikel is " + amount + " keer toegevoegd! In uw winkelmandje kunt u dit nog wijzigen.";
+					document.getElementById("successmessage").innerHTML = amount + " keer " + data["Naam"] + toegevoegd!";
 					if (localStorage.getItem(productid) === null) {
 			  			localStorage.setItem(productid, JSON.stringify(artikel));
 					} else {
 						var huidigArtikel = JSON.parse(localStorage[productid]);
-						huidigArtikel['amount'] += 1;
+						huidigArtikel['amount'] = Number(huidigArtikel['amount']) + amount;
 						localStorage.setItem(productid, JSON.stringify(huidigArtikel));
 					}
 	  				$("#dialog-confirm").dialog('open');return false;
@@ -237,7 +237,7 @@
 	      	autoOpen: false,
 	      	draggable: false,
 	      	buttons: {
-	        	"Afrekenen": function() {
+	        	"Bestellen": function() {
 	          		$( this ).dialog( "close" );
 	          		$(location).attr('href', '/winkelmandje.html')
 	        	},
@@ -266,12 +266,12 @@
     
     </script>
     
-    <div id="dialog-confirm" title="Het product is toegevoegd aan uw winkelmandje!">
+    <div id="dialog-confirm" title="Toegevoegd!">
     	<p id="successmessage"> </p>
-  		<p>Wilt u meteen afrekenen of eerst nog verder winkelen?</p>
+  		<p>Wilt u door naar bestellen of verder winkelen?</p>
 	</div>
 	
-	<div id="dialog-error" title="U heeft een verkeerd aantal geselecteerd.">
+	<div id="dialog-error" title="Verkeerd aantal.">
     	<p id="errormessage"> </p>
 	</div>
 	
