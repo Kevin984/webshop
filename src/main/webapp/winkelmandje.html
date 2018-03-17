@@ -237,7 +237,7 @@
 	
 	function showChangeDialog(artikelID){
 		document.getElementById("aantalToChange").value = document.getElementById("amountof" + artikelID).innerHTML;
-		$("#dialog-changeamount").data('productid', ArtikelID).dialog('open');
+		$("#dialog-changeamount").data('productid', artikelID).dialog('open');
 	};
 	
 	function changeAmountOfProducts() {
