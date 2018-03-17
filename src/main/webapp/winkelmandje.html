@@ -158,6 +158,8 @@
 		$("#dialog-deleted").dialog('open');
 	}
 	
+
+	
 	$( function() {
 		$("#dialog-confirm").dialog({
 	    	resizable: false,
@@ -167,11 +169,7 @@
 	      	autoOpen: false,
 	      	draggable: false,
 	      	buttons: {
-	        	"Annuleren": function() {
-	          		$( this ).dialog( "close" );
-	        	},
-	        	"Verwijderen": function() {
-	        		deleteArtikel(artikelID)
+	        	"OK": function() {
 	          		$( this ).dialog( "close" );
 	        	}
 	      	}
