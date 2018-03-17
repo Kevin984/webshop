@@ -104,9 +104,9 @@
     for (j = 0; j < localStorage.length; j++){
     	artikelID = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["productID"]);
     	aantal = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["amount"]);
-    	prijs = JSON.parse(localStorage.getItem(localStorage.key(j)))["price"];
+    	prijs = (Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["priceNoFormat"]) * aantal).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
     	aanbieding = JSON.parse(localStorage.getItem(localStorage.key(j)))["discount"] == "true";
-    	totalPrice += Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["priceNoFormat"]) * aantal;
+    	totalPrice += prijs;
     	
     	totalPriceFormatted = totalPrice.toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
     	
@@ -116,9 +116,9 @@
 	if (localStorage.length == 0) {
     	document.getElementById("winkelmand").style.visibility = "hidden";
        	document.getElementById("totaal").style.visibility = "hidden";
-		document.getElementById("winkelmandOmschrijving").innerHTML = "<b>Je hebt op dit moment geen artikelen in je winkelmandje!<br>Klik <a href='/categorie.html?id=1'>hier</a> om de meest recente artikelen te bekijken.</b>";
+		document.getElementById("winkelmandOmschrijving").innerHTML = "<b>U heeft op dit moment geen artikelen in uw winkelmandje!<br>Klik <a href='/categorie.html?id=1'>hier</a> om de meest recent toegevoegde artikelen te bekijken.</b>";
     } else {
-		document.getElementById("winkelmandOmschrijving").innerHTML = "<b>Bevestig hier de inhoud van je winkelmandje voordat je verder gaat.<br>Je kan nog artikelen toevoegen, verwijderen of het aantal wijzigen.<br></b>";
+		document.getElementById("winkelmandOmschrijving").innerHTML = "<b>Bevestig hier de inhoud van uw winkelmandje voordat u verder gaat.<br>U kunt hier nog artikelen toevoegen, verwijderen of het aantal exemplaren wijzigen.<br></b>";
     	document.getElementById("winkelmandjeTotal").innerHTML = totalPriceFormatted;
     }
 		
@@ -209,7 +209,7 @@
 		if (localStorage.length == 0) {
     	document.getElementById("winkelmand").style.visibility = "hidden";
        	document.getElementById("totaal").style.visibility = "hidden";
-		document.getElementById("winkelmandOmschrijving").innerHTML = "<b>Je hebt op dit moment geen artikelen in je winkelmandje!<br>Klik <a href='/categorie.html?id=1'>hier</a> om de meest recente artikelen te bekijken.</b>";
+		document.getElementById("winkelmandOmschrijving").innerHTML = "<b>U heeft op dit moment geen artikelen in uw winkelmandje!<br>Klik <a href='/categorie.html?id=1'>hier</a> om de meest recent toegevoegde artikelen te bekijken.</b>";
     	}
     	
     	confirmDelete();
