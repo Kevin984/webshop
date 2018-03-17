@@ -39,10 +39,12 @@
               <thead>
                 <tr>
                   <th class="col-xs-2">Naam</th>
-                  <th class="col-xs-3">Omschrijving</th>
-				  <th class="col-xs-2">Prijs</th>
+                  <th class="col-xs-2">Omschrijving</th>
+				  <th class="col-xs-1">Prijs</th>
 				  <th class="col-xs-1">Aantal</th>
+				  <th class="col-xs-1">Wijzig aantal</th>
 				  <th class="col-xs-1">Verwijder artikel</th>
+				  <th class="col-xs-1">Bekijk artikel</th>
                 </tr>
               </thead>
               <tbody>
@@ -121,7 +123,9 @@
 	  			+ "<td><button type='button' class='btn btn-warning' onclick='wijzigAantalArtikel(" + data["ID"]
 				+ ")'>Wijzig aantal</button></td>></tr>"
 				+ "<td><button type='button' class='btn btn-warning' onclick='deleteArtikel(" + data["ID"]
-				+ ")'>Verwijder artikel</button></td>></tr>");
+				+ ")'>Verwijder artikel</button></td>></tr>")
+				+ "<td><button type='button' class='btn btn-warning' onclick='goToProductPage(" + data["ID"]
+				+ ")'>Bekijk artikel</button></td></tr>");  
 			},
 			error : function() {
 				document.getElementById("productNaam").innerHTML="Er is iets misgegaan.";
@@ -136,13 +140,12 @@
 	};
 	
 	function wijzigAantalArtikel(artikelID){
-		//localStorage.removeItem(artikelID);
-		//var rij = document.getElementById(artikelID);
-		//rij.parentNode.removeChild(rij);
-		
 		console.log("wijzig aantal van product met id " + artikelID);
 	};
 	
+	function goToProductPage(artikelID) {
+		window.location="product.html?id=" + artikelID;
+	}
     </script>
   </body>
 </html>
