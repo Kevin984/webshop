@@ -103,7 +103,7 @@
     	aanbieding = JSON.parse(localStorage.getItem(localStorage.key(j)))["discount"] == "true";
     	totalPrice += Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["priceNoFormat"]) * aantal;
     	
-    	totalPriceFormatted = totalPrice).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
+    	totalPriceFormatted = totalPrice.toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
     	
     	document.getElementById("winkelmandjeTotal").innerHTML = totalPriceFormatted;
     	
