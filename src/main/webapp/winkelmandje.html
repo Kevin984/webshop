@@ -107,7 +107,7 @@
     	prijsNoFormat = (Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["priceNoFormat"]) * aantal);
     	prijs = prijsNoFormat.toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
     	aanbieding = JSON.parse(localStorage.getItem(localStorage.key(j)))["discount"] == "true";
-    	totalPrice += p
+    	totalPrice += prijsNoFormat
     	
     	totalPriceFormatted = totalPrice.toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
     	
