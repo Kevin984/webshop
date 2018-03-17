@@ -147,21 +147,35 @@
   					discount = "true";
   				}
   				
-				var amount = document.getElementById("aantalArtikelen").value;
+				var amount = Number(document.getElementById("aantalArtikelen").value);
+				
+				if (localStorage.getItem(productid) !== null) {
+					huidigeAmount = Number(JSON.parse(localStorage[productid])['amount']);
+					nieuweAmount = amount + huidigeAmount;
+					maxNieuweAmount = 20 - huidigeAmount;
+				}
 				
 				var artikel = {'productID': productid, 'amount': amount, 'price': prijs, 'priceNoFormat': prijsNoFormat, 'discount': discount};
 				
+				showError = false;
+				
 				if (amount % 1 !== 0) {
-					document.getElementById("errormessage").innerHTML = "Voer een geheel getal in.";
+					document.getElementById("errormessage").innerHTML = "Voer een geheel aantal in.";
 					showError = true;
 				} else if (amount < 1) {
-					document.getElementById("errormessage").innerHTML = "Voer een getal in van minimaal 1.";
+					document.getElementById("errormessage").innerHTML = "Voer een aantal in van minimaal 1.";
 					showError = true;
-				} else if (amount > 20) {
-					document.getElementById("errormessage").innerHTML = "Voer een getal in van maximaal 20.";
+				} else if (localStorage.getItem(productid) !== null && nieuweAmount > 20) {
+					if (huidigeAmount > 0 && < 20) {
+						document.getElementById("errormessage").innerHTML = "U heeft hiervan al " + huidigeAmount + " exemplaren in uw winkelmandje.<br>Voer een aantal in van maximaal " +  maxNieuweAmount + ".";
+					} else if (huidigeAmount == 20) {
+						document.getElementById("errormessage").innerHTML = "U heeft hiervan al 20 exemplaren in uw winkelmandje.<br>Meer exemplaren van 1 artikel bestellen is op dit moment helaas niet mogelijk.";
+					} else {
+						document.getElementById("errormessage").innerHTML = "Voer een aantal in van maximaal 20.";
+					}
 					showError = true;
 				} else {
-					document.getElementById("successmessage").innerHTML = amount + " keer " + data["Naam"] + "toegevoegd!";
+					document.getElementById("successmessage").innerHTML = amount + " keer artikel '" + data["Naam"] + "' toegevoegd!";
 					if (localStorage.getItem(productid) === null) {
 			  			localStorage.setItem(productid, JSON.stringify(artikel));
 					} else {
@@ -271,7 +285,7 @@
   		<p>Wilt u door naar bestellen of verder winkelen?</p>
 	</div>
 	
-	<div id="dialog-error" title="Verkeerd aantal.">
+	<div id="dialog-error" title="Onjuiste invoer.">
     	<p id="errormessage"> </p>
 	</div>
 	

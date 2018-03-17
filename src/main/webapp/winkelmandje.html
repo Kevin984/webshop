@@ -14,8 +14,12 @@
     <link href="assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
     <link href="dashboard.css" rel="stylesheet">
 	<link href="css/bootstrap.icon-large.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   </head>
   
   <body>
@@ -96,14 +100,6 @@
     
     totalPrice = 0;
     
-    if (localStorage.length == 0) {
-    	document.getElementById("winkelmand").style.visibility = "hidden";
-       	document.getElementById("totaal").style.visibility = "hidden";
-		document.getElementById("winkelmandOmschrijving").innerHTML = "<b>Je hebt op dit moment geen artikelen in je winkelmandje!<br>Klik <a href='/categorie.html?id=1'>hier</a> om de meest recente artikelen te bekijken.</b>";
-    } else {
-		document.getElementById("winkelmandOmschrijving").innerHTML = "<b>Bevestig hier de inhoud van je winkelmandje voordat je verder gaat.<br>Je kan nog artikelen toevoegen, verwijderen of het aantal wijzigen.<br></b>";
-    }
-    
     for (j = 0; j < localStorage.length; j++){
     	artikelID = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["productID"]);
     	aantal = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["amount"]);
@@ -116,8 +112,15 @@
    		fromStorageToTable(artikelID, aantal, prijs, aanbieding);
 	}
 	
-	document.getElementById("winkelmandjeTotal").innerHTML = totalPriceFormatted;
-	
+	if (localStorage.length == 0) {
+    	document.getElementById("winkelmand").style.visibility = "hidden";
+       	document.getElementById("totaal").style.visibility = "hidden";
+		document.getElementById("winkelmandOmschrijving").innerHTML = "<b>Je hebt op dit moment geen artikelen in je winkelmandje!<br>Klik <a href='/categorie.html?id=1'>hier</a> om de meest recente artikelen te bekijken.</b>";
+    } else {
+		document.getElementById("winkelmandOmschrijving").innerHTML = "<b>Bevestig hier de inhoud van je winkelmandje voordat je verder gaat.<br>Je kan nog artikelen toevoegen, verwijderen of het aantal wijzigen.<br></b>";
+    	document.getElementById("winkelmandjeTotal").innerHTML = totalPriceFormatted;
+    }
+		
 	function fromStorageToTable(artikelID, aantal, prijs, aanbieding) {
 		$.ajax({
 			url : "restservices/producten/" + artikelID,
@@ -136,16 +139,60 @@
 	  			+ "<td>" + aantal + "</td>"
 	  			+ "<td><button type='button' class='btn btn-warning' onclick='wijzigAantalArtikel(" + data["ID"]
 				+ ")'>Wijzig aantal</button></td>"
-				+ "<td><button type='button' class='btn btn-warning' onclick='deleteArtikel(" + data["ID"]
+				+ "<td><button type='button' class='btn btn-warning' onclick='showDeleteConfirmationDialog(" + data["ID"]
 				+ ")'>Verwijder artikel</button></td>"
 				+ "<td><button type='button' class='btn btn-warning' onclick='goToProductPage(" + data["ID"]
 				+ ")'>Bekijk artikel</button></td></tr>");  
 			},
 			error : function() {
-				document.getElementById("productNaam").innerHTML="Er is iets misgegaan.";
+				document.getElementById("winkelmandOmschrijving").innerHTML="Er is iets misgegaan bij het laden van uw winkelmandje.";
 			}
 		});
 	};
+	
+	function showDeleteConfirmationDialog(artikelID) {
+		$("#dialog-confirm").dialog('open');
+	}
+	
+	function confirmDelete() {
+		$("#dialog-deleted").dialog('open');
+	}
+	
+	$( function() {
+		$("#dialog-confirm").dialog({
+	    	resizable: false,
+	      	height: "auto",
+	      	width: 400,
+	      	modal: true,
+	      	autoOpen: false,
+	      	draggable: false,
+	      	buttons: {
+	        	"Annuleren": function() {
+	          		$( this ).dialog( "close" );
+	        	},
+	        	"Verwijderen": function() {
+	        		deleteArtikel(artikelID)
+	          		$( this ).dialog( "close" );
+	        	}
+	      	}
+	    });	
+	});
+	
+	$( function() {
+		$("#dialog-deleted").dialog({
+	    	resizable: false,
+	      	height: "auto",
+	      	width: 400,
+	      	modal: true,
+	      	autoOpen: false,
+	      	draggable: false,
+	      	buttons: {
+	        	"OK": function() {
+	          		$( this ).dialog( "close" );
+	        	}
+	      	}
+	    });	
+	});
 	
 	function deleteArtikel(artikelID){
 		var totalWorthOfItem = Number(JSON.parse(localStorage.getItem(artikelID))["priceNoFormat"]) * Number(JSON.parse(localStorage.getItem(artikelID))["amount"]);
@@ -162,6 +209,8 @@
        	document.getElementById("totaal").style.visibility = "hidden";
 		document.getElementById("winkelmandOmschrijving").innerHTML = "<b>Je hebt op dit moment geen artikelen in je winkelmandje!<br>Klik <a href='/categorie.html?id=1'>hier</a> om de meest recente artikelen te bekijken.</b>";
     	}
+    	
+    	confirmDelete(artikelID);
 	};
 	
 	function wijzigAantalArtikel(artikelID){
@@ -171,6 +220,20 @@
 	function goToProductPage(artikelID) {
 		window.location="product.html?id=" + artikelID;
 	}
+	
+	function checkout() {
+		window.location="bestellen.html";
+	}
+	
     </script>
+    
+    <div id="dialog-confirm" title="Artikel verwijderen">
+  		<p>Weet u zeker dat u dit artikel uit uw winkelmandje wilt verwijderen?</p>
+	</div>
+	
+	<div id="dialog-deleted" title="Artikel verwijderd.">
+    	<p>Het artikel is succesvol verwijderd.</p>
+	</div>
+    
   </body>
 </html>
