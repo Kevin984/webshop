@@ -200,9 +200,9 @@
 	      	draggable: false,
 	      	buttons: {
 	        	"OK": function() {
-	        		var artikelID = $(this).data('productid');
+	        		var artIDforChange = $(this).data('productid');
 					$( this ).dialog( "close" );
-	        		changeAmountOfProducts(artikelID);
+	        		changeAmountOfProducts(artIDforChange);
 	        	}
 	      	}
 	    });	
@@ -235,14 +235,14 @@
     	confirmDelete();
 	};
 	
-	function showChangeDialog(artikelID){
-		document.getElementById("aantalToChange").value = document.getElementById("amountof" + artikelID).innerHTML;
-		$("#dialog-changeamount").data('productid', artikelID).dialog('open');
+	function showChangeDialog(artIDforChange){
+		document.getElementById("aantalToChange").value = document.getElementById("amountof" + artIDforChange).innerHTML;
+		$("#dialog-changeamount").data('productid', artIDforChange).dialog('open');
 	};
 	
 	function changeAmountOfProducts() {
 		var amount = document.getElementById("aantalToChange").value;
-		document.getElementById("amountof" + artikelID).innerHTML = amount;
+		document.getElementById("amountof" + artIDforChange).innerHTML = amount;
 	};
 	
 	function goToProductPage(artikelID) {
