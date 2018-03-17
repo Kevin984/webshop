@@ -121,7 +121,7 @@
 					var productPrijs = Number(product["Prijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
 									
 					$.ajax({
-						url : "aanbiedingen/product/" + productID,
+						url : "restservices/aanbiedingen/product/" + productID,
 						method : "GET",
 						success : function (data) {
 							for (var i in data) {
