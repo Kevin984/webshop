@@ -120,7 +120,7 @@
 	
 	function fromStorageToTable(artikelID, aantal, prijs, aanbieding) {
 		$.ajax({
-			url : "https://webshopiac.herokuapp.com/restservices/producten/" + artikelID,
+			url : "restservices/producten/" + artikelID,
 			method : "GET",
 			success : function (data) {
 			

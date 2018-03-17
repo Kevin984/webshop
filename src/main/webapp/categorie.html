@@ -90,7 +90,7 @@
 	var id = getUrlParameter('id');
 
 	$.ajax({
-		url : "https://webshopiac.herokuapp.com/restservices/categorieen/" + id,
+		url : "restservices/categorieen/" + id,
 		method : "GET",
 		success : function (data) {
 			if (data["Naam"] === "Nieuw") {
@@ -121,7 +121,7 @@
 					var productPrijs = Number(product["Prijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
 									
 					$.ajax({
-						url : "https://webshopiac.herokuapp.com/restservices/aanbiedingen/product/" + productID,
+						url : "aanbiedingen/product/" + productID,
 						method : "GET",
 						success : function (data) {
 							for (var i in data) {

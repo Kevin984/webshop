@@ -114,7 +114,7 @@
 	$.noConflict();
 	
 	$.ajax({
-		url : "https://webshopiac.herokuapp.com/restservices/producten/" + id,
+		url : "restservices/producten/" + id,
 		method : "GET",
 		
 		success : function (data) {
@@ -187,7 +187,7 @@
 	});
 	
 	$.ajax({
-		url : "https://webshopiac.herokuapp.com/restservices/aanbiedingen/product/" + id,
+		url : "restservices/aanbiedingen/product/" + id,
 		method : "GET",
 		success : function (data) {
 			for (var i in data) {

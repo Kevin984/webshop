@@ -33,7 +33,8 @@
           <h1 id="categorieNaam" class="page-header">Bestellen</h1>
           <p id="categorieOmschrijving"> </p>
           <div class='expendable'></div>
-		  <div id="stap1.1">
+		  
+		  <div id="stap11">
           <div class="table-responsive">		  
             <table class="table table-striped" id='bestelling'>
               <thead>
@@ -41,7 +42,7 @@
               <tr><td>Naam: </td><td id="naam1"></td></tr>
               <tr><td>Woonadres: </td><td id="woonadres1"></td></tr>           
               <tr><td>Factuuradres: </td><td id="factuuradres1"></td></tr>              
-                            <tr><td></td><td><td></td><td><button id="goToStap2" type='button' class='btn btn-success'>Volgende</button></td></tr>
+                            <tr><td></td><td><td></td><td><button id="1goToStap2" type='button' class='btn btn-success'>Volgende</button></td></tr>
               </thead>
               <tbody>
               </tbody>
@@ -49,16 +50,15 @@
           </div>
           </div>
           
-           <div id="stap1.2">
+           <div id="stap12">
           <div class="table-responsive">		  
             <table class="table table-striped" id='bestelling'>
               <thead>
-              <tr><td>Naam: </td><td><input class='form-control' placeholder='Naam' name='Naam' required='required' type='text'/></td></tr>
-              <tr><td>Factuuradres: </td><td><input class='form-control' placeholder='FactuurAdres2' name='FactuurAdres2' required='required' type='text'/></td></tr>              
-              <tr><td></td><td><td></td><td><button id="goToStap2" type='button' class='btn btn-success'>Volgende</button></td></tr>
+              <tr><td>Naam: </td><td><input class='form-control' placeholder='Naam' name='Naam' id="Naam2" required='required' type='text'/></td></tr>
+              <tr><td>Factuuradres: </td><td><input class='form-control' placeholder='Factuuradres' name='FactuurAdres' id="FactuurAdres2" required='required' type='text'/></td></tr>              
+              <tr><td></td><td><td></td><td><button id="2goToStap2" type='button' class='btn btn-success'>Volgende</button></td></tr>
               </thead>
               <tbody>
-              
               </tbody>
             </table>
           </div>
@@ -66,7 +66,41 @@
           
           <div id="stap2">
             <table class="table table-striped">  
-            	<p>winkelmandjeinhoudetc....</p>                                   
+            	     <div class="table-responsive">		  
+            <table class="table table-striped" id='winkelmand'>
+              <thead>
+                <tr>
+                  <th class="col-xs-1">Naam</th>
+                  <th class="col-xs-2">Omschrijving</th>
+				  <th class="col-xs-1">Prijs</th>
+				  <th class="col-xs-1">Aantal</th>
+				  <th class="col-xs-1">Wijzig aantal</th>
+				  <th class="col-xs-1">Verwijder artikel</th>
+				  <th class="col-xs-1">Bekijk artikel</th>
+                </tr>
+              </thead>
+              <tbody>
+              
+              </tbody>
+            </table>
+          </div>
+          
+          <div class="table-responsive">		  
+            <table class="table table-striped" id='totaal'>
+              <thead>
+                <tr>
+                  <th class="col-xs-5"> </th>
+                  <th class="col-xs-1">Totale prijs</th>
+                  <th class="col-xs-1"></th>
+                </tr>
+              </thead>
+              <tbody>
+              	<tr>
+              		<td></td><td id="winkelmandjeTotal"></td><td><button type='button' class='btn btn-warning' onclick='checkout()'>Bestellen</button></td>
+              	</tr>
+              </tbody>
+            </table>
+          </div>                         
                <tr><td><input type="checkbox" id="agreement"> Ik heb mijn bestelling gecontroleerd en ga akkoord met de voorwaarden.</td>
                <td><button id="bestellen" type='button' class='btn btn-success'>Bestelling plaatsen</button></td></tr>
           </table>
@@ -100,19 +134,116 @@
     	window.location.href="index.html";
     })
     
-    var user = sessionStorage.getItem('loggedInUsername');
-    if(user == 'Guest'){
+    
+    
+    
+    
+    
+    totalPrice = 0;
+    
+    
+    for (j = 0; j < localStorage.length; j++){
+    	artikelID = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["productID"]);
+    	aantal = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["amount"]);
+    	prijs = JSON.parse(localStorage.getItem(localStorage.key(j)))["price"];
+    	aanbieding = JSON.parse(localStorage.getItem(localStorage.key(j)))["discount"] == "true";
+    	totalPrice += Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["priceNoFormat"]) * aantal;
     	
+    	totalPriceFormatted = totalPrice.toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
+    	
+   		fromStorageToTable(artikelID, aantal, prijs, aanbieding);
+	}
+	
+	document.getElementById("winkelmandjeTotal").innerHTML = totalPriceFormatted;
+	
+	function fromStorageToTable(artikelID, aantal, prijs, aanbieding) {
+		$.ajax({
+			url : "restservices/producten/" + artikelID,
+			method : "GET",
+			success : function (data) {
+			
+				if (aanbieding) {
+				 	var color = "#388724";
+				} else {
+					var color = "000000";	
+				}
+				
+				colorStyle = "style='color:" + color + "';"
+				
+	  			$("#winkelmand").append("<tr id='"+ data["ID"] +"'><td>" + data["Naam"] + "</td><td>" + data["Omschrijving"] + "</td><td " + colorStyle + " >" + prijs + "</td>"
+	  			+ "<td>" + aantal + "</td>"
+	  			+ "<td><button type='button' class='btn btn-warning' onclick='wijzigAantalArtikel(" + data["ID"]
+				+ ")'>Wijzig aantal</button></td>"
+				+ "<td><button type='button' class='btn btn-warning' onclick='deleteArtikel(" + data["ID"]
+				+ ")'>Verwijder artikel</button></td>"
+				+ "<td><button type='button' class='btn btn-warning' onclick='goToProductPage(" + data["ID"]
+				+ ")'>Bekijk artikel</button></td></tr>");  
+			},
+			error : function() {
+				document.getElementById("productNaam").innerHTML="Er is iets misgegaan.";
+			}
+		});
+	};
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+   		$("#stap11").hide();
+    	$("#stap12").hide();
+    	$("#stap2").hide();
+    	$("#stap3").hide();
+    
+    
+    var user = sessionStorage.getItem('loggedInUsername');
+    
+    if(sessionStorage.getItem('loggedInUsername') == null){
+    	user = 'Guest';
+    }
+    	
+    if(user == 'Guest' || null){
+    	console.log('guest here');
+    	$("#stap11").hide();
+    	$("#stap12").show();
+    	$("#stap2").hide();
+    	$("#stap3").hide();
     }
     else{
     	console.log(user);
+    	$("#stap11").show();
+    	$("#stap12").hide();
+    	$("#stap2").hide();
+    	$("#stap3").hide();
+
     	$.ajax({
-    		url: "restservices/accounts/"+user,
+    		url: "restservices/accounts/username/"+user,
     		method: "GET",
     		beforeSend: function (xhr) {
     		var token = window.sessionStorage.getItem("sessionToken");
     		xhr.setRequestHeader( 'Authorization', 'Bearer ' + token);
-        	console.log('1');
     		},
     		success: function (acc) {
 
@@ -122,13 +253,9 @@
     	    		beforeSend: function (xhr) {
     	    		var token = window.sessionStorage.getItem("sessionToken");
     	    		xhr.setRequestHeader( 'Authorization', 'Bearer ' + token);
-    	    		console.log('2');
-        	    	console.log(acc.KlantID);
     	    		},
     	    		success: function (klant) {
-    	    	    	console.log(klant.AdresID);
-
-    	    			$("naam1").html(klant.Naam);
+    	    			$("#naam1").html(klant.Naam);
 
     	    			$.ajax({
     	    	    		url: "restservices/adressen/"+klant.AdresID,
@@ -138,7 +265,7 @@
     	    	    		xhr.setRequestHeader( 'Authorization', 'Bearer ' + token);
     	    	    		},
     	    	    		success: function (adres) {
-       	    	    	    	$("woonadres1").html(adres.Straat + ' ' + adres.Straatnummer);
+       	    	    	    	$("#woonadres1").html(adres.Straat + ' ' + adres.Straatnummer);
     	    	    		}		
     	    	    	})
     	    		}
@@ -152,7 +279,7 @@
     	    	    		xhr.setRequestHeader( 'Authorization', 'Bearer ' + token);
     	    	    		},
     	    	    		success: function (adres) {
-    	    	    	    	$("factuuradres1").html(adres.Straat + ' ' + adres.Straatnummer);
+    	    	    	    	$("#factuuradres1").html(adres.Straat + ' ' + adres.Straatnummer);
     	    	    		}
     	    	    		
     	    	    	})
@@ -169,6 +296,25 @@
        	}  	
     })
   
+     $("#1goToStap2").click(function(event){
+    	  	$("#stap11").hide();
+        	$("#stap12").hide();
+        	$("#stap2").show();
+        	$("#stap3").hide();
+    })
+    
+     $("#2goToStap2").click(function(event){
+    	 $("#stap11").hide();
+     	$("#stap12").hide();
+     	$("#stap2").show();
+     	$("#stap3").hide();
+ 		
+     	var naam = $("#Naam2").val();
+     	var adres = $("#FactuurAdres2").val();
+     	
+    })
+    
+    
 	
     </script>
   </body>

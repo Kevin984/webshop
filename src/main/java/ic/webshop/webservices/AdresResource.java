@@ -48,8 +48,8 @@ private AdresDAO aDAO = new AdresDAO();
 		
 		JsonObjectBuilder job = Json.createObjectBuilder();
 		job.add("ID", a.getID());
-		job.add("VanDatum", a.getStraat());
-		job.add("TotDatum", a.getStraatNummer());
+		job.add("Straat", a.getStraat());
+		job.add("Straatnummer", a.getStraatNummer());
 		return job.build().toString();
 	}
 
