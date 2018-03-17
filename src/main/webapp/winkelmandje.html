@@ -81,14 +81,14 @@
     var aantal = -1;
     
     for (j = 0; j < localStorage.length; j++){
-    	artikelID = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["productID"]);
-    	aantal = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["amount"]);
+    	var artikelID = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["productID"]);
+    	var aantal = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["amount"]);
     	
 		$.ajax({
 			url : "https://webshopiac.herokuapp.com/restservices/producten/" + artikelID,
 			method : "GET",
 			success : function (data) {
-				huidigePrijsArtikel = Number(data["Prijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});	
+				var huidigePrijsArtikel = Number(data["Prijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});	
 				
 				console.log("https://webshopiac.herokuapp.com/restservices/aanbiedingen/product/" + artikelID);
 				
@@ -117,7 +117,7 @@
 										
 							if (huidigeDatum > vanDatum && huidigeDatum < totDatum) {
 								console.log("aanbieding, prijs is: " + data[i]["Aanbiedingsprijs"]);
-								huidigePrijsArtikel = Number(data[i]["Aanbiedingsprijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});	
+								var huidigePrijsArtikel = Number(data[i]["Aanbiedingsprijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});	
 							}
 						}
 					},
