@@ -149,6 +149,12 @@
   				
 				var amount = Number(document.getElementById("aantalArtikelen").value);
 				
+				if (localStorage.getItem(productid) !== null) {
+					huidigeAmount = Number(JSON.parse(localStorage[productid])['amount']);
+					nieuweAmount = amount + huidigeAmount;
+					maxNieuweAmount = 20 - huidigeAmount;
+				}
+				
 				var artikel = {'productID': productid, 'amount': amount, 'price': prijs, 'priceNoFormat': prijsNoFormat, 'discount': discount};
 				
 				if (amount % 1 !== 0) {
@@ -157,9 +163,12 @@
 				} else if (amount < 1) {
 					document.getElementById("errormessage").innerHTML = "Voer een aantal in van minimaal 1.";
 					showError = true;
-				} else if (amount > 20) {
-					document.getElementById("errormessage").innerHTML = "Voer een aantal in van maximaal 20.";
-					showError = true;
+				} else if (nieuweAmount > 20) {
+					if (localStorage.getItem(productid) !== null && huidigeAmount > 0) {
+						document.getElementById("errormessage").innerHTML = "U heeft hiervan al " + huidigeAmount + " artikelen in uw winkelmandje.<br>Voer een aantal in van maximaal " +  maxNieuweAmount + ".";
+					} else {
+						document.getElementById("errormessage").innerHTML = "Voer een aantal in van maximaal 20.";
+					}
 				} else {
 					document.getElementById("successmessage").innerHTML = amount + " keer artikel '" + data["Naam"] + "' toegevoegd!";
 					if (localStorage.getItem(productid) === null) {
