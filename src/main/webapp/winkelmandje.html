@@ -30,8 +30,8 @@
         </div>
         
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 id="categorieNaam" class="page-header">Winkelmandje</h1>
-          <p id="categorieOmschrijving"> </p>
+          <h1 id="winkelmandHeader" class="page-header">Winkelmandje</h1>
+          <p id="winkelmandOmschrijving"> </p>
           <div class='expendable'></div>
 		  
           <div class="table-responsive">		  
@@ -59,12 +59,12 @@
                 <tr>
                   <th class="col-xs-5"> </th>
                   <th class="col-xs-1">Totale prijs</th>
-                  <th class="col-xs-1">Afrekenen</th>
+                  <th class="col-xs-1">Bestellen</th>
                 </tr>
               </thead>
               <tbody>
               	<tr>
-              		<td></td><td id="winkelmandjeTotal"></td><td><button type='button' class='btn btn-warning' onclick='checkout()'>Afrekenen</button></td>
+              		<td></td><td id="winkelmandjeTotal"></td><td><button type='button' class='btn btn-warning' onclick='checkout()'>Bestel!</button></td>
               	</tr>
               </tbody>
             </table>
@@ -96,6 +96,14 @@
     
     totalPrice = 0;
     
+    if (localStorage.length == 0) {
+    	document.getElementById("winkelmand").style.visibility = "hidden";
+       	document.getElementById("totaal").style.visibility = "hidden";
+		document.getElementById("winkelmandOmschrijving").innerHTML = "<b>Je hebt nog geen artikelen in je winkelmandje!</b>";
+    } else {
+		document.getElementById("winkelmandOmschrijving").innerHTML = "<b>Bevestig hier de inhoud van je winkelmandje voordat je verder gaat.<br>Je kan nog artikelen toevoegen, verwijderen of het aantal wijzigen.</b>";
+    }
+    
     for (j = 0; j < localStorage.length; j++){
     	artikelID = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["productID"]);
     	aantal = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["amount"]);
@@ -105,10 +113,10 @@
     	
     	totalPriceFormatted = totalPrice.toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
     	
-    	document.getElementById("winkelmandjeTotal").innerHTML = totalPriceFormatted;
-    	
    		fromStorageToTable(artikelID, aantal, prijs, aanbieding);
 	}
+	
+	document.getElementById("winkelmandjeTotal").innerHTML = totalPriceFormatted;
 	
 	function fromStorageToTable(artikelID, aantal, prijs, aanbieding) {
 		$.ajax({
