@@ -65,7 +65,7 @@
               	<tr style="height: 300px;"><td id="afbeeldingCell" style="width:300px;"><img src="/images/default_product.jpg" id="productAfbeelding">
           									<img src="/images/aanbiedingoverlay.png" id="aanbiedingAfbeelding" style="display: none;"></td></tr>
           		<tr><td style="font-size: 30px;"><div id="productPrijs" style="display:inline;"></div><div id="aanbiedingPrijs" style="display:inline;"></div></td></tr>
-              	<tr><td id="winkelwagenKnopCell"><p>Aantal: </p><input id='aantalArtikelen' type='number' value='1' min='1' max='100'><div id="buttonplaceholder"></div></td></tr>
+              	<tr><td id="winkelwagenKnopCell"><p>Aantal: </p><input id='aantalArtikelen' type='number' value='1' min='1' max='20'><p> (Maximaal 20)</p><div style="display:inline; id="buttonplaceholder"></div></td></tr>
               	<tr><td id="omschrijvingCell"></td></tr>
               	<tr id="aanbiedingRij"><td id="reclameTekstCell"></td></tr>
               </tbody>
@@ -148,6 +148,20 @@
   				}
   				
 				var amount = document.getElementById("aantalArtikelen").value;
+				
+				if (amount % 1 !== 0) {
+					amount = 1;
+					document.getElementById("errormessage").innerHTML = "U heeft geen geheel aantal ingevoerd. Dit artikel is 1 keer toegevoegd. In uw winkelmandje kunt u dit nog wijzigen.";
+				} else if (amount < 1) {
+					amount = 1;
+					document.getElementById("errormessage").innerHTML = "U heeft een aantal lager dan de min ingevoerd. Dit artikel is 1 keer toegevoegd. In uw winkelmandje kunt u dit nog wijzigen.";
+				} else if (amount > 20) {
+					amount = 20;
+					document.getElementById("errormessage").innerHTML = "U heeft een aantal hoger dan de max ingevoerd. Dit artikel is 20 keer toegevoegd. In uw winkelmandje kunt u dit nog wijzigen.";
+
+				} else {
+					document.getElementById("errormessage").innerHTML = "Dit artikel is " + amount + " keer toegevoegd. In uw winkelmandje kunt u dit nog wijzigen.";
+				}
 	
 				var artikel = {'productID': productid, 'amount': amount, 'price': prijs, 'priceNoFormat': prijsNoFormat, 'discount': discount};
 				
@@ -233,6 +247,7 @@
     </script>
     
     <div id="dialog-confirm" title="Het product is toegevoegd aan uw winkelmandje!">
+    	<p id="errormessage"> </p>
   		<p>Wilt u meteen afrekenen of eerst nog verder winkelen?</p>
 	</div>
 	
