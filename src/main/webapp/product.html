@@ -138,10 +138,10 @@
   				var productid = getUrlParameter('id');
   				
   				if (document.getElementById("aanbiedingPrijs").innerHTML == " ") {
-  					prijs = document.getElementById("productPrijs").innerHTML;
+  					prijs = normalePrijs;
   					discount = "false";
   				} else {
-  					prijs = document.getElementById("aanbiedingPrijs").innerHTML;
+  					prijs = aanbiedingsprijs;
   					discount = "true";
   				}
 	
