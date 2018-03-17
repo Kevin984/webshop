@@ -164,8 +164,11 @@
 	          		$( this ).dialog( "close" );
 	        	},
 	        	"Verwijderen": function() {
-	        		var artikelID = $("#dialog_confirm").data('productid')
-	        		deleteArtikel(artikelID)
+	        		var artikelID = $(this).data('productid');
+	        		console.log(artikelID);
+	        		console.log($(this).data('productid');
+					console.log($(this).data);
+	        		deleteArtikel(artikelID);
 	          		$( this ).dialog( "close" );
 	        	}
 	      	}
