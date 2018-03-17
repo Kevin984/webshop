@@ -125,10 +125,10 @@
 							
 							var eindDatum = moment(aanbieding.TotDatum, "YYYY-MM-DD").toDate().toString("dd MMM yyyy");
 							
-					 		$("#voorraad").append("<tr onclick='goToProductPage(" + aanbieding.ProductID + ")'><td>" + product.Naam + "</td><td>" + product.Omschrijving + "</td><td><p style='text-decoration: line-through; display:inline;'>" + productPrijs 
+					 		$("#voorraad").append("<tr><td>" + product.Naam + "</td><td>" + product.Omschrijving + "</td><td><p style='text-decoration: line-through; display:inline;'>" + productPrijs 
 									+ "</p><p style='color: #388724; display:inline;'> " + aanbiedingPrijs + "</p></td><td>" + korting + "%</td>" + "<td>" + eindDatum + "</td>"
-							+ "<td><button type='button' class='btn btn-warning' id='goToProduct" + aanbieding.ProductID
-							+ "'>Bekijk artikel</button></td></tr>");  
+							+ "<td><button type='button' class='btn btn-warning' onclick='goToProductPage(" + aanbieding.ProductID
+							+ ")'>Bekijk artikel</button></td></tr>");  
 						}		  
 					}
 				});

@@ -76,11 +76,16 @@
     	window.location.href="index.html";
     })
     
+    totalPrice = 0;
+    
     for (j = 0; j < localStorage.length; j++){
     	artikelID = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["productID"]);
     	aantal = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["amount"]);
     	prijs = JSON.parse(localStorage.getItem(localStorage.key(j)))["price"];
     	aanbieding = JSON.parse(localStorage.getItem(localStorage.key(j)))["discount"] == "true";
+    	totalPrice += Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["priceNoFormat"]) * aantal;
+    	
+    	console.log(totalPrice);
     	
    		fromStorageToTable(artikelID, aantal, prijs, aanbieding);
 	}
