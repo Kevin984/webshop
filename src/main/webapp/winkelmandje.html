@@ -21,16 +21,6 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     
-    <style>
-    	input[type="number"]::-webkit-outer-spin-button,
-		input[type="number"]::-webkit-inner-spin-button {
-		    -webkit-appearance: none;
-		    margin: 0;
-		}
-		input[type="number"] {
-		    -moz-appearance: textfield;
-		}
-    </style>
   </head>
   
   <body>
@@ -149,7 +139,7 @@
 				colorStyle = "style='color:" + color + "';"
 				
 	  			$("#winkelmand").append("<tr id='"+ data["ID"] +"'><td>" + data["Naam"] + "</td><td>" + data["Omschrijving"] + "</td><td " + colorStyle + " >" + prijs + "</td>"
-	  			+ "<td><input id='aantalArtikelen' onchange='wijzigAantalArtikel(" + data["ID"] + "," + $( this ).value + ")' type='number' value='" + aantal + "' min='1' max='20'></td>"
+	  			+ "<td id='amountof"+ data["ID"] +"'> " + aantal + "</td>"
 	  			+ "<td><button type='button' class='btn btn-warning' onclick='wijzigAantalArtikel(" + data["ID"]
 				+ ")'>Wijzig aantal</button></td>"
 				+ "<td><button type='button' class='btn btn-warning' onclick='showDeleteConfirmationDialog(" + data["ID"]
@@ -229,7 +219,7 @@
 	
 	function wijzigAantalArtikel(artikelID, nieuwAantal){
 		console.log("wijzig aantal van product met id " + artikelID + " naar " + nieuwAantal);
-		
+		document.getElementById("amountof" + artikelID).innerHTML = "5000";
 	};
 	
 	function goToProductPage(artikelID) {
