@@ -140,7 +140,7 @@
 				
 	  			$("#winkelmand").append("<tr id='"+ data["ID"] +"'><td>" + data["Naam"] + "</td><td>" + data["Omschrijving"] + "</td><td " + colorStyle + " >" + prijs + "</td>"
 	  			+ "<td id='amountof"+ data["ID"] +"'> " + aantal + "</td>"
-	  			+ "<td><button type='button' class='btn btn-warning' onclick='wijzigAantalArtikel(" + data["ID"]
+	  			+ "<td><button type='button' class='btn btn-warning' onclick='showChangeDialog(" + data["ID"]
 				+ ")'>Wijzig aantal</button></td>"
 				+ "<td><button type='button' class='btn btn-warning' onclick='showDeleteConfirmationDialog(" + data["ID"]
 				+ ")'>Verwijder artikel</button></td>"
@@ -162,13 +162,13 @@
 	      	autoOpen: false,
 	      	draggable: false,
 	      	buttons: {
-	        	"Annuleren": function() {
-	          		$( this ).dialog( "close" );
-	        	},
 	        	"Verwijderen": function() {
 	        		var artikelID = $(this).data('productid');
 					$( this ).dialog( "close" );
 	        		deleteArtikel(artikelID);
+	        	},
+	        	"Annuleren": function() {
+	          		$( this ).dialog( "close" );
 	        	}
 	      	}
 	    });	
@@ -185,6 +185,24 @@
 	      	buttons: {
 	        	"OK": function() {
 	          		$( this ).dialog( "close" );
+	        	}
+	      	}
+	    });	
+	});
+	
+	$( function() {
+		$("#dialog-changeamount").dialog({
+	    	resizable: false,
+	      	height: "auto",
+	      	width: 400,
+	      	modal: true,
+	      	autoOpen: false,
+	      	draggable: false,
+	      	buttons: {
+	        	"OK": function() {
+	        		var artikelID = $(this).data('productid');
+					$( this ).dialog( "close" );
+	        		changeAmountOfProducts(artikelID);
 	        	}
 	      	}
 	    });	
@@ -217,9 +235,14 @@
     	confirmDelete();
 	};
 	
-	function wijzigAantalArtikel(artikelID){
-		console.log("wijzig aantal van product met id " + artikelID + " naar " + nieuwAantal);
-		document.getElementById("amountof" + artikelID).innerHTML = "5000";
+	function showChangeDialog(artikelID){
+		document.getElementById("aantalToChange").value = document.getElementById("amountof" + artikelID).innerHTML;
+		$("#dialog-changeamount").data('productid', ArtikelID).dialog('open');
+	};
+	
+	function changeAmountOfProducts() {
+		var amount = document.getElementById("aantalToChange").value;
+		document.getElementById("amountof" + artikelID).innerHTML = amount;
 	};
 	
 	function goToProductPage(artikelID) {
@@ -238,6 +261,11 @@
 	
 	<div id="dialog-deleted" title="Artikel verwijderd.">
     	<p>Het artikel is succesvol verwijderd.</p>
+	</div>
+	
+	<div id="dialog-changeamount" title="Wijzig aantal">
+  		<p>Hoeveel exemplaren van dit artikel wilt u?</p>
+  		<input id='aantalToChange' type='number' value='1' min='1' max='20'>
 	</div>
     
   </body>
