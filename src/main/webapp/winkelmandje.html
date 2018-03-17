@@ -127,7 +127,7 @@
 	
 	function deleteArtikel(artikelID){
 		localStorage.removeItem(artikelID);
-		var rij = document.getElementById(ID);
+		var rij = document.getElementById(artikelID);
 		rij.parentNode.removeChild(rij);
 	};
 	
