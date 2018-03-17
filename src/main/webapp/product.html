@@ -147,7 +147,7 @@
   					discount = "true";
   				}
   				
-				var amount = document.getElementById("aantalArtikelen").value;
+				var amount = Number(document.getElementById("aantalArtikelen").value);
 				
 				var artikel = {'productID': productid, 'amount': amount, 'price': prijs, 'priceNoFormat': prijsNoFormat, 'discount': discount};
 				
@@ -161,7 +161,7 @@
 					document.getElementById("errormessage").innerHTML = "Voer een getal in van maximaal 20.";
 					showError = true;
 				} else {
-					document.getElementById("successmessage").innerHTML = amount + " keer " + data["Naam"] + "toegevoegd!";
+					document.getElementById("successmessage").innerHTML = amount + " keer artikel '" + data["Naam"] + "' toegevoegd!";
 					if (localStorage.getItem(productid) === null) {
 			  			localStorage.setItem(productid, JSON.stringify(artikel));
 					} else {
