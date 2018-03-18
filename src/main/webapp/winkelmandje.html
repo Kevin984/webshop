@@ -20,6 +20,7 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    
   </head>
   
   <body>
@@ -85,6 +86,7 @@
     <script src="js/moment.min.js"></script>
     
     <script>
+    $.noConflict();
     $.get("../sources/navbar.html", function(data) {
 		$("#navbar_placeholder").replaceWith(data);
 	});
@@ -103,9 +105,10 @@
     for (j = 0; j < localStorage.length; j++){
     	artikelID = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["productID"]);
     	aantal = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["amount"]);
-    	prijs = JSON.parse(localStorage.getItem(localStorage.key(j)))["price"];
+    	prijsNoFormat = (Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["priceNoFormat"]) * aantal);
+    	prijs = prijsNoFormat.toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
     	aanbieding = JSON.parse(localStorage.getItem(localStorage.key(j)))["discount"] == "true";
-    	totalPrice += Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["priceNoFormat"]) * aantal;
+    	totalPrice += prijsNoFormat
     	
     	totalPriceFormatted = totalPrice.toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
     	
@@ -115,9 +118,9 @@
 	if (localStorage.length == 0) {
     	document.getElementById("winkelmand").style.visibility = "hidden";
        	document.getElementById("totaal").style.visibility = "hidden";
-		document.getElementById("winkelmandOmschrijving").innerHTML = "<b>Je hebt op dit moment geen artikelen in je winkelmandje!<br>Klik <a href='/categorie.html?id=1'>hier</a> om de meest recente artikelen te bekijken.</b>";
+		document.getElementById("winkelmandOmschrijving").innerHTML = "<b>U heeft op dit moment geen artikelen in uw winkelmandje!<br>Klik <a href='/categorie.html?id=1'>hier</a> om de meest recent toegevoegde artikelen te bekijken.</b>";
     } else {
-		document.getElementById("winkelmandOmschrijving").innerHTML = "<b>Bevestig hier de inhoud van je winkelmandje voordat je verder gaat.<br>Je kan nog artikelen toevoegen, verwijderen of het aantal wijzigen.<br></b>";
+		document.getElementById("winkelmandOmschrijving").innerHTML = "<b>Bevestig hier de inhoud van uw winkelmandje voordat u verder gaat.<br>U kunt hier nog artikelen toevoegen, verwijderen of het aantal exemplaren wijzigen.<br></b>";
     	document.getElementById("winkelmandjeTotal").innerHTML = totalPriceFormatted;
     }
 		
@@ -135,9 +138,9 @@
 				
 				colorStyle = "style='color:" + color + "';"
 				
-	  			$("#winkelmand").append("<tr id='"+ data["ID"] +"'><td>" + data["Naam"] + "</td><td>" + data["Omschrijving"] + "</td><td " + colorStyle + " >" + prijs + "</td>"
-	  			+ "<td>" + aantal + "</td>"
-	  			+ "<td><button type='button' class='btn btn-warning' onclick='wijzigAantalArtikel(" + data["ID"]
+	  			$("#winkelmand").append("<tr id='"+ data["ID"] +"'><td>" + data["Naam"] + "</td><td>" + data["Omschrijving"] + "</td><td " + colorStyle + " id='priceof"+ data["ID"] +"'>" + prijs + "</td>"
+	  			+ "<td id='amountof"+ data["ID"] +"'>" + aantal + "</td>"
+	  			+ "<td><button type='button' class='btn btn-warning' onclick='showChangeDialog(" + data["ID"]
 				+ ")'>Wijzig aantal</button></td>"
 				+ "<td><button type='button' class='btn btn-warning' onclick='showDeleteConfirmationDialog(" + data["ID"]
 				+ ")'>Verwijder artikel</button></td>"
@@ -150,14 +153,6 @@
 		});
 	};
 	
-	function showDeleteConfirmationDialog(artikelID) {
-		$("#dialog-confirm").dialog('open');
-	}
-	
-	function confirmDelete() {
-		$("#dialog-deleted").dialog('open');
-	}
-	
 	$( function() {
 		$("#dialog-confirm").dialog({
 	    	resizable: false,
@@ -167,11 +162,12 @@
 	      	autoOpen: false,
 	      	draggable: false,
 	      	buttons: {
-	        	"Annuleren": function() {
-	          		$( this ).dialog( "close" );
-	        	},
 	        	"Verwijderen": function() {
-	        		deleteArtikel(artikelID)
+	        		var artikelID = $(this).data('productid');
+					$( this ).dialog( "close" );
+	        		deleteArtikel(artikelID);
+	        	},
+	        	"Annuleren": function() {
 	          		$( this ).dialog( "close" );
 	        	}
 	      	}
@@ -194,6 +190,64 @@
 	    });	
 	});
 	
+	$( function() {
+		$("#dialog-changeamount").dialog({
+	    	resizable: false,
+	      	height: "auto",
+	      	width: 400,
+	      	modal: true,
+	      	autoOpen: false,
+	      	draggable: false,
+	      	buttons: {
+	        	"OK": function() {
+	        		var artIDforChange = $(this).data('productid');
+					$( this ).dialog( "close" );
+	        		changeAmountOfProducts(artIDforChange);
+	        	}
+	      	}
+	    });	
+	});
+	
+	$( function() {
+		$("#dialog-changesuccess").dialog({
+	    	resizable: false,
+	      	height: "auto",
+	      	width: 400,
+	      	modal: true,
+	      	autoOpen: false,
+	      	draggable: false,
+	      	buttons: {
+	        	"OK": function() {
+	          		$( this ).dialog( "close" );
+	        	}
+	      	}
+	    });	
+	});
+	
+	$( function() {
+		$("#dialog-changeerror").dialog({
+	    	resizable: false,
+	      	height: "auto",
+	      	width: 400,
+	      	modal: true,
+	      	autoOpen: false,
+	      	draggable: false,
+	      	buttons: {
+	        	"OK": function() {
+	          		$( this ).dialog( "close" );
+	        	}
+	      	}
+	    });	
+	});
+	
+	function showDeleteConfirmationDialog(ArtikelID) {
+		$("#dialog-confirm").data('productid', ArtikelID).dialog('open');
+	}
+	
+	function confirmDelete() {
+		$("#dialog-deleted").dialog('open');
+	}
+	
 	function deleteArtikel(artikelID){
 		var totalWorthOfItem = Number(JSON.parse(localStorage.getItem(artikelID))["priceNoFormat"]) * Number(JSON.parse(localStorage.getItem(artikelID))["amount"]);
 		totalPrice -= totalWorthOfItem;
@@ -207,14 +261,53 @@
 		if (localStorage.length == 0) {
     	document.getElementById("winkelmand").style.visibility = "hidden";
        	document.getElementById("totaal").style.visibility = "hidden";
-		document.getElementById("winkelmandOmschrijving").innerHTML = "<b>Je hebt op dit moment geen artikelen in je winkelmandje!<br>Klik <a href='/categorie.html?id=1'>hier</a> om de meest recente artikelen te bekijken.</b>";
+		document.getElementById("winkelmandOmschrijving").innerHTML = "<b>U heeft op dit moment geen artikelen in uw winkelmandje!<br>Klik <a href='/categorie.html?id=1'>hier</a> om de meest recent toegevoegde artikelen te bekijken.</b>";
     	}
     	
-    	confirmDelete(artikelID);
+    	confirmDelete();
 	};
 	
-	function wijzigAantalArtikel(artikelID){
-		console.log("wijzig aantal van product met id " + artikelID);
+	function showChangeDialog(artIDforChange){
+		document.getElementById("aantalToChange").value = document.getElementById("amountof" + artIDforChange).innerHTML;
+		$("#dialog-changeamount").data('productid', artIDforChange).dialog('open');
+	};
+	
+	function changeAmountOfProducts(artIDforChange) {
+		var amount = document.getElementById("aantalToChange").value;
+		
+		showError = false;
+				
+		if (amount % 1 !== 0) {
+			document.getElementById("errormessage").innerHTML = "Voer een geheel aantal in.";
+			showError = true;
+		} else if (amount < 1) {
+			document.getElementById("errormessage").innerHTML = "Voer een aantal in van minimaal 1.";
+			showError = true;
+		} else if (amount > 20) {
+			document.getElementById("errormessage").innerHTML = "Voer een aantal in van maximaal 20.";
+			showError = true;
+		} else {
+			document.getElementById("successmessage").innerHTML = "Aantal gewijzigd naar " + amount + "!";
+			var huidigArtikel = JSON.parse(localStorage[artIDforChange]);
+			huidigArtikel['amount'] = amount;
+			localStorage.setItem(artIDforChange, JSON.stringify(huidigArtikel));
+			var oldTotalWorthOfItem = Number(JSON.parse(localStorage.getItem(artIDforChange))["priceNoFormat"]) * document.getElementById("amountof" + artIDforChange).innerHTML;
+			var totalWorthOfItem = Number(JSON.parse(localStorage.getItem(artIDforChange))["priceNoFormat"]) * amount;
+			totalPrice -= oldTotalWorthOfItem;
+			totalPrice += totalWorthOfItem
+			totalPriceFormatted = totalPrice.toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
+			totalWorthOfItemFormatted = totalWorthOfItem.toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
+			
+    		document.getElementById("winkelmandjeTotal").innerHTML = totalPriceFormatted;
+    		document.getElementById("amountof" + artIDforChange).innerHTML = amount;
+    		document.getElementById("priceof" + artIDforChange).innerHTML = totalWorthOfItemFormatted;
+			$("#dialog-changesuccess").dialog('open');return false;
+		}
+		
+		if (showError) {
+			$("#dialog-changeerror").dialog('open');return false;
+			showError = false;
+		}
 	};
 	
 	function goToProductPage(artikelID) {
@@ -233,6 +326,19 @@
 	
 	<div id="dialog-deleted" title="Artikel verwijderd.">
     	<p>Het artikel is succesvol verwijderd.</p>
+	</div>
+	
+	<div id="dialog-changeamount" title="Wijzig aantal">
+  		<p>Hoeveel exemplaren van dit artikel wilt u?</p>
+  		<input id='aantalToChange' type='number' value='1' min='1' max='20'>
+	</div>
+	
+	<div id="dialog-changeerror" title="Onjuiste invoer.">
+    	<p id="errormessage"> </p>
+	</div>
+	
+	<div id="dialog-changesuccess" title="Aantal gewijzigd">
+    	<p id="successmessage"> </p>
 	</div>
     
   </body>

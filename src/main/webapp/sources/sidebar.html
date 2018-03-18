@@ -1,9 +1,20 @@
 <div id="sidebar" class="well sidebar-nav">
 	<h5>
-		<small><b>Categorieën</b></small>
+		<b>Artikel categorieën</b>
 	</h5>
 	<ul id="sidebarul" class="nav nav-pills nav-stacked">
+	</ul>
+	<h5>
+		<b>Overige links (tijdelijk)</b>
+	</h5>
+	<ul class="nav nav-pills nav-stacked">
 		<li><a href="index.html">Home</a></li>
+		<li><a href="winkelmandje.html">Winkelmandje</a></li>
+		<li><a href="bestellen.html">Bestellen</a></li>
+		<li><a href="productbeheer.html">Productbeheer</a></li>
+		<li><a href="categoriebeheer.html">Categoriebeheer</a></li>
+		<li><a href="klantbeheer.html">Klantbeheer</a></li>
+		<li><a href="bestellingenbeheer.html">Bestellingenbeheer</a></li>
 	</ul>
 	<div id="renderList"></div>
 	<h5>
@@ -34,4 +45,9 @@ $.ajax({
 			<!--document.getElementById("productNaam").innerHTML="Er is een error (wss product niet gevonden, ff checken welke response ofzo, dat dit nuttig is)";-->
 		}
 	});
+	
+$("#logout").click(function(event){
+    window.sessionStorage.setItem("sessionToken", "guest");
+    window.location ="index.html";
+})
 </script>
