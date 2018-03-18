@@ -41,7 +41,7 @@ public class AdresDAO extends BaseDAO{
 	public void saveAdres(Adres adres){
 		String query = "INSERT INTO public.\"Adres\"(\r\n" + 
 				"	\"ID\", \"Straat\", \"Straatnummer\")\r\n" + 
-				"	VALUES (nextval('adres_seq'::regclass), '?', '?');";
+				"	VALUES (nextval('adres_seq'::regclass), ?, ?);";
 		try (Connection con = super.getConnection()) {
 			preparedStatement = con.prepareStatement(query);
 			preparedStatement.setString(1, adres.getStraat()); 
