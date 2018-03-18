@@ -291,18 +291,18 @@
 					success: function(response){
 						var data = "Straat=" + straatnaam + "&Straatnummer=" + straatnummer;
 				    	$.post("restservices/adressen", data, function(response){
-				    		console.log(response);
+				    		bestellingFactuurAdresID = response["ID"];
+				    		// NOG TESTEN ^
 				    	})
 				    },
 		   			error: function(response){
-		   				console.log("error met toevoegen adres");
-		   				console.log(response);
+		   				console.log("Er is iets misgegaan bij het toevoegen van het adres.");
 		   			}
 		    	});
 
 		    }
-		    // insert bestelling 
-		    // zojuist gegenereerde bestelling id ophalen en opslaan in bestellingFactuurAdresID
+		    // insert bestelling (adres_id = bestellingFactuurAdresID, account_id = ??? 0 voor guest en anders idk)
+		    // zojuist gegenereerde bestelling id ophalen en opslaan in 
 		    // loop door winkelmandje heen
 		    	// insert bestellingregel
 		    	
