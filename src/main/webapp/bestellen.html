@@ -100,7 +100,7 @@
           
           </div>
           <div id="stap3" style="display:none;">
-          <div class='alert alert-success'>Bedankt voor uw bestelling! We gaan gelijk aan de slag. <button href="index.html" type='button' class='btn btn-success'>Terug naar de hoofdpagina.</button></div>
+          <div style="height:400px; text-align:center;" class='alert alert-success'>Bedankt voor uw bestelling! We gaan gelijk aan de slag. <br><button onclick='goHome()' type='button' class='btn btn-success'>Terug naar de hoofdpagina.</button></div>
           </div>
         </div>
       </div>
@@ -202,6 +202,8 @@
      	if(! $("#agreement").is(":checked")){
     		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>U bent niet akkoord gegaan met de algemene voorwaarden.</div>");
        	} else {
+       	    $(".expendable").replaceWith("<div class='expendable'></div>");
+       		$("#stap2").hide();
        		$("#stap3").show();
        	}
     })
@@ -217,6 +219,7 @@
      	if($("#Naam2").val() == "" || $("#FactuurAdres2").val() == ""){
     		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>U heeft geen naam of adres ingevuld.</div>");
        	} else {
+       		$(".expendable").replaceWith("<div class='expendable'></div>");
        		$("#stap11").hide();
 	     	$("#stap12").hide();
 	     	$("#stap2").show();
@@ -272,6 +275,10 @@
     
     function goToProductPage(artikelID) {
 		window.location="product.html?id=" + artikelID;
+	}
+	
+	function goHome() {
+		window.location="index.html";
 	}
 	
     </script>
