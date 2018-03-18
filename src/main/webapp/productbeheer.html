@@ -173,10 +173,10 @@
 	   		     var replacer = $("<tr>").attr('id', trid);
 	   		     
 	   		     var formulier = $("<form id='updateForm"+trid+"'>");
-	   		     formulier.append($("<td>").append($("<input value='"+trid+"' readonly name='ID'/>"))); //inputs vullen en deze rij herhalen
-	   		     formulier.append($("<td>").append($("<input placeholder='Naam' name='Naam' required='required' type='text'/>"))); //inputs vullen en deze rij herhalen
-	   		     formulier.append($("<td>").append($("<input placeholder='Omschrijving' name='Omschrijving' type='text' required='required'/>"))); //inputs vullen en deze rij herhalen
-	   		     formulier.append($("<td>").append($("<input placeholder='Prijs' type='text' required='required' name='Prijs'/>"))); //inputs vullen en deze rij herhalen
+	   		     formulier.append($("<td>").append($("<input id='id"+trid+"' value='"+trid+"' readonly name='ID'/>"))); //inputs vullen en deze rij herhalen
+	   		     formulier.append($("<td>").append($("<input id='naam"+trid+"' placeholder='Naam' name='Naam' required='required' type='text'/>"))); //inputs vullen en deze rij herhalen
+	   		     formulier.append($("<td>").append($("<input id='omschrijving"+trid+"' placeholder='Omschrijving' name='Omschrijving' type='text' required='required'/>"))); //inputs vullen en deze rij herhalen
+	   		     formulier.append($("<td>").append($("<input id='prijs"+trid+"' placeholder='Prijs' type='text' required='required' name='Prijs'/>"))); //inputs vullen en deze rij herhalen
 	   		     formulier.append($("<td>").append($("<button type='button' class='btn btn-primary' id='wijzigArtikel" + artikel.ID + "'>Wijziging opslaan</button>"))); //inputs vullen en deze rij herhalen
 	   		     formulier.append($("<td>").append($("<button type='button' class='btn btn-info' id='wijzigArtikelAnnuleren" + artikel.ID+ "'>Wijzigen annuleren</button>"))); //inputs vullen en deze rij herhalen
 
@@ -201,6 +201,11 @@
 		   	   			})	*/
 		   	   	//functie hierboven in de comment werkt niet door een '403 forbidden' error, nu krijgt de gebruiker een bericht van de browser  	
 		   	   	     var trid = $(this).closest('tr').attr('id');
+		   	   			console.log($("#id"+trid).val());
+		   	   			console.log($("#naam"+trid).val());
+		   	   			console.log($("#omschrijving"+trid).val());
+		   	   			console.log($("#prijs"+trid).val());
+
      var uri = "restservices/producten/" + trid;
 		   	   	   $.ajax(uri, {
         type: "PUT",

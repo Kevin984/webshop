@@ -1,5 +1,7 @@
 package ic.webshop.webservices;
 
+import java.net.MalformedURLException;
+
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -31,5 +33,5 @@ public interface BestellingService {
 	
 	@POST 
 	@Produces("application/json")
-	public String createBestelling( @FormParam("AdresID") int adresID, @FormParam("AccountID") int accountIDm);
+	public String createBestelling( @FormParam("AdresID") int adresID, @FormParam("AccountID") int accountIDm) throws MalformedURLException;
 }
