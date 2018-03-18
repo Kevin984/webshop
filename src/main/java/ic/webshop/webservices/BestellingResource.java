@@ -1,5 +1,8 @@
 package ic.webshop.webservices;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
@@ -14,6 +17,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
+import javax.xml.namespace.QName;
+import javax.xml.ws.Service;
 
 import ic.webshop.domain.Account;
 import ic.webshop.domain.Adres;
@@ -21,6 +26,7 @@ import ic.webshop.domain.Bestelling;
 import ic.webshop.persistence.AccountDAO;
 import ic.webshop.persistence.AdresDAO;
 import ic.webshop.persistence.BestellingDAO;
+import ic.webshop.soap.OrderNumber;
 @Path("/bestellingen") 
 
 public class BestellingResource implements BestellingService{
@@ -86,8 +92,14 @@ private AccountDAO accountDAO = new AccountDAO();
 	@Override
 	@POST
 	@Produces("application/json")
-	public String createBestelling(@FormParam("AdresID") int adresID, @FormParam("AccountID") int accountID) {
-		
+	public String createBestelling(@FormParam("AdresID") int adresID, @FormParam("AccountID") int accountID) throws MalformedURLException {
+		URL url = new URL("https://webshopsoap.herokuapp.com/ws/ordernumber?wsdl");
+
+	        QName qname = new QName("http://Service.SOAP/", "OrderNumberImplService");
+	        Service service = Service.create(url, qname);
+	        OrderNumber hello = service.getPort(OrderNumber.class);
+	        System.out.println(hello.getRandomOrdernumber("","","",34.34));	
+	
 		Adres adres = adresDAO.findAdresByPK(adresID);
 		Account account = accountDAO.findAccountByPK(accountID);
 		Bestelling bestelling = new Bestelling(adres, account);

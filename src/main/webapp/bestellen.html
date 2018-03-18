@@ -31,7 +31,7 @@
         
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 id="categorieNaam" class="page-header">Bestellen</h1>
-          <p id="categorieOmschrijving"> </p>
+          <p id="bestelBericht"> </p>
           <div class='expendable'></div>
 		  
 		  <div id="stap11" style="display:none;">
@@ -55,7 +55,8 @@
             <table class="table table-striped" id='bestelling'>
               <thead>
               <tr><td>Naam: </td><td><input class='form-control' placeholder='Naam' name='Naam' id="Naam2" required='required' type='text'/></td></tr>
-              <tr><td>Factuuradres: </td><td><input class='form-control' placeholder='Factuuradres' name='FactuurAdres' id="FactuurAdres2" required='required' type='text'/></td></tr>              
+              <tr><td>Straatnaam: </td><td><input class='form-control' placeholder='Straatnaam' name='StraatNaam' id="StraatNaam" required='required' type='text'/></td></tr>   
+              <tr><td>Huisnummer: </td><td><input class='form-control' placeholder='Huisnummer' name='HuisNummer' id="HuisNummer" required='required' type='text'/></td></tr>               
               <tr><td></td><td><td></td><td><button id="2goToStap2" type='button' class='btn btn-success'>Volgende</button></td></tr>
               </thead>
               <tbody>
@@ -96,7 +97,6 @@
           </table>
           
           </div>                         
-              
           
           </div>
           <div id="stap3" style="display:none;">
@@ -134,14 +134,14 @@
     }
     	
     if(user == 'Guest' || null){
-    	console.log('guest here');
+    	document.getElementById("bestelBericht").innerHTML = "<b>Voer uw naam en adres in.</b>";
     	$("#stap11").hide();
     	$("#stap12").show();
     	$("#stap2").hide();
     	$("#stap3").hide();
     }
     else{
-    	console.log(user);
+        document.getElementById("bestelBericht").innerHTML = "<b>Controleer uw naam en adres.</b>";
     	$("#stap11").show();
     	$("#stap12").hide();
     	$("#stap2").hide();
@@ -181,52 +181,45 @@
     	    	})
     			
     			$.ajax({
-    	    	    		url: "restservices/adressen/"+acc.FactuurAdresID,
-    	    	    		method: "GET",
-    	    	    		beforeSend: function (xhr) {
-    	    	    		var token = window.sessionStorage.getItem("sessionToken");
-    	    	    		xhr.setRequestHeader( 'Authorization', 'Bearer ' + token);
-    	    	    		},
-    	    	    		success: function (adres) {
-    	    	    	    	$("#factuuradres1").html(adres.Straat + ' ' + adres.Straatnummer);
-    	    	    		}
-    	    	    		
-    	    	    	})
+    	    		url: "restservices/adressen/"+acc.FactuurAdresID,
+    	    		method: "GET",
+    	    		beforeSend: function (xhr) {
+    	    		var token = window.sessionStorage.getItem("sessionToken");
+    	    		xhr.setRequestHeader( 'Authorization', 'Bearer ' + token);
+    	    		},
+    	    		success: function (adres) {
+    	    	    	$("#factuuradres1").html(adres.Straat + ' ' + adres.Straatnummer);
+    	    		}
+    	    		
+    	    	})
+    	    	bestellingFactuurAdresID = acc.FactuurAdresID;
     		}
     		
     	})
     }
-    
-    
-    $("#bestellen").click(function(event){
-     	if(! $("#agreement").is(":checked")){
-    		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>U bent niet akkoord gegaan met de algemene voorwaarden.</div>");
-       	} else {
-       	    $(".expendable").replaceWith("<div class='expendable'></div>");
-       		$("#stap2").hide();
-       		$("#stap3").show();
-       	}
-    })
   
      $("#1goToStap2").click(function(event){
-    	  	$("#stap11").hide();
-        	$("#stap12").hide();
-        	$("#stap2").show();
-        	$("#stap3").hide();
+        document.getElementById("bestelBericht").innerHTML = "<b>Controleer de inhoud van uw winkelmandje.</b>";
+    	$("#stap11").hide();
+     	$("#stap12").hide();
+       	$("#stap2").show();
+       	$("#stap3").hide();
     })
     
      $("#2goToStap2").click(function(event){
-     	if($("#Naam2").val() == "" || $("#FactuurAdres2").val() == ""){
+     	if($("#Naam2").val() == "" || $("#StraatNaam").val() == "" || $("#HuisNummer").val() == ""){
     		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>U heeft geen naam of adres ingevuld.</div>");
        	} else {
+       	    document.getElementById("bestelBericht").innerHTML = "<b>Controleer de inhoud van uw winkelmandje.</b>";
        		$(".expendable").replaceWith("<div class='expendable'></div>");
        		$("#stap11").hide();
 	     	$("#stap12").hide();
 	     	$("#stap2").show();
 	     	$("#stap3").hide();
 	 		
-	     	var naam = $("#Naam2").val();
-	     	var adres = $("#FactuurAdres2").val();
+	     	naam = $("#Naam2").val();
+	     	straatnaam = $("#StraatNaam").val();
+	     	straatnummer = $("#HuisNummer").val();
        	}
     })
     
@@ -280,6 +273,51 @@
 	function goHome() {
 		window.location="index.html";
 	}
+	
+	
+	$("#bestellen").click(function(event){
+     	if(! $("#agreement").is(":checked")){
+    		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>U bent niet akkoord gegaan met de algemene voorwaarden.</div>");
+       	} else {
+       	    $(".expendable").replaceWith("<div class='expendable'></div>");
+       	    document.getElementById("bestelBericht").innerHTML = " ";
+       		$("#stap2").hide();
+       		$("#stap3").show();
+       		if(user == 'Guest' || null){
+		    	// insert adres (naam, straatnaam, straatnummer)
+		    	
+		    	$.ajax({
+					url: "restservices/adressen/",
+					success: function(response){
+						var data = "Straat=" + straatnaam + "&Straatnummer=" + straatnummer;
+				    	$.post("restservices/adressen", data, function(response){
+				    		console.log(response);
+				    	})
+				    },
+		   			error: function(response){
+		   				console.log("error met toevoegen adres");
+		   				console.log(response);
+		   			}
+		    	});
+
+		    }
+		    // insert bestelling 
+		    // zojuist gegenereerde bestelling id ophalen en opslaan in bestellingFactuurAdresID
+		    // loop door winkelmandje heen
+		    	// insert bestellingregel
+		    	
+		    	
+		    //Adres: Straat, Straatnummer
+		    
+		    //Bestelling: Adres_ID, Account_ID
+		    
+		    //Bestellingsregel: Aantal, Product_ID, Bestelling_ID	
+		    	
+
+       		
+       	}
+    })
+	
 	
     </script>
   </body>

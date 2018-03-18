@@ -17,6 +17,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import ic.webshop.domain.Aanbieding;
@@ -87,9 +88,9 @@ JsonArrayBuilder jab = Json.createArrayBuilder();
 	@Override
 	@PUT
 	@Path("{ID}")
-	@Produces("application/json") 
-	public String updateProduct(@PathParam("ID") int ID, @FormParam("Naam") String naam, @FormParam("Omschrijving") String omschrijving
-			, @FormParam("Prijs") double prijs) {
+	@Produces("application/json")
+	@Consumes({ MediaType.WILDCARD })
+	public String updateProduct(@PathParam("ID") int ID, @FormParam("Naam") String naam, @FormParam("Omschrijving") String omschrijving, @FormParam("Prijs") double prijs) {
 		Product found = null;
 		found = productDAO.findByPK(ID);
 		if(found != null) {
