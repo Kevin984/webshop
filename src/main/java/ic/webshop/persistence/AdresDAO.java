@@ -55,6 +55,7 @@ public class AdresDAO extends BaseDAO{
                 adresID = rs.getInt(1);
             }
 			preparedStatement.close();
+			adres.setID(adresID);
 			System.out.println("Adres met adres ID " + adresID  + " saved.");
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
