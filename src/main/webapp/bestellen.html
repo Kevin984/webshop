@@ -287,7 +287,7 @@
 		    	// insert adres (naam, straatnaam, straatnummer)
 		    	
 		    	$.ajax({
-					url: "restservices/producten/",
+					url: "restservices/adressen/",
 					success: function(response){
 						var data = "Straat=" + straatnaam + "&Straatnummer=" + straatnummer;
 				    	$.post("restservices/adressen", data, function(response){
