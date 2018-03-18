@@ -34,7 +34,7 @@
           <p id="categorieOmschrijving"> </p>
           <div class='expendable'></div>
 		  
-		  <div id="stap11">
+		  <div id="stap11" style="visibility:hidden;">
           <div class="table-responsive">		  
             <table class="table table-striped" id='bestelling'>
               <thead>
@@ -50,7 +50,7 @@
           </div>
           </div>
           
-           <div id="stap12">
+           <div id="stap12" style="visibility:hidden;">
           <div class="table-responsive">		  
             <table class="table table-striped" id='bestelling'>
               <thead>
@@ -64,7 +64,7 @@
           </div>
           </div>
           
-          <div id="stap2">
+          <div id="stap2" style="visibility:hidden;">
             	     <div class="table-responsive">		  
             <table class="table table-striped" id='winkelmand'>
               <thead>
@@ -92,15 +92,14 @@
               </thead>
               <tbody>
               
-               <tr><td><input type="checkbox" id="agreement"> Ik heb mijn bestelling gecontroleerd en ga akkoord met de voorwaarden.</td>
-               <td><button id="bestellen" type='button' class='btn btn-success'>Bestelling plaatsen</button></td></tr>
+               <tr><td><input type="checkbox" id="agreement"> Ik heb mijn bestelling gecontroleerd en ga akkoord met de voorwaarden.</td><td id="winkelmandjeTotal"></td></tr>
           </table>
           
           </div>                         
               
           
           </div>
-          <div id="stap3">
+          <div id="stap3" style="visibility:hidden;">
           <div class='alert alert-success'>Bedankt voor uw bestelling! We gaan gelijk aan de slag. <button href="index.html" type='button' class='btn btn-success'>Terug naar de hoofdpagina.</button></div>
           </div>
         </div>
@@ -122,35 +121,6 @@
 		$("#sidebar_placeholder").replaceWith(data);
 	});
 	
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
    		$("#stap11").hide();
     	$("#stap12").hide();
     	$("#stap2").hide();
@@ -253,7 +223,52 @@
      	
     })
     
+    totalPrice = 0;
     
+    for (j = 0; j < localStorage.length; j++){
+    	artikelID = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["productID"]);
+    	aantal = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["amount"]);
+    	prijsNoFormat = (Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["priceNoFormat"]) * aantal);
+    	prijs = prijsNoFormat.toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
+    	aanbieding = JSON.parse(localStorage.getItem(localStorage.key(j)))["discount"] == "true";
+    	totalPrice += prijsNoFormat
+    	
+    	totalPriceFormatted = totalPrice.toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
+    	
+   		fromStorageToTable(artikelID, aantal, prijs, aanbieding);
+	}
+	
+	//document.getElementById("winkelmandOmschrijving").innerHTML = "<b>Bevestig hier de inhoud van uw winkelmandje voordat u verder gaat.<br>U kunt hier nog artikelen toevoegen, verwijderen of het aantal exemplaren wijzigen.<br></b>";
+    document.getElementById("winkelmandjeTotal").innerHTML = totalPriceFormatted;
+		
+	function fromStorageToTable(artikelID, aantal, prijs, aanbieding) {
+		$.ajax({
+			url : "restservices/producten/" + artikelID,
+			method : "GET",
+			success : function (data) {
+			
+				if (aanbieding) {
+				 	var color = "#388724";
+				} else {
+					var color = "000000";	
+				}
+				
+				colorStyle = "style='color:" + color + "';"
+				
+	  			$("#winkelmand").append("<tr id='"+ data["ID"] +"'><td>" + data["Naam"] + "</td><td>" + data["Omschrijving"] + "</td><td " + colorStyle + " id='priceof"+ data["ID"] +"'>" + prijs + "</td>"
+	  			+ "<td id='amountof"+ data["ID"] +"'>" + aantal + "</td>"
+				+ "<td><button type='button' class='btn btn-warning' onclick='goToProductPage(" + data["ID"]
+				+ ")'>Bekijk artikel</button></td></tr>");  
+			},
+			error : function() {
+				document.getElementById("winkelmandOmschrijving").innerHTML="Er is iets misgegaan bij het laden van uw winkelmandje.";
+			}
+		});
+	};
+    
+    function goToProductPage(artikelID) {
+		window.location="product.html?id=" + artikelID;
+	}
 	
     </script>
   </body>
