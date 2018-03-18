@@ -65,7 +65,6 @@
           </div>
           
           <div id="stap2">
-            <table class="table table-striped">  
             	     <div class="table-responsive">		  
             <table class="table table-striped" id='winkelmand'>
               <thead>
@@ -74,18 +73,15 @@
                   <th class="col-xs-2">Omschrijving</th>
 				  <th class="col-xs-1">Prijs</th>
 				  <th class="col-xs-1">Aantal</th>
-				  <th class="col-xs-1">Wijzig aantal</th>
-				  <th class="col-xs-1">Verwijder artikel</th>
 				  <th class="col-xs-1">Bekijk artikel</th>
                 </tr>
               </thead>
               <tbody>
-              
               </tbody>
             </table>
           </div>
           
-          <div class="table-responsive">		  
+              <div class="table-responsive">		  
             <table class="table table-striped" id='totaal'>
               <thead>
                 <tr>
@@ -95,15 +91,13 @@
                 </tr>
               </thead>
               <tbody>
-              	<tr>
-              		<td></td><td id="winkelmandjeTotal"></td><td><button type='button' class='btn btn-warning' onclick='checkout()'>Bestellen</button></td>
-              	</tr>
-              </tbody>
-            </table>
-          </div>                         
+              
                <tr><td><input type="checkbox" id="agreement"> Ik heb mijn bestelling gecontroleerd en ga akkoord met de voorwaarden.</td>
                <td><button id="bestellen" type='button' class='btn btn-success'>Bestelling plaatsen</button></td></tr>
           </table>
+          
+          </div>                         
+              
           
           </div>
           <div id="stap3">
@@ -134,56 +128,6 @@
     	window.location.href="index.html";
     })
     
-    
-    
-    
-    
-    
-    totalPrice = 0;
-    
-    
-    for (j = 0; j < localStorage.length; j++){
-    	artikelID = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["productID"]);
-    	aantal = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["amount"]);
-    	prijs = JSON.parse(localStorage.getItem(localStorage.key(j)))["price"];
-    	aanbieding = JSON.parse(localStorage.getItem(localStorage.key(j)))["discount"] == "true";
-    	totalPrice += Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["priceNoFormat"]) * aantal;
-    	
-    	totalPriceFormatted = totalPrice.toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
-    	
-   		fromStorageToTable(artikelID, aantal, prijs, aanbieding);
-	}
-	
-	document.getElementById("winkelmandjeTotal").innerHTML = totalPriceFormatted;
-	
-	function fromStorageToTable(artikelID, aantal, prijs, aanbieding) {
-		$.ajax({
-			url : "restservices/producten/" + artikelID,
-			method : "GET",
-			success : function (data) {
-			
-				if (aanbieding) {
-				 	var color = "#388724";
-				} else {
-					var color = "000000";	
-				}
-				
-				colorStyle = "style='color:" + color + "';"
-				
-	  			$("#winkelmand").append("<tr id='"+ data["ID"] +"'><td>" + data["Naam"] + "</td><td>" + data["Omschrijving"] + "</td><td " + colorStyle + " >" + prijs + "</td>"
-	  			+ "<td>" + aantal + "</td>"
-	  			+ "<td><button type='button' class='btn btn-warning' onclick='wijzigAantalArtikel(" + data["ID"]
-				+ ")'>Wijzig aantal</button></td>"
-				+ "<td><button type='button' class='btn btn-warning' onclick='deleteArtikel(" + data["ID"]
-				+ ")'>Verwijder artikel</button></td>"
-				+ "<td><button type='button' class='btn btn-warning' onclick='goToProductPage(" + data["ID"]
-				+ ")'>Bekijk artikel</button></td></tr>");  
-			},
-			error : function() {
-				document.getElementById("productNaam").innerHTML="Er is iets misgegaan.";
-			}
-		});
-	};
     
     
     
