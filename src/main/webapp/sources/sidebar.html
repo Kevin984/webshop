@@ -17,13 +17,32 @@
 		<li><a href="bestellingenbeheer.html">Bestellingenbeheer</a></li>
 	</ul>
 	<div id="renderList"></div>
-	<h5>
+	<h5 id="logoutlink">
 		<i class="glyphicon glyphicon-log-out"></i>
-		<a href="#"><span id="logout">Uitloggen</span></a>
+		<a href="/index.html"><span id="logout">Uitloggen</span></a>
+	</h5>
+	<h5 id="loginlink">
+		<i class="glyphicon glyphicon-log-in"></i>
+		<a href="/login.html"><span id="login">Inloggen</span></a>
 	</h5>
 </div>
 
 <script>
+var user = sessionStorage.getItem('loggedInUsername');
+    
+if(sessionStorage.getItem('loggedInUsername') == null){
+	user = 'Guest';
+}
+	
+if(user == 'Guest' || null){
+	$("#logoutlink").hide();
+	$("#loginlink").show();
+}
+else{
+	$("#logoutlink").hide();
+	$("#loginlink").show();
+}
+
 $.ajax({
 		url : "https://webshopiac.herokuapp.com/restservices/categorieen",
 		method : "GET",
@@ -48,6 +67,6 @@ $.ajax({
 	
 $("#logout").click(function(event){
     window.sessionStorage.setItem("sessionToken", "guest");
-    window.location ="index.html";
+    //window.location ="index.html";
 })
 </script>
