@@ -39,16 +39,23 @@ public class AdresDAO extends BaseDAO{
 	}
 	
 	public void saveAdres(Adres adres){
+		int adresID = 0;
 		String query = "INSERT INTO public.\"Adres\"(\r\n" + 
 				"	\"ID\", \"Straat\", \"Straatnummer\")\r\n" + 
 				"	VALUES (nextval('adres_seq'::regclass), ?, ?);";
 		try (Connection con = super.getConnection()) {
-			preparedStatement = con.prepareStatement(query);
+			preparedStatement = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS); 
 			preparedStatement.setString(1, adres.getStraat()); 
 			preparedStatement.setString(2, adres.getStraatNummer()); 
 			preparedStatement.executeUpdate();	
+			
+			ResultSet rs = preparedStatement.getGeneratedKeys();
+            if(rs.next())
+            {
+                adresID = rs.getInt(1);
+            }
 			preparedStatement.close();
-			System.out.println("Artikel: " + adres.getID()  + " saved.");
+			System.out.println("Adres met adres ID " + adresID  + " saved.");
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 		}	
