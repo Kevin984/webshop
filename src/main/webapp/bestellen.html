@@ -338,10 +338,14 @@
 			var aantal = amountCell.innerHTML;
 			var productID = amountCell.id.substring(8);
 			
+			console.log("voor ajax call, aantal = " + aantal + " en productID = " + productID);
+			
 		    $.ajax({
 				url: "restservices/bestellingsregels/",
 				success: function(response){
+					console.log("tijdens ajax call, vlak voor post, aantal = " + aantal + " en productID = " + productID);
 					var data = "Aantal=" + aantal + "&BestellingID=" + bestellingID + "&ProductID=" + productID;
+					console.log("meegestuurde data: " + data);
 			    	$.post("restservices/bestellingsregels", data, function(response){
 			    		console.log("bestellingregel toegevoegd met id " + response["ID"]);
 			    	})
