@@ -104,7 +104,7 @@ private AccountDAO accountDAO = new AccountDAO();
 	@Path("ordernumber/{ID}")
 	@Produces("application/json")
 	public void getUniqueOrderNumber(@PathParam("ID") int ID, @FormParam("Naam") String naam, @FormParam("Straat") String straat, @FormParam("Straatnummer") String straatnummer, 
-		@FormParam("Bedrag") double bedrag,	@FormParam("BestellingID") int bestellingID ) throws MalformedURLException {
+		@FormParam("Bedrag") double bedrag  ) throws MalformedURLException {
 		URL url = new URL("https://webshopsoap.herokuapp.com/ws/ordernumber?wsdl");
         QName qname = new QName("http://Service.SOAP/", "OrderNumberImplService");
         Service service = Service.create(url, qname);
