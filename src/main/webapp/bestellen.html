@@ -333,21 +333,26 @@
    		var table = document.getElementById('bestellingregels');
 		var rowLength = table.rows.length;
 		for(i=0; i<rowLength; i+=1){
-		    $.ajax({
-				url: "restservices/bestellingsregels/",
-				success: function(response){
-					console.log(i);
-					var data = "Aantal=" + document.getElementById('bestellingregels').rows[i].cells[3].innerHTML + "&BestellingID=" + bestellingID + "&ProductID=" + document.getElementById('bestellingregels').rows[i].cells[3].id.substring(8);
-					console.log(data);
-			    	$.post("restservices/bestellingsregels", data, function(response){
-			    		console.log("bestellingregel toegevoegd met id " + response["ID"]);
-			    	})
-			    },
-	   			error: function(response){
-	   				console.log("Er is iets misgegaan bij het opslaan van de bestellingsregels.");
-	   			}
-	    	});
+			aantal = document.getElementById('bestellingregels').rows[i].cells[3].innerHTML;
+		    productID = document.getElementById('bestellingregels').rows[i].cells[3].id.substring(8);
+		    doBestellingsregelCall(aantal, productID);
 	    }
+    }
+    
+    function doBestellingsregelCall(aantal, productID) {
+    	$.ajax({
+			url: "restservices/bestellingsregels/",
+			success: function(response){
+				var data = "Aantal=" + aantal + "&BestellingID=" + bestellingID + "&ProductID=" + productID;
+				console.log(data);
+		    	$.post("restservices/bestellingsregels", data, function(response){
+		    		console.log("bestellingregel toegevoegd met id " + response["ID"]);
+		    	})
+		    },
+   			error: function(response){
+   				console.log("Er is iets misgegaan bij het opslaan van de bestellingsregels.");
+   			}
+    	});
     }
     </script>
   </body>
