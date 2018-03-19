@@ -27,7 +27,7 @@ private BestellingDAO bestellingDAO = new BestellingDAO();
 			while(dbResultSet.next()){ 
 				 int ID = dbResultSet.getInt("ID");
 				 int aantal = dbResultSet.getInt("Aantal");
-				 double totaalprijs = dbResultSet.getDouble("Totaalprijs");
+				 double totaalprijs = dbResultSet.getDouble("Prijs");
 				 int productID = dbResultSet.getInt("Product_ID");
 				 int bestellingID = dbResultSet.getInt("Bestelling_ID");
 				 
