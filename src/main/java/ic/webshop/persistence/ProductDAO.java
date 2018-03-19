@@ -15,7 +15,6 @@ import ic.webshop.domain.Product;
 public class ProductDAO extends BaseDAO{
 	private PreparedStatement preparedStatement = null;
 private ProductCategorieDAO pcDAO = new ProductCategorieDAO();
-private AanbiedingDAO aanbiedingDAO = new AanbiedingDAO();
 
 	private List<Product> selectArtikelen(String query){
 		List<Product> producten = new ArrayList<Product>();
@@ -166,17 +165,4 @@ private AanbiedingDAO aanbiedingDAO = new AanbiedingDAO();
 			return result;
 		
 	}
-	
-	public double getPrijs(int productID) {
-		double prijs = -1;
-		double aanbiedingprijs = aanbiedingDAO.getPrijs(productID);
-		if (aanbiedingprijs == -1) {
-			prijs = findByPK(productID).getPrijs();
-		} else {
-			return aanbiedingprijs;
-		}
-		return prijs;
-	}
-	
-	
 }

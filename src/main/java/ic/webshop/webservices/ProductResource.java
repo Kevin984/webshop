@@ -26,6 +26,7 @@ import ic.webshop.persistence.ProductDAO;
 @Path("/producten") 
 public class ProductResource implements ProductService{
 	private ProductDAO productDAO = new ProductDAO();
+	private AanbiedingResource aanbiedingResource = new AanbiedingResource();
 	
 	@Override
 	public String getProducten() {
@@ -123,5 +124,16 @@ JsonArrayBuilder jab = Json.createArrayBuilder();
 		job.add("Omschrijving", a.getOmschrijving());
 		job.add("Prijs", a.getPrijs());
 		return job;
+	}
+	
+	public double getPrijs(int productID) {
+		double prijs = -1;
+		double aanbiedingprijs = aanbiedingResource.getPrijs(productID);
+		if (aanbiedingprijs == -1) {
+			prijs = productDAO.findByPK(productID).getPrijs();
+		} else {
+			return aanbiedingprijs;
+		}
+		return prijs;
 	}
 }

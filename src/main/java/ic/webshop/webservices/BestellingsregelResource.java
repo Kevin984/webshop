@@ -22,11 +22,14 @@ import ic.webshop.domain.Product;
 import ic.webshop.persistence.BestellingDAO;
 import ic.webshop.persistence.BestellingsregelDAO;
 import ic.webshop.persistence.ProductDAO;
+
 @Path("/bestellingsregels") 
 public class BestellingsregelResource implements BestellingsregelService{
 private BestellingsregelDAO bDAO = new BestellingsregelDAO();
 private ProductDAO productDAO = new ProductDAO();
+private ProductResource prodResource = new ProductResource();
 private BestellingDAO bestellingDAO = new BestellingDAO();
+
 
 	@Override
 	public String getBestellingsregels() {
@@ -94,7 +97,7 @@ private BestellingDAO bestellingDAO = new BestellingDAO();
 		
 		Bestelling bestelling = bestellingDAO.findBestellingByPK(bestellingID);
 		Product product = productDAO.findByPK(productID);
-		double totaalprijs = productDAO.getPrijs(productID) * aantal;
+		double totaalprijs = prodResource.getPrijs(productID) * aantal;
 		
 		Bestellingsregel bestellingsregel = new Bestellingsregel(bestelling, aantal, totaalprijs, product);
 		bDAO.saveBestellingsregel(bestellingsregel);
@@ -127,5 +130,4 @@ private BestellingDAO bestellingDAO = new BestellingDAO();
 		job.add("ProductID", b.getProduct().getID());
 		return job;
 	}
-
 }

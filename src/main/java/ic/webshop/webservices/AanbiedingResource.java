@@ -153,4 +153,16 @@ return aanbiedingToJson(aanbieding).build().toString();
 		job.add("ProductID", a.getProduct().getID());
 		return job;
 	}
+	
+	public double getPrijs(int productID) {
+		double aanbiedingprijs = -1;
+		List<Aanbieding> aanbiedingenVanDitProduct = aDAO.findAanbiedingByProductID(productID);
+		for (Aanbieding a : aanbiedingenVanDitProduct) {
+			if (a.checkIfGeldig()) {
+				aanbiedingprijs = a.getAanbiedingPrijs();
+				break;
+			}
+		}
+		return aanbiedingprijs;
+	}
 }

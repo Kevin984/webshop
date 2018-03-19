@@ -238,7 +238,7 @@
    		fromStorageToTable(artikelID, aantal, prijs, aanbieding);
 	}
 	
-	//document.getElementById("winkelmandOmschrijving").innerHTML = "<b>Bevestig hier de inhoud van uw winkelmandje voordat u verder gaat.<br>U kunt hier nog artikelen toevoegen, verwijderen of het aantal exemplaren wijzigen.<br></b>";
+	//document.getElementById("bestelBericht").innerHTML = "<b>Bevestig hier de inhoud van uw winkelmandje voordat u verder gaat.<br>U kunt hier nog artikelen toevoegen, verwijderen of het aantal exemplaren wijzigen.<br></b>";
     document.getElementById("winkelmandjeTotal").innerHTML = totalPriceFormatted;
 		
 	function fromStorageToTable(artikelID, aantal, prijs, aanbieding) {
@@ -261,7 +261,7 @@
 				+ ")'>Bekijk artikel</button></td></tr>");  
 			},
 			error : function() {
-				document.getElementById("winkelmandOmschrijving").innerHTML="Er is iets misgegaan bij het laden van uw winkelmandje.";
+				document.getElementById("bestelBericht").innerHTML="Er is iets misgegaan bij het laden van uw winkelmandje.";
 			}
 		});
 	};
