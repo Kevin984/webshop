@@ -49,20 +49,25 @@ private BestellingDAO bestellingDAO = new BestellingDAO();
 	}
 	
 	public void saveBestellingsregel(Bestellingsregel bestellingsregel){
+		int bestellingsregelID = 0;
 		String query = "INSERT INTO public.\"Bestellingsregel\"(\r\n" + 
 				"    \"ID\", \"Aantal\", \"Prijs\", \"Product_ID\", \"Bestelling_ID\")\r\n" + 
-				"    VALUES (nextval('bestellingsregel_seq'::regclass), ?, (SELECT \"Prijs\" from public.\"Product\" WHERE \"ID\" = ?) * ?, ?, ?);";
+				"    VALUES (nextval('bestellingsregel_seq'::regclass), ?, ?, ?, ?);";
 		try (Connection con = super.getConnection()) {
-			preparedStatement = con.prepareStatement(query);
-			
+			preparedStatement = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);			
 			preparedStatement.setInt(1, bestellingsregel.getAantal()); 
-			preparedStatement.setInt(2, bestellingsregel.getProduct().getID()); 
-			preparedStatement.setInt(3, bestellingsregel.getAantal()); 
+			//preparedStatement.setFloat(2, bestellingsregel.getTotaalPrijs()); i have no idea what i am doing kavn help pls
 			preparedStatement.setInt(1, bestellingsregel.getProduct().getID()); 
 			preparedStatement.setInt(1, bestellingsregel.getBestelling().getID()); 	
 			preparedStatement.executeUpdate();	
+			ResultSet rs = preparedStatement.getGeneratedKeys();
+            if(rs.next())
+            {
+                bestellingsregelID = rs.getInt(1);
+            }
 			preparedStatement.close();
-			System.out.println("bestellingsregel: " + bestellingsregel.getID()  + " saved.");
+			bestellingsregel.setID(bestellingsregelID);
+			System.out.println("Bestelling: " + bestellingsregel.getID()  + " saved.");
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 		}	

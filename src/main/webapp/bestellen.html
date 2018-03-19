@@ -309,20 +309,31 @@
 	   			error: function(response){
 	   				console.log("Er is iets misgegaan bij het opslaan van de bestelling.");
 	   			}
-	    	});	    	
-	    	$('#winkelmand').each(function (i, row) {
-			        //var $row = $(row),
-		            //$amount = $row.find('input[name*="family"]'),
-		            //$grade = $row.find('input[name*="grade"]'),
-		            //$checkedBoxes = $row.find('input:checked');
-		            // insert bestellingregel (aantal, product_id, bestelling_id)
-		            
-		            // WERKT NOG NIET
-		    });
+	    	});	   
+	    	 	
+	    	var table = document.getElementById('bestellingregels');
+			var rowLength = table.rows.length;
+			for(var i=0; i<rowLength; i+=1){
+				var row = table.rows[i];
+				var amountCell = row.cells[3];
+				var aantal = amountCell.innerHTML;
+				var productID = amountCell.id.substring(8);
+				
+				$.ajax({
+					url: "restservices/bestellingsregels/",
+					success: function(response){
+						var data = "Aantal=" + aantal + "&BestellingID=" + bestellingID + "&ProductID=" + productID;
+				    	$.post("restservices/bestellingsregels", data, function(response){
+				    		console.log("bestellingregel toegevoegd met id " + response["ID"]);
+				    	})
+				    },
+		   			error: function(response){
+		   				console.log("Er is iets misgegaan bij het opslaan van de bestellingsregels.");
+		   			}
+		    	});	
+			}
        	}
     })
-	
-	
     </script>
   </body>
 </html>

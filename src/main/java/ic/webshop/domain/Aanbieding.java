@@ -73,4 +73,9 @@ public void setReclameTekst(String tekst) {
 	this.reclameTekst = tekst;
 }
 
+public boolean checkIfGeldig() {
+	Date sysdate = new Date();
+	return (sysdate.after(vanDatum) && sysdate.before(totDatum));
+}
+
 }

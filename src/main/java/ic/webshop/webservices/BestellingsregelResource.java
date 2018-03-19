@@ -90,10 +90,11 @@ private BestellingDAO bestellingDAO = new BestellingDAO();
 	@Override
 	@POST
 	@Produces("application/json")
-	public String createBestellingsregel(@FormParam("Aantal") int aantal, @FormParam("BestellingID") int bestellingID, @FormParam("ProductID") int productID, @FormParam("Totaalprijs") double totaalprijs) {
+	public String createBestellingsregel(@FormParam("Aantal") int aantal, @FormParam("BestellingID") int bestellingID, @FormParam("ProductID") int productID) {
 		
 		Bestelling bestelling = bestellingDAO.findBestellingByPK(bestellingID);
 		Product product = productDAO.findByPK(productID);
+		double totaalprijs = productDAO.getPrijs(productID) * aantal;
 		
 		Bestellingsregel bestellingsregel = new Bestellingsregel(bestelling, aantal, totaalprijs, product);
 		bDAO.saveBestellingsregel(bestellingsregel);

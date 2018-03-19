@@ -30,5 +30,5 @@ public interface BestellingsregelService {
 	
 	@POST 
 	@Produces("application/json")
-	public String createBestellingsregel(@FormParam("Aantal") int aantal, @FormParam("BestellingID") int bestellingID, @FormParam("ProductID") int productID, @FormParam("Totaalprijs") double totaalprijs);
+	public String createBestellingsregel(@FormParam("Aantal") int aantal, @FormParam("BestellingID") int bestellingID, @FormParam("ProductID") int productID);
 }

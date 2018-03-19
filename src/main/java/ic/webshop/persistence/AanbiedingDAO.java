@@ -131,4 +131,16 @@ private ProductDAO productDAO = new ProductDAO();
 				return result;
 			
 		}
+		
+		public double getPrijs(int productID) {
+			double aanbiedingprijs = -1;
+			List<Aanbieding> aanbiedingenVanDitProduct = findAanbiedingByProductID(productID);
+			for (Aanbieding a : aanbiedingenVanDitProduct) {
+				if (a.checkIfGeldig()) {
+					aanbiedingprijs = a.getAanbiedingPrijs();
+					break;
+				}
+			}
+			return aanbiedingprijs;
+		}
 }
