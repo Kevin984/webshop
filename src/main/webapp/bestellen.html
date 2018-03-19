@@ -306,7 +306,7 @@
 		    $.ajax({
 				url: "restservices/bestellingen/",
 				success: function(response){
-					var data = "adresID=" + bestellingFactuurAdresID + "&accountID=" + accountID;
+					var data = "AdresID=" + bestellingFactuurAdresID + "&AccountID=" + accountID;
 			    	$.post("restservices/bestellingen", data, function(response){
 			    		console.log("response bestelling post:" + response);
 				    	console.log("bestelling id: " + response["ID"]);
