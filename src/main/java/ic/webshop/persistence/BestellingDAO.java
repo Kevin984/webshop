@@ -129,7 +129,8 @@ public class BestellingDAO extends BaseDAO{
 		if(exists){ 
 			String query = "UPDATE public.\"Bestelling\" "
 			+ " SET \"Adres_ID\" = '" 		+ bestelling.getAdres().getID()		+"',"
-			+ " \"Account_ID\" = '" +bestelling.getAccount().getID()+"'"
+			+ " \"Account_ID\" = '" +bestelling.getAccount().getID()+"',"
+			+ " \"Ordernummer\" = '" +bestelling.getOrdernummer()+"'"
 			+ " WHERE \"ID\" = " 	+ bestelling.getID();
 			try(Connection con = super.getConnection()){
 				Statement stmt = con.createStatement();
@@ -143,4 +144,6 @@ public class BestellingDAO extends BaseDAO{
 		}
 			return result;
 	}
+	
+	
 }
