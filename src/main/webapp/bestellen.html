@@ -274,8 +274,6 @@
 		window.location="index.html";
 	}
 	
-	bestellingFactuurAdresID = -1;
-	bestellingID = -1;
 	console.log("bestellingFactuurAdresID voor bestelknop: " + bestellingFactuurAdresID);
 	
 	$("#bestellen").click(function(event){
@@ -287,9 +285,11 @@
        		$("#stap2").hide();
        		$("#stap3").show();
        		if(user == 'Guest' || null){	
-       			bestellingFactuurAdresID = saveGuestAddress();
+       			bestellingAdresID = saveGuestAddress();
+       			saveBestelling(bestellingAdresID);
+		    } else {
+		    	saveBestelling(bestellingFactuurAdresID);
 		    }
-		    saveBestelling(bestellingFactuurAdresID);
 		}
     });
     
