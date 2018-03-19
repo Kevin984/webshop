@@ -59,7 +59,7 @@ private KlantDAO klantDAO = new KlantDAO();
 	public void saveAccount(Account account){
 		String query = "INSERT INTO public.\"Account\"(\r\n" + 
 				"    \"ID\", \"OpenDatum\", \"IsActief\", \"Factuur_AdresID\", \"Klant_ID\")\r\n" + 
-				"    VALUES (nextval('account_seq'::regclass), '?', '?', ?, ?);";
+				"    VALUES (nextval('account_seq'::regclass), ?, ?, ?, ?);";
 		try (Connection con = super.getConnection()) {
 			preparedStatement = con.prepareStatement(query);
 			preparedStatement.setDate(1, (java.sql.Date) account.getOpenDatum()); 

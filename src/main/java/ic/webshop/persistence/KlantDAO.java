@@ -48,7 +48,7 @@ public class KlantDAO extends BaseDAO{
 				"	\"ID\", \"Naam\", \"Afbeelding\", \"Adres_ID\")\r\n" + 
 				"	VALUES (nextval('klant_seq'::regclass), '?', null, ?);";
 		try (Connection con = super.getConnection()) {
-			preparedStatement = con.prepareStatement(query);
+			preparedStatement = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			preparedStatement.setString(1, klant.getNaam()); 
 			preparedStatement.setInt(2,klant.getAdres().getID()); 
 			preparedStatement.executeUpdate();	
