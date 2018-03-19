@@ -290,6 +290,8 @@
 					success: function(response){
 						var data = "Straat=" + straatnaam + "&Straatnummer=" + straatnummer;
 				    	$.post("restservices/adressen", data, function(response){
+				    		console.log("response adres post:" + response);
+				    		console.log("adres id: " + response["ID"]);
 				    		bestellingFactuurAdresID = response["ID"];
 				    	})
 				    },
@@ -303,6 +305,8 @@
 				success: function(response){
 					var data = "adresID=" + bestellingFactuurAdresID + "&accountID=" + accountID;
 			    	$.post("restservices/bestellingen", data, function(response){
+			    		console.log("response bestelling post:" + response);
+				    	console.log("bestelling id: " + response["ID"]);
 			    		bestellingID = response["ID"];
 			    	})
 			    },
