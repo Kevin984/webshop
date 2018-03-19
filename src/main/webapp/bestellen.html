@@ -344,6 +344,7 @@
 		    doBestellingsregelCall(aantal, productID);
 	    }
 	    localStorage.clear();
+	    console.log("LOCALSTORAGE CLEARED");
 	    doPayment(bestellingID);
     }
     
@@ -364,10 +365,11 @@
     }
     
     function doPayment(bestellingID) {
+    	console.log("DOPAYMENT AANGEROEPEN, BESTELLING ID = " + bestellingID);
     	$.ajax({
 			url: "restservices/bestellingen/ordernumber/" + bestellingID,
 			success: function(response){
-				
+				console.log("SUCCES - " + response);
 				if(user == 'Guest' || null){	
 					naamToSend = naam;
        				straatToSend = straat;
@@ -377,8 +379,7 @@
        				straatToSend = ingelogdeStraat;
        				straatNummerToSend = ingelogdeStraatnummer;
 		    	}
-			
-			
+		    	console.log("MIDDEN IN DOPAYMENT");
 				var data = "ID=" + bestellingID + "&Naam=" + naamToSend + "&Straat=" + straatToSend + "&Straatnummer=" + straatNummerToSend + "&Bedrag=" + totalPrice;
 				console.log(data);
 		    	$.post("restservices/bestellingen/ordernummer/" + bestellingID, data, function(response){
@@ -386,6 +387,7 @@
 		    	})
 		    },
    			error: function(response){
+   				console.log("ERROR - " + response);
    				console.log("Er is iets misgegaan bij het afwerken van de betaling.");
    			}
     	});	 
