@@ -47,15 +47,22 @@ public class BestellingDAO extends BaseDAO{
 	}
 	
 	public void saveBestelling(Bestelling bestelling){
+		int bestellingID = 0;
 		String query = "INSERT INTO public.\"Bestelling\"(\r\n" + 
 				"    \"ID\", \"Adres_ID\")\r\n" + 
 				"    VALUES (nextval('bestelling_seq'::regclass), ?,?);;";
 		try (Connection con = super.getConnection()) {
-			preparedStatement = con.prepareStatement(query);
+			preparedStatement = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS); 
 			preparedStatement.setInt(1, bestelling.getAdres().getID()); 
 			preparedStatement.setInt(2, bestelling.getAccount().getID()); 
 			preparedStatement.executeUpdate();	
+			ResultSet rs = preparedStatement.getGeneratedKeys();
+            if(rs.next())
+            {
+                bestellingID = rs.getInt(1);
+            }
 			preparedStatement.close();
+			bestelling.setID(bestellingID);
 			System.out.println("Bestelling: " + bestelling.getID()  + " saved.");
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
