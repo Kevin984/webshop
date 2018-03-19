@@ -38,6 +38,7 @@ private BestellingDAO bestellingDAO = new BestellingDAO();
 			JsonObjectBuilder job = Json.createObjectBuilder();
 			job.add("ID", b.getID());
 			job.add("Aantal", b.getAantal());
+			job.add("Prijs", b.getTotaalPrijs());
 			job.add("BestellingID", b.getBestelling().getID());
 			job.add("ProductID", b.getProduct().getID());
 			jab.add(job);
