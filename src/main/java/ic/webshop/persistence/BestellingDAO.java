@@ -79,7 +79,7 @@ public class BestellingDAO extends BaseDAO{
 	public void saveBestelling(Bestelling bestelling){
 		int bestellingID = 0;
 		String query = "INSERT INTO public.\"Bestelling\"(\r\n" + 
-				"    \"ID\", \"Adres_ID\")\r\n" + 
+				"    \"ID\", \"Adres_ID\", \"Account_ID\")\r\n" + 
 				"    VALUES (nextval('bestelling_seq'::regclass), ?,?);;";
 		try (Connection con = super.getConnection()) {
 			preparedStatement = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS); 
