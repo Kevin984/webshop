@@ -376,7 +376,7 @@
     	console.log("MIDDEN IN DOPAYMENT");
 		var data = "ID=" + bestellingID + "&Naam=" + naamToSend + "&Straat=" + straatToSend + "&Straatnummer=" + straatNummerToSend + "&Bedrag=" + totalPrice;
 		console.log(data);
-    	$.post("restservices/bestellingen/ordernummer/" + bestellingID, data, function(response){
+    	$.post("restservices/bestellingen/ordernumber/" + bestellingID, data, function(response){
     		console.log(response);
     	});
     	console.log("about to clear localstorage");
