@@ -332,11 +332,13 @@
     function saveBestellingsregels(bestellingID) {
    		var table = document.getElementById('bestellingregels');
 		var rowLength = table.rows.length;
-		for(var i=0; i<rowLength; i+=1){
+		for(i=0; i<rowLength; i+=1){
 		    $.ajax({
 				url: "restservices/bestellingsregels/",
 				success: function(response){
-					var data = "Aantal=" + table.rows[i].cells[3].innerHTML + "&BestellingID=" + bestellingID + "&ProductID=" + table.rows[i].cells[3].id.substring(8);
+					console.log(i);
+					var data = "Aantal=" + document.getElementById('bestellingregels').rows[i].cells[3].innerHTML + "&BestellingID=" + bestellingID + "&ProductID=" + document.getElementById('bestellingregels').rows[i].cells[3].id.substring(8);
+					console.log(data);
 			    	$.post("restservices/bestellingsregels", data, function(response){
 			    		console.log("bestellingregel toegevoegd met id " + response["ID"]);
 			    	})
