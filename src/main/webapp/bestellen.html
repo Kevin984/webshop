@@ -337,6 +337,7 @@
 		    productID = document.getElementById('bestellingregels').rows[i].cells[3].id.substring(8);
 		    doBestellingsregelCall(aantal, productID);
 	    }
+	    localStorage.clear();
     }
     
     function doBestellingsregelCall(aantal, productID) {
