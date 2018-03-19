@@ -29,6 +29,7 @@ public class ProductResource implements ProductService{
 	private AanbiedingResource aanbiedingResource = new AanbiedingResource();
 	
 	@Override
+	@RolesAllowed({"admin"})
 	public String getProducten() {
 JsonArrayBuilder jab = Json.createArrayBuilder();
 		for(Product a : productDAO.findAll()){ 
@@ -50,6 +51,7 @@ JsonArrayBuilder jab = Json.createArrayBuilder();
 
 	@Override
 	@GET
+	@RolesAllowed({"admin"})
 	@Path("{ID}")
 	@Produces("application/json")
 	public String getProduct(@PathParam("ID") int ID){
@@ -72,6 +74,7 @@ JsonArrayBuilder jab = Json.createArrayBuilder();
 	
 	@Override
 	@DELETE
+	@RolesAllowed({"admin"})
 	@Path("{ID}")
 	public Response deleteProduct(@PathParam("ID") int productID) {
 		Product found = null;
@@ -88,6 +91,7 @@ JsonArrayBuilder jab = Json.createArrayBuilder();
 
 	@Override
 	@PUT
+	@RolesAllowed({"admin"})
 	@Path("{ID}")
 	@Produces("application/json")
 	@Consumes({ MediaType.WILDCARD })
@@ -106,6 +110,7 @@ JsonArrayBuilder jab = Json.createArrayBuilder();
 
 	@Override
 	@POST
+	@RolesAllowed({"admin"})
 	@Produces("application/json")
 	public String createProduct(@FormParam("Naam") String naam, @FormParam("Omschrijving") String omschrijving
 			, @FormParam("Prijs") double prijs) {
