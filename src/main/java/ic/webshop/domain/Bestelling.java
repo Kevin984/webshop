@@ -4,6 +4,7 @@ public class Bestelling {
 	private int ID;
 	private Adres adres;
 	private Account account;
+	private String ordernummer;
 	
 	public Bestelling(int ID, Adres adres, Account account) {
 		this.ID = ID;
@@ -17,6 +18,14 @@ public class Bestelling {
 	}
 	public void setID(int ID) {
 		this.ID = ID;
+	}
+	
+	public void setOrdernummer(String on) {
+		this.ordernummer = on;
+	}
+	
+	public String getOrdernummer() {
+		return ordernummer;
 	}
 	
 	public void setAdres(Adres adres) {
