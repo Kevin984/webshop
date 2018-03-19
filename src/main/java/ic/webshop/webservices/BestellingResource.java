@@ -110,6 +110,7 @@ private AccountDAO accountDAO = new AccountDAO();
         Service service = Service.create(url, qname);
         OrderNumber on  = service.getPort(OrderNumber.class);
         String ordernummer = on.getRandomOrdernumber(naam, straat, straatnummer, bedrag);
+        System.out.println("Ordernummer gegenereert vanuit SOAP: " + ordernummer);
    	    Bestelling b = bDAO.findBestellingByPK(ID);
 
         if(bDAO.checkIfOrdernumberExists(ordernummer)) {
