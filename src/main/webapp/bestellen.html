@@ -343,8 +343,6 @@
 		    productID = document.getElementById('bestellingregels').rows[i].cells[3].id.substring(8);
 		    doBestellingsregelCall(aantal, productID);
 	    }
-	    localStorage.clear();
-	    console.log("LOCALSTORAGE CLEARED");
 	    doPayment(bestellingID);
     }
     
@@ -391,6 +389,8 @@
    				console.log("Er is iets misgegaan bij het afwerken van de betaling.");
    			}
     	});	 
+    	console.log("about to clear localstorage");
+    	localStorage.clear();
     }
     </script>
   </body>
