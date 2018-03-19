@@ -283,8 +283,7 @@
        		$("#stap2").hide();
        		$("#stap3").show();
        		if(user == 'Guest' || null){	
-       			bestellingAdresID = saveGuestAddress();
-       			saveBestelling(bestellingAdresID);
+       			saveGuestAddress();
 		    } else {
 		    	saveBestelling(bestellingFactuurAdresID);
 		    }
@@ -308,6 +307,7 @@
    				console.log("Er is iets misgegaan bij het opslaan van het adres.");
    			}
     	});
+    	saveBestelling(bestellingAdresID);
     }
     
     function saveBestelling(bestellingFactuurAdresID) {
