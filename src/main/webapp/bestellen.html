@@ -273,9 +273,7 @@
 	function goHome() {
 		window.location="index.html";
 	}
-	
-	console.log("bestellingFactuurAdresID voor bestelknop: " + bestellingFactuurAdresID);
-	
+		
 	$("#bestellen").click(function(event){
      	if(! $("#agreement").is(":checked")){
     		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>U bent niet akkoord gegaan met de algemene voorwaarden.</div>");
