@@ -128,6 +128,9 @@
     
     
     var user = sessionStorage.getItem('loggedInUsername');
+    ingelogdeStraat;
+	ingelogdeStraatnummer;
+	ingelogdeNaam;
     
     if(sessionStorage.getItem('loggedInUsername') == null){
     	user = 'Guest';
@@ -146,7 +149,8 @@
     	$("#stap12").hide();
     	$("#stap2").hide();
     	$("#stap3").hide();
-
+		
+		
     	$.ajax({
     		url: "restservices/accounts/username/"+user,
     		method: "GET",
@@ -164,6 +168,7 @@
     	    		xhr.setRequestHeader( 'Authorization', 'Bearer ' + token);
     	    		},
     	    		success: function (klant) {
+    	    			ingelogdeNaam = klant.Naam;
     	    			$("#naam1").html(klant.Naam);
 
     	    			$.ajax({
@@ -174,6 +179,8 @@
     	    	    		xhr.setRequestHeader( 'Authorization', 'Bearer ' + token);
     	    	    		},
     	    	    		success: function (adres) {
+    	    	    			ingelogdeStraat = adres.Straat;
+    	    	    			ingelogdeStraatnummer = adres.Straatnummer;
        	    	    	    	$("#woonadres1").html(adres.Straat + ' ' + adres.Straatnummer);
     	    	    		}		
     	    	    	})
@@ -337,6 +344,7 @@
 		    doBestellingsregelCall(aantal, productID);
 	    }
 	    localStorage.clear();
+	    doPayment(bestellingID);
     }
     
     function doBestellingsregelCall(aantal, productID) {
@@ -353,6 +361,34 @@
    				console.log("Er is iets misgegaan bij het opslaan van de bestellingsregels.");
    			}
     	});
+    }
+    
+    function doPayment(bestellingID) {
+    	$.ajax({
+			url: "restservices/bestellingen/ordernumber/" + bestellingID,
+			success: function(response){
+				
+				if(user == 'Guest' || null){	
+					naamToSend = naam;
+       				straatToSend = straat;
+       				straatNummerToSend = straatnummer;
+		    	} else {
+		    		naamToSend = ingelogdeNaam;
+       				straatToSend = ingelogdeStraat;
+       				straatNummerToSend = ingelogdeStraatnummer;
+		    	}
+			
+			
+				var data = "ID=" + bestellingID + "&Naam=" + naamToSend + "&Straat=" + straatToSend + "&Straatnummer=" + straatNummerToSend + "&Bedrag=" + totalPrice;
+				console.log(data);
+		    	$.post("restservices/bestellingen/ordernummer/" + bestellingID, data, function(response){
+		    		console.log(response);
+		    	})
+		    },
+   			error: function(response){
+   				console.log("Er is iets misgegaan bij het afwerken van de betaling.");
+   			}
+    	});	 
     }
     </script>
   </body>
