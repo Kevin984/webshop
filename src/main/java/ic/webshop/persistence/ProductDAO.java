@@ -43,7 +43,7 @@ private AanbiedingDAO aanbiedingDAO = new AanbiedingDAO();
 		return selectArtikelen("SELECT * FROM public.\"Product\" ORDER BY \"ID\"");
 	}
 	
-	//gebruik de primary keys (id, maat, kleur) van artikel om een specifiek artikel te vinden
+	
 	public Product findByPK(int ID){ 	
 		return selectArtikelen("SELECT * "
 			+ "FROM public.\"Product\" " 
@@ -53,7 +53,6 @@ private AanbiedingDAO aanbiedingDAO = new AanbiedingDAO();
 	public void saveArtikel(Product artikel){
 		System.out.println("1 Product: " + artikel.getID() + ", " + artikel.getNaam()  +", " + artikel.getOmschrijving());
 
-	//	String query = "INSERT INTO public.\"Product\" (\"ID\", \"Afbeelding\", \"Naam\", \"Omschrijving\",\"Prijs\")  VALUES(?,?,?,?,?)"; 
 		String query = "INSERT INTO public.\"Product\"(\r\n" + 
 				"	\"ID\", \"Naam\", \"Omschrijving\", \"Afbeelding\", \"Prijs\")\r\n" + 
 				"	VALUES (?, ?, ?, null, ?);";
@@ -78,7 +77,6 @@ private AanbiedingDAO aanbiedingDAO = new AanbiedingDAO();
 		try (Connection con = super.getConnection()) {
 			preparedStatement = con.prepareStatement(query);
 			// eerste vraagteken = 1
-		//	preparedStatement.setInt(1, artikel.getID()); 
 		//	byte[] source = artikel.getBlobPlaatje();
 		//	ByteArrayInputStream blob = new ByteArrayInputStream(source);
 		//	preparedStatement.setBinaryStream(2, blob);
@@ -142,36 +140,12 @@ private AanbiedingDAO aanbiedingDAO = new AanbiedingDAO();
 			return result;
 	}
 	
-	/*
-	 public boolean deleteArtikel(Product artikel){
-		boolean result = false;
-		boolean artikelExists = findByPK(artikel.getID()) != null;
-		
-		if(artikelExists){
-			String query = "DELETE FROM public.\"Artikel\" WHERE \"ID\" = " + artikel.getID();
-			String query2 ="DELETE FROM public.\"Verkoop\" WHERE \"Klant_ID\" IN (?)";
-			String query3 = "DELETE FROM public.\"VerkoopRegel\" WHERE \"ID\" IN ((SELECT \"ID\" FROM public.\"Verkoop\" WHERE \"Klant_ID\" = ?))";
-			try(Connection con = super.getConnection()){
-				Statement stmt = con.createStatement();
-				if(stmt.executeUpdate(query) == 1){
-					result = true;
-					
-				
-				}
-			} 
-			catch (SQLException sqle){
-				sqle.printStackTrace(); }
-		}
-			return result;
-	}*/
 	 
 	
-	//deze functie zou eerst gebruikt worden voor Use Case: wijzig artikel maar wordt nu gebruikt om het aantal van het artikel te verlagen wanneer er iets verkocht wordt
 	public boolean updateArtikel(Product artikel){ 
 		boolean result = false;
 		boolean artikelExists = findByPK(artikel.getID()) != null; //zoek artikel met de primary keys
 		
-		//update artikel in database
 		if(artikelExists){ 
 			String query = "UPDATE public.\"Product\" "
 			+ " SET \"Naam\" = '" 		+ artikel.getNaam()			+"',"

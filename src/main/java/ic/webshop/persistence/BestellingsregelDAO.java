@@ -57,8 +57,9 @@ private BestellingDAO bestellingDAO = new BestellingDAO();
 			preparedStatement = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);			
 			preparedStatement.setInt(1, bestellingsregel.getAantal()); 
 			//preparedStatement.setFloat(2, bestellingsregel.getTotaalPrijs()); i have no idea what i am doing kavn help pls
-			preparedStatement.setInt(1, bestellingsregel.getProduct().getID()); 
-			preparedStatement.setInt(1, bestellingsregel.getBestelling().getID()); 	
+			preparedStatement.setDouble(2, bestellingsregel.getTotaalPrijs());
+			preparedStatement.setInt(3, bestellingsregel.getProduct().getID()); 
+			preparedStatement.setInt(4, bestellingsregel.getBestelling().getID()); 	
 			preparedStatement.executeUpdate();	
 			ResultSet rs = preparedStatement.getGeneratedKeys();
             if(rs.next())
@@ -67,7 +68,7 @@ private BestellingDAO bestellingDAO = new BestellingDAO();
             }
 			preparedStatement.close();
 			bestellingsregel.setID(bestellingsregelID);
-			System.out.println("Bestelling: " + bestellingsregel.getID()  + " saved.");
+			System.out.println("Bestellingsregel: " + bestellingsregel.getID()  + " saved.");
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 		}	
