@@ -113,7 +113,7 @@ private AccountDAO accountDAO = new AccountDAO();
         System.out.println("Ordernummer gegenereert vanuit SOAP: " + ordernummer);
    	    Bestelling b = bDAO.findBestellingByPK(ID);
 
-        if(bDAO.checkIfOrdernumberExists(ordernummer)) {
+     /*   if(bDAO.checkIfOrdernumberExists(ordernummer)) {
         	ordernummer = on.getRandomOrdernumber(naam, straat, straatnummer, bedrag);
         	//////////////////// loop voor als t nog een keer voorkomt etc... en anders updaten..... hoe???
              if(b != null) {
@@ -126,7 +126,17 @@ private AccountDAO accountDAO = new AccountDAO();
              	b.setOrdernummer(ordernummer);
              	bDAO.updateBestelling(b);
              } 	
+        }*/
+        
+        while(bDAO.checkIfOrdernumberExists(ordernummer)) {
+        	ordernummer = on.getRandomOrdernumber(naam, straat, straatnummer, bedrag);
+
         }
+        if(b != null) {
+         	b.setOrdernummer(ordernummer);
+         	bDAO.updateBestelling(b);
+         } 	
+        
 	}
 	
 	@Override
