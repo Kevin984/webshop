@@ -92,14 +92,7 @@ private AccountDAO accountDAO = new AccountDAO();
 	@Override
 	@POST
 	@Produces("application/json")
-	public String createBestelling(@FormParam("AdresID") int adresID, @FormParam("AccountID") int accountID) throws MalformedURLException {
-		URL url = new URL("https://webshopsoap.herokuapp.com/ws/ordernumber?wsdl");
-
-	        QName qname = new QName("http://Service.SOAP/", "OrderNumberImplService");
-	        Service service = Service.create(url, qname);
-	        OrderNumber hello = service.getPort(OrderNumber.class);
-	        System.out.println(hello.getRandomOrdernumber("","","",34.34));	
-	
+	public String createBestelling(@FormParam("AdresID") int adresID, @FormParam("AccountID") int accountID) {
 		Adres adres = adresDAO.findAdresByPK(adresID);
 		Account account = accountDAO.findAccountByPK(accountID);
 		Bestelling bestelling = new Bestelling(adres, account);
@@ -107,6 +100,34 @@ private AccountDAO accountDAO = new AccountDAO();
 		return bestellingToJson(bestelling).build().toString();
 	}
 
+	@POST
+	@Path("ordernumber/{ID}")
+	@Produces("application/json")
+	public void getUniqueOrderNumber(@PathParam("ID") int ID, @FormParam("Naam") String naam, @FormParam("Straat") String straat, @FormParam("Straatnummer") String straatnummer, 
+		@FormParam("Bedrag") double bedrag,	@FormParam("BestellingID") int bestellingID ) throws MalformedURLException {
+		URL url = new URL("https://webshopsoap.herokuapp.com/ws/ordernumber?wsdl");
+        QName qname = new QName("http://Service.SOAP/", "OrderNumberImplService");
+        Service service = Service.create(url, qname);
+        OrderNumber on  = service.getPort(OrderNumber.class);
+        String ordernummer = on.getRandomOrdernumber(naam, straat, straatnummer, bedrag);
+   	    Bestelling b = bDAO.findBestellingByPK(ID);
+
+        if(bDAO.checkIfOrdernumberExists(ordernummer)) {
+        	ordernummer = on.getRandomOrdernumber(naam, straat, straatnummer, bedrag);
+        	//////////////////// loop voor als t nog een keer voorkomt etc... en anders updaten..... hoe???
+             if(b != null) {
+             	b.setOrdernummer(ordernummer);
+             	bDAO.updateBestelling(b);
+             } 	
+        }
+        else {
+             if(b != null) {
+             	b.setOrdernummer(ordernummer);
+             	bDAO.updateBestelling(b);
+             } 	
+        }
+	}
+	
 	@Override
 	@GET
 	@Path("{ID}")

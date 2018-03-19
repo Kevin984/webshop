@@ -46,6 +46,36 @@ public class BestellingDAO extends BaseDAO{
 		return selectBestellingen("SELECT * FROM public.\"Bestelling\" WHERE \"ID\" = " + ID).get(0);
 	}
 	
+	
+	public boolean checkIfOrdernumberExists(String ordernummer) {
+		boolean exists = false;
+		
+		String query = "SELECT \"Ordernummer\" FROM public.\"Bestelling\" WHERE \"Ordernummer\" = ?";
+		try(Connection con = super.getConnection()){
+			
+			preparedStatement = con.prepareStatement(query);
+			preparedStatement.setString(1, ordernummer);
+			preparedStatement.executeQuery();
+			ResultSet rs = preparedStatement.getResultSet();
+			int counter = 0;
+			while(rs.next()) {
+				counter += 1;
+			}			
+			preparedStatement.close();
+			
+			if(counter == 0) {
+				exists = false;
+			}else {
+				exists = true;
+			}
+			
+			
+		}catch (SQLException sqle) {
+			sqle.printStackTrace();
+		}	
+		return exists;
+	}
+	
 	public void saveBestelling(Bestelling bestelling){
 		int bestellingID = 0;
 		String query = "INSERT INTO public.\"Bestelling\"(\r\n" + 
