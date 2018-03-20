@@ -45,11 +45,11 @@
 				}
 			});
 		} else {
-			return "guest";
+			return "Guest";
 		}
 	}
 	    
-	if(user == 'Guest' || null){
+	if(user == 'Guest'){
 		$("#logoutlink").hide();
 		$("#loginlink").show();
 	}
@@ -112,10 +112,6 @@
 	$.ajax({
 			url : "https://webshopiac.herokuapp.com/restservices/categorieen",
 			method : "GET",
-			beforeSend : function(xhr) {
-				var token = window.sessionStorage.getItem("sessionToken");
-				xhr.setRequestHeader('Authorization', 'Bearer ' + token);
-			},
 			success : function (data) {
 				var arrayLength = data.length;
 				var ul = document.getElementById('sidebarul')
