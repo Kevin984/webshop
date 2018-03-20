@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import ic.webshop.domain.Product;
-import ic.webshop.persistence.ProductDAO;
+
 
 
  class ProductDAOTest {
