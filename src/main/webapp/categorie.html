@@ -119,8 +119,8 @@
 					var productNaam = product["Naam"];
 					var productOmschrijving = product["Omschrijving"];
 					var productPrijs = Number(product["Prijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
-					productShown = false;
-									
+					var inDeAanbieding = false;
+														
 					$.ajax({
 						url : "restservices/aanbiedingen/product/" + productID,
 						method : "GET",
@@ -141,13 +141,8 @@
 												
 								if (huidigeDatum > vanDatum && huidigeDatum < totDatum) {
 									aanbiedingPrijs = Number(data[i]["Aanbiedingsprijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});	
-									$("#categorie").append("<tr><td>" + productNaam + "</td><td>" + productOmschrijving + "</td><td><p style='text-decoration: line-through; display:inline;'>" + productPrijs 
-									+ "</p><p style='color: #388724; display:inline;'> " + aanbiedingPrijs + "</p><td><button type='button' class='btn btn-warning' onclick='goToProductPage(" + productID
-									+ ")'>Bekijk artikel</button></td></tr>");  	
-									productShown = true;
+									InDeAanbieding = true;  	
 									break;	  
-								} else {
-									productShown = false;
 								}
 							}
 						},
@@ -156,11 +151,14 @@
 						}
 					});
 					
-					if (!productShown) {
+					if (inDeAanbieding) {
+						$("#categorie").append("<tr><td>" + productNaam + "</td><td>" + productOmschrijving + "</td><td><p style='text-decoration: line-through; display:inline;'>" + productPrijs 
+						+ "</p><p style='color: #388724; display:inline;'> " + aanbiedingPrijs + "</p><td><button type='button' class='btn btn-warning' onclick='goToProductPage(" + productID
+						+ ")'>Bekijk artikel</button></td></tr>");
+					else {
 						$("#categorie").append("<tr><td>" + productNaam + "</td><td>" + productOmschrijving + "</td><td>" + productPrijs 
 						+ "<td><button type='button' class='btn btn-warning' onclick='goToProductPage(" + productID
 						+ ")'>Bekijk artikel</button></td></tr>");
-						productShown = false;
 					}
 				});
 			} else {
