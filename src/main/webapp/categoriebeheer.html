@@ -122,7 +122,7 @@
 			    	$.post("restservices/categorieen", data, function(response){
 			    		// reset de form voor nieuwe input
 	   					$("#categorieAanmaken")[0].reset(); 
-	   					$(".expendable").replaceWith("<div class='alert alert-success expendable' id='response'> <strong>Artikel:</strong> " +  " Categorie " + response.Naam + " is aangemaakt!</div>");
+	   					$(".expendable").replaceWith("<div class='alert alert-success expendable' id='response'> <strong>Categorie:</strong> " +  " Categorie " + response.Naam + " is aangemaakt!</div>");
 			    	})
 			    },
 	   			error: function(response){
@@ -252,15 +252,59 @@
 					$("#categorieen").append("<tr id='"+categorie.ID+"'><td>" + categorie.ID + "</td><td>" + categorie.Naam + "</td><td>" + categorie.Omschrijving 
 					   		+ "</td>"
 					   		+ "<td><button type='button' class='btn btn-warning' id='alter" + categorie.ID
-					   		+ "'>Artikel Wijzigen</button></td>></tr>");
+					   		+ "'>Categorie Wijzigen</button></td>></tr>");
 				}
 				else{
 					$("#categorieen").append("<tr id='"+categorie.ID+"'><td>" + categorie.ID + "</td><td>" + categorie.Naam + "</td><td>" + categorie.Omschrijving 
 					   		+ "</td>"
 					   		+ "<td><button type='button' class='btn btn-warning' id='alter" + categorie.ID
-					   		+ "'>Artikel Wijzigen</button></td><td>" + "<button type='button' class='btn btn-danger' id='delete" 
-					   		+ categorie.ID + "'> Artikel Verwijderen</button>" + "</td></tr>");
+					   		+ "'>Categorie Wijzigen</button></td><td>" + "<button type='button' class='btn btn-danger' id='delete" 
+					   		+ categorie.ID + "'> Categorie Verwijderen</button>" + "</td></tr>");
 					}
+				
+				$("#alter"+categorie.ID).one("click",function(){
+					 var trid = $(this).closest('tr').attr('id');
+	 					var replacer = $("<tr>").attr('id', trid);
+			   		     
+			   		     var formulier = $("<form id='updateForm"+trid+"'>");
+			   		     formulier.append($("<td>").append($("<input id='id"+trid+"' value='"+trid+"' readonly name='ID'/>"))); //inputs vullen en deze rij herhalen
+			   		     formulier.append($("<td>").append($("<input id='naam"+trid+"' placeholder='Naam' name='Naam' required='required' type='text'/>"))); //inputs vullen en deze rij herhalen
+			   		     formulier.append($("<td>").append($("<input id='omschrijving"+trid+"' placeholder='Omschrijving' name='Omschrijving' type='text' required='required'/>"))); //inputs vullen en deze rij herhalen
+			   		     formulier.append($("<td>").append($("<button type='button' class='btn btn-primary' id='wijzigCategorie" + trid + "'>Wijziging opslaan</button>"))); //inputs vullen en deze rij herhalen
+			   		     formulier.append($("<td>").append($("<button type='button' class='btn btn-warning' id='wijzigCategorieAnnuleren" + trid + "'>Wijzigen annuleren</button>"))); //inputs vullen en deze rij herhalen
+			   		     formulier.appendTo(replacer);
+			   		     $(this).parents("tr").replaceWith(replacer);	
+					
+			   		  $("#wijzigCategorie" + trid).click(function(){
+				   		 	var trid = $(this).closest('tr').attr('id');
+				   	   		console.log($("#id"+trid).val());
+				   	   		console.log($("#naam"+trid).val());
+				   	   		console.log($("#omschrijving"+trid).val());
+				   	   		console.log($("#prijs"+trid).val());
+
+		     				var uri = "restservices/categorieen/" + trid;
+		     				$.ajax({
+		     					url: "restservices/categorieen/"+ trid,
+		     					success: function(response){
+		     						var data = $("#updateForm"+trid).serialize();
+		     				    	$.post("restservices/categorieen/"+trid, data, function(response){
+		     		   					$("#updateForm"+trid)[0].reset(); 
+		     		   					$(".expendable").replaceWith("<div class='alert alert-success expendable' id='response'> <strong>Categorie:</strong> " + trid + " " + response.Naam + " is gewijzigd!</div>");
+		     				    	})
+		     				    },
+		     		   			error: function(response){
+		     		   				$(".expendable").replaceWith("<div class='alert alert-danger expendable' id='response'> Er is iets mis gegaan! Categorie is <strong>niet</strong> gewijzigd.</div>");
+		     		   			}
+		     		    	});
+		     				
+		     		
+				   	   	})
+						$("#wijzigCategorieAnnuleren"+trid).click(function(){
+				   	   		// refresh pagina
+				   	   		location.reload();	
+						})
+					
+				})
 					
 			   		$("#delete" + categorie.ID).one("click",function(){   
 			   			var uri = ("restservices/categorieen/") + categorie.ID;

@@ -86,7 +86,7 @@ public class CategorieResource implements CategorieService{
 		cDAO.updateCategorie(found);
 		return categorieToJson(found).build().toString();
 		}
-		throw new WebApplicationException("Aanbieding not found!");
+		throw new WebApplicationException("Categorie not found!");
 	}
 	
 	@Override
@@ -116,6 +116,21 @@ public class CategorieResource implements CategorieService{
 	}
 	
 	
+	@POST
+	@Path("{ID}")
+	@Produces("application/json")
+	public String updateCategorieViaPOST(@FormParam("ID") int ID, @FormParam("Naam") String naam, @FormParam("Omschrijving") String omschrijving) {
+		Categorie found = null;
+		found = cDAO.findCategorieByPK(ID);		
+		if(found != null) {
+		found.setNaam(naam);
+		found.setOmschrijving(omschrijving);
+		cDAO.updateCategorie(found);
+		return categorieToJson(found).build().toString();
+		}
+		throw new WebApplicationException("Categorie not found!");
+	}
+	
 	@POST 
 	@Path("/producten/{selectCategorie}")
 	@Produces("application/json")
@@ -125,6 +140,8 @@ public class CategorieResource implements CategorieService{
 		pcDAO.saveProductCategorie(product, categorie);
 		return productCategorieToJson(product, categorie).build().toString();
 	}
+	
+	
 	
 	@GET
 	@Path("/producten/{ID}")
