@@ -107,11 +107,13 @@ input[type="password"] {
     <script src="assets/js/ie10-viewport-bug-workaround.js"></script>
 
     <script>
+    var user = sessionStorage.getItem('loggedInUsername');
+    
     if(sessionStorage.getItem('loggedInUsername') == null){
 	    user = 'Guest';
 	}
 	    	
-	if(user != 'Guest' || null){
+	if(user != 'Guest' && user != null){
 		window.location = "index.html";
 	}
     
