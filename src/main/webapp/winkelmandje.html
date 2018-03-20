@@ -251,13 +251,13 @@
 			localStorage.setItem(artIDforChange, JSON.stringify(huidigArtikel));
 			var oldTotalWorthOfItem = Number(JSON.parse(localStorage.getItem(artIDforChange))["priceNoFormat"]) * document.getElementById("amountof" + artIDforChange).innerHTML;
 			var totalWorthOfItem = Number(JSON.parse(localStorage.getItem(artIDforChange))["priceNoFormat"]) * amount;
-			console.log(totalPrice);
-			console.log(oldTotalWorthOfItem);
+			//console.log(totalPrice);
+			//console.log(oldTotalWorthOfItem);
 			totalPrice -= oldTotalWorthOfItem;
-			console.log(totalPrice);
-			console.log(totalWorthOfItem);
+			//console.log(totalPrice);
+			//console.log(totalWorthOfItem);
 			totalPrice += totalWorthOfItem;
-			console.log(totalPrice);
+			//console.log(totalPrice);
 			totalPriceFormatted = totalPrice.toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
 			totalWorthOfItemFormatted = totalWorthOfItem.toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
 			
