@@ -25,7 +25,7 @@
 </div>
 <div id="sidebarCart" class="well sidebar-nav">
 	<div id="cartPreviewPlaceholder">
-		<b>Huidige artikelen in uw winkelmandje:</b>
+		<b>UW winkelmandje:</b>
 	</div>
 	<div id="cartTotal">
 	</div>
@@ -62,7 +62,7 @@ function showWinkelmandje() {
 		
 		fromStorageToPreview(artikelID, aantal, prijs, aanbieding);
 	}
-	document.getElementById("cartTotal").innerHTML = "<b>Totale waarde: </b>" + totalPriceFormatted;
+	document.getElementById("cartTotal").innerHTML = "<br><b>Totale waarde: </b>" + totalPriceFormatted;
 }
 
 showWinkelmandje();
@@ -84,7 +84,7 @@ function fromStorageToPreview(artikelID, aantal, prijs, aanbieding) {
 			
 			colorStyle = "style='color:" + color + "';"
 			
-			document.getElementById("cartPreviewPlaceholder").innerHTML += aantal + " keer " + data["Naam"] + " - <span " + colorStyle + ">" + prijs + "</span";
+			document.getElementById("cartPreviewPlaceholder").innerHTML += "<br>" + aantal + " keer " + data["Naam"] + " - <span " + colorStyle + ">" + prijs + "</span";
 		},
 		error : function() {
 			document.getElementById("winkelmandOmschrijving").innerHTML="Er is iets misgegaan bij het weergeven van uw winkelmandje.";
