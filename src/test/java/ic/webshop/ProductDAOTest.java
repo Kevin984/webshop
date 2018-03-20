@@ -8,10 +8,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import ic.webshop.domain.Product;
-import ic.webshop.persistence.ProductDAO;
 
 
-public class ProductDAOTest {
+
+ class ProductDAOTest {
 	private ProductDAO pDAO;
 	
 	@BeforeEach
@@ -50,7 +50,7 @@ public class ProductDAOTest {
 	void testSalaryCalculatorWithValidSalary() {
 	double salary = 1200;
 	salaryCalculator.setSalary(1200);
-	double expectedInsuranceMoney = salary * 0.15;
+	double expectedInsuranceMoney = salary * 0.15; 
 	assertEquals(expectedInsuranceMoney, salaryCalculator.getInsuranceMoney());
 	double expectedBonusMoney = salary / 11;
 	assertEquals(expectedBonusMoney, salaryCalculator.getSalaryBonus());
