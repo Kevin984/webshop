@@ -143,7 +143,10 @@
 									$("#categorie").append("<tr><td>" + productNaam + "</td><td>" + productOmschrijving + "</td><td><p style='text-decoration: line-through; display:inline;'>" + productPrijs 
 									+ "</p><p style='color: #388724; display:inline;'> " + aanbiedingPrijs + "</p><td><button type='button' class='btn btn-warning' onclick='goToProductPage(" + productID
 									+ ")'>Bekijk artikel</button></td></tr>");  	
-									productShown = true;	  
+									productShown = true;
+									break;	  
+								} else {
+									productShown = false;
 								}
 							}
 						},
