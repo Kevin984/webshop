@@ -90,11 +90,11 @@ JsonArrayBuilder jab = Json.createArrayBuilder();
 	}
 
 	@Override
-	@PUT
+	@POST
 //	@RolesAllowed({"admin"})
 	@Path("{ID}")
 	@Produces("application/json")
-	@Consumes({ MediaType.WILDCARD })
+//	@Consumes({ MediaType.WILDCARD })
 	public String updateProduct(@PathParam("ID") int ID, @FormParam("Naam") String naam, @FormParam("Omschrijving") String omschrijving, @FormParam("Prijs") double prijs) {
 		Product found = null;
 		found = productDAO.findByPK(ID);
