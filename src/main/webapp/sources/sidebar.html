@@ -25,7 +25,6 @@
 </div>
 <div id="sidebarCart" class="well sidebar-nav">
 	<div id="cartPreviewPlaceholder">
-		<b>UW winkelmandje:</b>
 	</div>
 	<div id="cartTotal">
 	</div>
@@ -50,19 +49,24 @@ else{
 totalPrice = 0;
 
 function showWinkelmandje() {
-	for (j = 0; j < localStorage.length; j++){
-		artikelID = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["productID"]);
-		aantal = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["amount"]);
-		prijsNoFormat = (Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["priceNoFormat"]) * aantal);
-		prijs = prijsNoFormat.toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
-		aanbieding = JSON.parse(localStorage.getItem(localStorage.key(j)))["discount"] == true;
-		totalPrice += prijsNoFormat
-		
-		totalPriceFormatted = totalPrice.toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
-		
-		fromStorageToPreview(artikelID, aantal, prijs, aanbieding);
+	if (localStorage.length > 0) {
+		document.getElementById("cartPreviewPlaceholder").innerHTML = "<b>Uw winkelmandje:</b>";
+		for (j = 0; j < localStorage.length; j++){
+			artikelID = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["productID"]);
+			aantal = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["amount"]);
+			prijsNoFormat = (Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["priceNoFormat"]) * aantal);
+			prijs = prijsNoFormat.toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
+			aanbieding = JSON.parse(localStorage.getItem(localStorage.key(j)))["discount"] == true;
+			totalPrice += prijsNoFormat
+			
+			totalPriceFormatted = totalPrice.toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
+			
+			fromStorageToPreview(artikelID, aantal, prijs, aanbieding);
+		}
+		document.getElementById("cartTotal").innerHTML = "<br><b>Totale waarde: </b>" + totalPriceFormatted;
+	} else {
+		document.getElementById("cartPreviewPlaceholder").innerHTML = "<b>Uw winkelmandje is leeg.</b>";
 	}
-	document.getElementById("cartTotal").innerHTML = "<br><b>Totale waarde: </b>" + totalPriceFormatted;
 }
 
 showWinkelmandje();
@@ -87,7 +91,7 @@ function fromStorageToPreview(artikelID, aantal, prijs, aanbieding) {
 			document.getElementById("cartPreviewPlaceholder").innerHTML += "<br>" + aantal + " keer " + data["Naam"] + " - <span " + colorStyle + ">" + prijs + "</span";
 		},
 		error : function() {
-			document.getElementById("winkelmandOmschrijving").innerHTML="Er is iets misgegaan bij het weergeven van uw winkelmandje.";
+			document.getElementById("cartPreviewPlaceholder").innerHTML= "Er is iets misgegaan bij het weergeven van uw winkelmandje.";
 		}
 	});
 }
