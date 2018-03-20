@@ -119,6 +119,7 @@
 					var productNaam = product["Naam"];
 					var productOmschrijving = product["Omschrijving"];
 					var productPrijs = Number(product["Prijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
+					productShown = false;
 									
 					$.ajax({
 						url : "restservices/aanbiedingen/product/" + productID,
