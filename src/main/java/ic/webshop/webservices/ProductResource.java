@@ -107,6 +107,22 @@ JsonArrayBuilder jab = Json.createArrayBuilder();
 		}
 		throw new WebApplicationException("Product not found!");
 	}
+	
+	@Override
+	@GET
+	@Path("/prijs/{ID}")
+	@Produces("application/json")
+	public String getProductPrijs(@PathParam("ID") int ID){
+		Product a = productDAO.findByPK(ID);
+		if(a == null){
+			throw new WebApplicationException("Product bestaat niet!");
+		}
+		
+		double prijs = getPrijs(ID);
+		JsonObjectBuilder job = Json.createObjectBuilder();
+		job.add("Prijs", prijs);
+		return job.build().toString();
+	} 
 
 	@Override
 	@POST

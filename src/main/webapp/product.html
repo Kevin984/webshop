@@ -134,15 +134,16 @@
   			button.onclick = function(){
   				var productid = getUrlParameter('id');
   				
-  				if (document.getElementById("aanbiedingPrijs").innerHTML == " ") {
-  					prijs = normalePrijs;
-  					prijsNoFormat = normalePrijsNoFormat;
-  					discount = "false";
-  				} else {
-  					prijs = aanbiedingsprijs;
-  					prijsNoFormat = aanbiedingsprijsNoFormat;
-  					discount = "true";
-  				}
+  				$.ajax({
+					url : "restservices/producten/prijs" + id,
+					method : "GET",
+					success : function (data) {
+						var prijs = data["Prijs"]
+					},
+					error : function (data) {
+						document.getElementById("productNaam").innerHTML="Dit product kon helaas niet worden gevonden.";			
+					}
+				});
   				
 				var amount = Number(document.getElementById("aantalArtikelen").value);
 				
