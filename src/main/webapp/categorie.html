@@ -146,14 +146,17 @@
 									break;	  
 								}
 							}
+							if (inDeAanbieding) {
+								var inDeAanbieding = false;  
+							} else {
+								showProduct(inDeAanbieding, productID, productNaam, productOmschrijving, productPrijs, 0);	
+							}
 						},
 						error : function() {
 							var inDeAanbieding = false;  
 							showProduct(inDeAanbieding, productID, productNaam, productOmschrijving, productPrijs, 0);	
 						}
 					});
-					var inDeAanbieding = false;  
-					showProduct(inDeAanbieding, productID, productNaam, productOmschrijving, productPrijs, 0);	
 				});
 			} else {
 				document.getElementById("categorie").style.visibility = "hidden";
