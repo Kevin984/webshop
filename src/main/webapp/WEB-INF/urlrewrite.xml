@@ -1,0 +1,6 @@
+<urlrewrite>
+    <rule>
+        <from>/product.html?id=([0-9]+)$</from>
+        <to type="redirect">/product/$1</to>
+    </rule>
+</urlrewrite>
