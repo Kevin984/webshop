@@ -35,14 +35,18 @@
 	user = getUsername()
 	
 	function getUsername() {
-		$.ajax({
-			url: "restservices/accounts/usernamebytoken/" + window.sessionStorage.getItem("sessionToken"),
-			method: "GET",
-			success: function (username) {
-				return username;
-			}
-		});
-		return "guest";
+		token = window.sessionStorage.getItem("sessionToken");
+		if (token != null) {
+			$.ajax({
+				url: "restservices/accounts/usernamebytoken/" + window.sessionStorage.getItem("sessionToken"),
+				method: "GET",
+				success: function (username) {
+					return username;
+				}
+			});
+		} else {
+			return "guest";
+		}
 	}
 	    
 	if(user == 'Guest' || null){
