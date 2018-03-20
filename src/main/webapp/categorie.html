@@ -141,7 +141,7 @@
 												
 								if (huidigeDatum > vanDatum && huidigeDatum < totDatum) {
 									aanbiedingPrijs = Number(data[i]["Aanbiedingsprijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});	
-									inDeAanbieding = true;  	
+									var inDeAanbieding = true;  	
 									break;	  
 								}
 							}
