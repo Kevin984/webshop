@@ -49,7 +49,7 @@ else{
 
 totalPrice = 0;
 
-showWinkelmandje() {
+function showWinkelmandje() {
 	for (j = 0; j < localStorage.length; j++){
 		artikelID = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["productID"]);
 		aantal = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["amount"]);
@@ -62,7 +62,7 @@ showWinkelmandje() {
 		
 		fromStorageToPreview(artikelID, aantal, prijs, aanbieding);
 	}
-document.getElementById("cartTotal").innerHTML = "<b>Totale waarde: </b>" + totalPriceFormatted;
+	document.getElementById("cartTotal").innerHTML = "<b>Totale waarde: </b>" + totalPriceFormatted;
 }
 
 showWinkelmandje();
