@@ -35,6 +35,7 @@
 		  
           <div class="table-responsive">
             <table class="table table-striped">
+            
               <thead>
                 <tr>
                   <th class="col-xs-2">Naam</th>
@@ -48,41 +49,44 @@
               
               <tbody>
                 <tr>
-				<form id="categorieAanmaken" accept-charset="utf-8">
-                  <td> <input type="text" class="form-control" id="Naam" name="Naam"/></td>
-                  <td><input type="text" class="form-control" id="Omschrijving" name="Omschrijving"/></td>
-				  <td><button type="button" class="btn btn-success" id="categoriePost">Categorie aanmaken</button></td>
-				  </form>
-				  
-				  <form id="prodCatAanmaken" accept-charset="utf-8">
-                 <td> <select class='form-control' type='text' name='selectProduct' id='selectProduct'><option></option></select></td>
-                  <td><select class='form-control' type='text' name='selectCategorie' id='selectCategorie'><option></option></select></td>
-				  <td><button type="button" class="btn btn-success" id="prodCatPost">Toevoegen</button></td>
-				  				  <td><button type="button" class="btn btn-danger" id="prodCatDelete">Verwijderen</button></td> <!-- check if category and product are linked first-->
-				  </form>
+					<form id="categorieAanmaken" accept-charset="utf-8">
+	                  	<td> <input type="text" class="form-control" id="Naam" name="Naam"/></td>
+	                  	<td><input type="text" class="form-control" id="Omschrijving" name="Omschrijving"/></td>
+					  	<td><button type="button" class="btn btn-success" id="categoriePost">Categorie aanmaken</button></td>
+					</form>
+					  
+					<form id="prodCatAanmaken" accept-charset="utf-8">
+	                 	<td> <select class='form-control' type='text' name='selectProduct' id='selectProduct'><option></option></select></td>
+	                  	<td><select class='form-control' type='text' name='selectCategorie' id='selectCategorie'><option></option></select></td>
+					  	<td><button type="button" class="btn btn-success" id="prodCatPost">Toevoegen</button></td>
+						<td><button type="button" class="btn btn-danger" id="prodCatDelete">Verwijderen</button></td> <!-- check if category and product are linked first-->
+					</form>
                 </tr>
               </tbody>
+              
             </table>
           </div>
           
-              <div class="table-responsive">		  
+          <div class="table-responsive">		  
             <table class="table table-striped" id='categorieen'>
+            
               <thead>
                 <tr>
-                  <th class="col-xs-1">#ID</th>
-                  <th class="col-xs-3">Naam</th>
-                  <th class="col-xs-2">Omschrijving</th>
-				 <th class="col-xs-1">Wijzigen</th>
-				 <th class="col-xs-1">Verwijderen</th>
+                  	<th class="col-xs-1">#ID</th>
+                  	<th class="col-xs-3">Naam</th>
+                  	<th class="col-xs-2">Omschrijving</th>
+				 	<th class="col-xs-1">Wijzigen</th>
+				 	<th class="col-xs-1">Verwijderen</th>
                 </tr>
               </thead>
-              <tbody>
               
+              <tbody>
               </tbody>
+              
             </table>
           </div>
         </div>
-        </div>
+       </div>
       </div>
     </div>
 
@@ -110,30 +114,26 @@
 
     	else if(Omschrijving.length < 1 || Omschrijving.length > 50){
     		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>Naam moet 1-100 karakters bevatten!</div>");	
-    	}
-
-    else {
-    	$.ajax({
-			url: "restservices/categorieen/",
-			success: function(response){
-				var data = $("#categorieAanmaken").serialize();
-		    	$.post("restservices/categorieen", data, function(response){
-		    		// reset de form voor nieuwe input
-   				$("#categorieAanmaken")[0].reset(); 
-   				
-   				$(".expendable").replaceWith("<div class='alert alert-success expendable' id='response'> <strong>Artikel:</strong> " +  " Categorie " + response.Naam + " is aangemaakt!</div>");
-		    	})
-		    	},
-   				error: function(response){
-   				$(".expendable").replaceWith("<div class='alert alert-danger expendable' id='response'> Er is iets mis gegaan! Categorie is <strong>niet</strong> toegevoegd.</div>");
-   			}
-    	
-    	});
-    }
-     });
+    	} else {
+	    	$.ajax({
+				url: "restservices/categorieen/",
+				success: function(response){
+					var data = $("#categorieAanmaken").serialize();
+			    	$.post("restservices/categorieen", data, function(response){
+			    		// reset de form voor nieuwe input
+	   					$("#categorieAanmaken")[0].reset(); 
+	   					$(".expendable").replaceWith("<div class='alert alert-success expendable' id='response'> <strong>Artikel:</strong> " +  " Categorie " + response.Naam + " is aangemaakt!</div>");
+			    	})
+			    },
+	   			error: function(response){
+	   				$(".expendable").replaceWith("<div class='alert alert-danger expendable' id='response'> Er is iets mis gegaan! Categorie is <strong>niet</strong> toegevoegd.</div>");
+	   			}
+	    	});
+	 	}
+    });
     
     $("#prodCatPost").click(function(response){
-    	 var prod = $("#selectProduct").val();
+   		var prod = $("#selectProduct").val();
     	var cat = $("#selectCategorie").val();
     	
     	if(prod.length < 1){
@@ -141,107 +141,88 @@
     	}
     	else if(cat.length < 1){
     		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>Categorie moet geselecteerd zijn!</div>");	
-    	}
-
-    else {
-    	    	
-    	$.ajax({
-    		url: "restservices/categorieen/producten/"+cat,
-    		method: "GET",
-    		success: function (product) {
-    	    	var x = false;
-
-    			$.each(product, function(i, product){ 
-    				if(product.ProductID == prod){
-    					x = true;
-    				}
-    		})
-    		if(x == false){
-    	    	$.ajax({
-    	    		url: "restservices/categorieen/producten/"+cat,
-    				success: function(response){
-    					var data = $("#prodCatAanmaken").serialize();
-    					console.log(cat);
-    			    	$.post("restservices/categorieen/producten/"+cat, data, function(response){
-    	   				$(".expendable").replaceWith("<div class='alert alert-success expendable' id='response'> Categorie is aan product toegevoegd!</div>");
-    			    	})
-    			    	},
-    	   				error: function(response){
-    	   				$(".expendable").replaceWith("<div class='alert alert-danger expendable' id='response'> Er is iets mis gegaan! Categorie is <strong>niet</strong> aan product toegevoegd.</div>");
-    	   			}
-    	    	
-    	    	});
-    	    	
-    	    	}
-    	    	else{
-    					$(".expendable").replaceWith("<div class='alert alert-danger expendable' id='response'> Dit product hoort al bij deze categorie!</div>");
-    	    	}
-    		}
-    		});
-    }
-     });
+    	} else {
+	    	$.ajax({
+	    		url: "restservices/categorieen/producten/"+cat,
+	    		method: "GET",
+	    		success: function (product) {
+	    	    	var x = false;
+	    			$.each(product, function(i, product){ 
+	    				if(product.ProductID == prod){
+	    					x = true;
+	    				}
+	    			})
+	    			if(x == false){
+	    	    		$.ajax({
+	    	    			url: "restservices/categorieen/producten/"+cat,
+	    					success: function(response){
+	    						var data = $("#prodCatAanmaken").serialize();
+	    			    		$.post("restservices/categorieen/producten/"+cat, data, function(response){
+	    	   						$(".expendable").replaceWith("<div class='alert alert-success expendable' id='response'> Categorie is aan product toegevoegd!</div>");
+	    			    		})
+	    			    	},
+	    	   				error: function(response){
+	    	   					$(".expendable").replaceWith("<div class='alert alert-danger expendable' id='response'> Er is iets mis gegaan! Categorie is <strong>niet</strong> aan product toegevoegd.</div>");
+	    	   				}
+	    	    	
+	    	    		});
+	    	    	} else{
+	    				$(".expendable").replaceWith("<div class='alert alert-danger expendable' id='response'> Dit product hoort al bij deze categorie!</div>");
+	    	    	}
+	    		}
+	    	});
+		}
+	});
     
     
     $("#prodCatDelete").click(function(response){
-   	 var prod = $("#selectProduct").val();
-   	var cat = $("#selectCategorie").val();
+   		var prod = $("#selectProduct").val();
+   		var cat = $("#selectCategorie").val();
    	
-   	if(prod.length < 1){
-   		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>Product moet geselecteerd zijn!</div>");	
-   	}
-   	else if(cat.length < 1){
-   		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>Categorie moet geselecteerd zijn!</div>");	
-   	}
-
-   else {
-   	$.ajax({
-   		url: "restservices/categorieen/producten/"+cat,
-   		method: "GET",
-   		success: function (product) {
-   	    	var x = false;
-
-   			$.each(product, function(i, product){ 
-   				if(product.ProductID == prod){
-  					x = true;
-   					return false;
+   		if(prod.length < 1){
+   			$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>Product moet geselecteerd zijn!</div>");	
+   		} else if(cat.length < 1){
+   			$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>Categorie moet geselecteerd zijn!</div>");	
+   		} else {
+   			$.ajax({
+   				url: "restservices/categorieen/producten/"+cat,
+   				method: "GET",
+   				success: function (product) {
+   	    			var x = false;
+   					$.each(product, function(i, product){ 
+   						if(product.ProductID == prod){
+  							x = true;
+   							return false;
+   						}
+   					})
+   					if(x == true){
+   						$("#prodCatDelete").one("click",function(){   
+		   					var uri = ("restservices/categorieen/producten/") + cat+"/"+prod;
+							var r = confirm("Weet je zeker dat je deze categorie wilt verwijderen?"); 
+		   		  
+		   		  			if (r == true){ 
+		   						$.ajax(uri, {
+		   							method: "DELETE",
+		   							success: function(response){	
+		   								// refresh pagina
+		   								$("body").load("categoriebeheer.html")	
+		   								function notification(){
+		   									$(".expendable").replaceWith("<div class='alert alert-success' id='response'> Categorie van product verwijderd!</div>");
+		   								} 
+		   								setTimeout(notification, 300); 
+		   							},
+		   							error: function(response){
+		   								$(".expendable").replaceWith("<div class='alert alert-danger' id='response'> Er is iets mis gegaan! Categorie is <strong>niet</strong> verwijderd.</div>");
+		   							}
+		   						});
+		   		  			}
+	   					});
+   	    			} else {
+   						$(".expendable").replaceWith("<div class='alert alert-danger expendable' id='response'> Dit product hoort niet bij deze categorie!</div>");
+   	    			}
    				}
-   		})
-   		if(x == true){
-   			$("#prodCatDelete").one("click",function(){   
-	   			var uri = ("restservices/categorieen/producten/") + cat+"/"+prod;
-	   			
-	   		  var r = confirm("Weet je zeker dat je deze categorie wilt verwijderen?"); 
-	   		  
-	   		  if (r == true){ 
-	   			$.ajax(uri, {
-	   				method: "DELETE",
-	   				success: function(response){	
-	   				// refresh pagina
-	   				$("body").load("categoriebeheer.html")	
-	   				
-	   				function notification(){
-	   				$(".expendable").replaceWith("<div class='alert alert-success' id='response'> Categorie van product verwijderd!</div>");
-	   				} 
-	   			// laat bericht zien,  0.3 seconde na de pagina refresh
-	   				setTimeout(notification, 300); 
-	   				},
-	   				error: function(response){
-	   				$(".expendable").replaceWith("<div class='alert alert-danger' id='response'> Er is iets mis gegaan! Categorie is <strong>niet</strong> verwijderd.</div>");
-	   			}
-	   			})
-	   		  }
-	   		  else {
-	   		  }
-	   			
-	   		})
-   	    	
-   	    	}
-   	    	else{
-   					$(".expendable").replaceWith("<div class='alert alert-danger expendable' id='response'> Dit product hoort niet bij deze categorie!</div>");
-   	    	}
+   			});
    		}
-   		});
-   }
     });
     
 	$.ajax({
@@ -253,9 +234,9 @@
 					value: product.ID,
 					text: product.Naam
 				}))		   	
-		})
+			});
 		}
-		});
+	});
     
 	$.ajax({
 		url: "restservices/categorieen/",
@@ -274,48 +255,37 @@
 					   		+ "'>Artikel Wijzigen</button></td>></tr>");
 				}
 				else{
-				
-				$("#categorieen").append("<tr id='"+categorie.ID+"'><td>" + categorie.ID + "</td><td>" + categorie.Naam + "</td><td>" + categorie.Omschrijving 
-				   		+ "</td>"
-				   		+ "<td><button type='button' class='btn btn-warning' id='alter" + categorie.ID
-				   		+ "'>Artikel Wijzigen</button></td><td>" + "<button type='button' class='btn btn-danger' id='delete" 
-				   		+ categorie.ID + "'> Artikel Verwijderen</button>" + "</td></tr>");
-				}
-		   		$("#delete" + categorie.ID).one("click",function(){   
-		   			var uri = ("restservices/categorieen/") + categorie.ID;
-		   			
-		   		  var r = confirm("Weet je zeker dat je deze categorie wilt verwijderen?"); 
-		   		  
-		   		  if (r == true){ 
-		   			$.ajax(uri, {
-		   				method: "DELETE",
-		   				success: function(response){	
-		   				// refresh pagina
-		   				$("body").load("categoriebeheer.html")	
-		   				
-		   				function notification(){
-		   				$(".expendable").replaceWith("<div class='alert alert-success' id='response'> <strong>Categorie:</strong> " + categorie.ID + " " + categorie.Naam + " is verwijderd!</div>");
-		   				} 
-		   			// laat bericht zien,  0.3 seconde na de pagina refresh
-		   				setTimeout(notification, 300); 
-		   				},
-		   				
-		   				error: function(response){
-		   				$(".expendable").replaceWith("<div class='alert alert-danger' id='response'> Er is iets mis gegaan! Categorie is <strong>niet</strong> verwijderd.</div>");
-		   			}
-		   			})
-		   		  }
-		   		  else {
-		   		  }
-		   			
+					$("#categorieen").append("<tr id='"+categorie.ID+"'><td>" + categorie.ID + "</td><td>" + categorie.Naam + "</td><td>" + categorie.Omschrijving 
+					   		+ "</td>"
+					   		+ "<td><button type='button' class='btn btn-warning' id='alter" + categorie.ID
+					   		+ "'>Artikel Wijzigen</button></td><td>" + "<button type='button' class='btn btn-danger' id='delete" 
+					   		+ categorie.ID + "'> Artikel Verwijderen</button>" + "</td></tr>");
+					}
+					
+			   		$("#delete" + categorie.ID).one("click",function(){   
+			   			var uri = ("restservices/categorieen/") + categorie.ID;
+			   		  	var r = confirm("Weet je zeker dat je deze categorie wilt verwijderen?"); 
+			   		  
+			   		  	if (r == true){ 
+			   				$.ajax(uri, {
+			   					method: "DELETE",
+			   					success: function(response){	
+			   					$("body").load("categoriebeheer.html")	
+			   				
+			   					function notification(){
+			   						$(".expendable").replaceWith("<div class='alert alert-success' id='response'> <strong>Categorie:</strong> " + categorie.ID + " " + categorie.Naam + " is verwijderd!</div>");
+			   					} 
+			   					setTimeout(notification, 300); 
+			   				},
+			   				error: function(response){
+			   					$(".expendable").replaceWith("<div class='alert alert-danger' id='response'> Er is iets mis gegaan! Categorie is <strong>niet</strong> verwijderd.</div>");
+			   				}
+			   			})
+		   		  	}
 		   		})
-				
-				
-		})
+			})
 		}
-		});
-    
-    
+	});
     </script>
   </body>
 </html>

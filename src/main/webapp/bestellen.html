@@ -35,72 +35,89 @@
           <div class='expendable'></div>
 		  
 		  <div id="stap11" style="display:none;">
-          <div class="table-responsive">		  
-            <table class="table table-striped" id='bestelling'>
-              <thead>
-              
-              <tr><td>Naam: </td><td id="naam1"></td></tr>
-              <tr><td>Woonadres: </td><td id="woonadres1"></td></tr>           
-              <tr><td>Factuuradres: </td><td id="factuuradres1"></td></tr>              
-                            <tr><td></td><td><td></td><td><button id="1goToStap2" type='button' class='btn btn-success'>Volgende</button></td></tr>
-              </thead>
-              <tbody>
-              </tbody>
-            </table>
-          </div>
-          </div>
+	          <div class="table-responsive">		  
+	            <table class="table table-striped" id='bestelling'>
+	            
+	              <thead>
+	              	<tr><td>Naam: </td><td id="naam1"></td></tr>
+	              	<tr><td>Woonadres: </td><td id="woonadres1"></td></tr>           
+	              	<tr><td>Factuuradres: </td><td id="factuuradres1"></td></tr>              
+	              	<tr><td></td><td><td></td><td><button id="1goToStap2" type='button' class='btn btn-success'>Volgende</button></td></tr>
+	              </thead>
+	              
+	              <tbody>
+	              </tbody>
+	              
+	            </table>
+	          </div>
+   		  </div>
           
-           <div id="stap12" style="display:none;">
-          <div class="table-responsive">		  
-            <table class="table table-striped" id='bestelling'>
-              <thead>
-              <tr><td>Naam: </td><td><input class='form-control' placeholder='Naam' name='Naam' id="Naam2" required='required' type='text'/></td></tr>
-              <tr><td>Straatnaam: </td><td><input class='form-control' placeholder='Straatnaam' name='StraatNaam' id="StraatNaam" required='required' type='text'/></td></tr>   
-              <tr><td>Huisnummer: </td><td><input class='form-control' placeholder='Huisnummer' name='HuisNummer' id="HuisNummer" required='required' type='text'/></td></tr>               
-              <tr><td></td><td><td></td><td><button id="2goToStap2" type='button' class='btn btn-success'>Volgende</button></td></tr>
-              </thead>
-              <tbody>
-              </tbody>
-            </table>
-          </div>
+          <div id="stap12" style="display:none;">
+	          <div class="table-responsive">		  
+	            <table class="table table-striped" id='bestelling'>
+	            
+	              <thead>
+	              	<tr><td>Naam: </td><td><input class='form-control' placeholder='Naam' name='Naam' id="Naam2" required='required' type='text'/></td></tr>
+	              	<tr><td>Straatnaam: </td><td><input class='form-control' placeholder='Straatnaam' name='StraatNaam' id="StraatNaam" required='required' type='text'/></td></tr>   
+	              	<tr><td>Huisnummer: </td><td><input class='form-control' placeholder='Huisnummer' name='HuisNummer' id="HuisNummer" required='required' type='text'/></td></tr>               
+	              	<tr><td></td><td><td></td><td><button id="2goToStap2" type='button' class='btn btn-success'>Volgende</button></td></tr>
+	              </thead>
+	              
+	              <tbody>
+	              </tbody>
+	              
+	            </table>
+	          </div>
           </div>
           
           <div id="stap2" style="display:none;">
-            	     <div class="table-responsive">		  
-            <table class="table table-striped" id='winkelmand'>
-              <thead>
-                <tr>
-                  <th class="col-xs-1">Naam</th>
-                  <th class="col-xs-2">Omschrijving</th>
-				  <th class="col-xs-1">Prijs</th>
-				  <th class="col-xs-1">Aantal</th>
-				  <th class="col-xs-1">Bekijk artikel</th>
-                </tr>
-              </thead>
-              <tbody id="bestellingregels">
-              </tbody>
-            </table>
+          		<div class="table-responsive">		  
+            		<table class="table table-striped" id='winkelmand'>
+            		
+              			<thead>
+			                <tr>
+			                  	<th class="col-xs-1">Naam</th>
+			                  	<th class="col-xs-2">Omschrijving</th>
+							  	<th class="col-xs-1">Prijs</th>
+							  	<th class="col-xs-1">Aantal</th>
+							  	<th class="col-xs-1">Bekijk artikel</th>
+			                </tr>
+              			</thead>
+              			
+              			<tbody id="bestellingregels">
+              			</tbody>
+              			
+            		</table>
+          		</div>
+          
+              	<div class="table-responsive">		  
+            		<table class="table table-striped" id='totaal'>
+            		
+              			<thead>
+			                <tr>
+			                  	<th class="col-xs-5"> </th>
+			                  	<th class="col-xs-1">Totale prijs</th>
+			                  	<th class="col-xs-1"></th>
+			                </tr>
+              			</thead>
+              			
+              			<tbody>
+              				<tr>
+              					<td><input type="checkbox" id="agreement"> Ik heb mijn bestelling gecontroleerd en ga akkoord met de voorwaarden.</td>
+              					<td id="winkelmandjeTotal"></td>
+              					<td><button id="bestellen" type='button' class='btn btn-success'>Rond bestelling af</button></td>
+              				</tr>
+              			</tbody>
+          			</table>
+          		</div>            
           </div>
           
-              <div class="table-responsive">		  
-            <table class="table table-striped" id='totaal'>
-              <thead>
-                <tr>
-                  <th class="col-xs-5"> </th>
-                  <th class="col-xs-1">Totale prijs</th>
-                  <th class="col-xs-1"></th>
-                </tr>
-              </thead>
-              <tbody>
-              
-               <tr><td><input type="checkbox" id="agreement"> Ik heb mijn bestelling gecontroleerd en ga akkoord met de voorwaarden.</td><td id="winkelmandjeTotal"></td><td><button id="bestellen" type='button' class='btn btn-success'>Rond bestelling af</button></td></tr>
-          </table>
-          
-          </div>                         
-          
-          </div>
           <div id="stap3" style="display:none;">
-          <div style="padding:80px; text-align:center;" class='alert alert-success'>Bedankt voor uw bestelling! We gaan gelijk aan de slag. <br><br><br><button onclick='goHome()' type='button' class='btn btn-success'>Terug naar de hoofdpagina.</button></div>
+          		<div style="padding:80px; text-align:center;" class='alert alert-success'>
+          			Bedankt voor uw bestelling! We gaan gelijk aan de slag. 
+          			<br><br><br>
+          			<button onclick='goHome()' type='button' class='btn btn-success'>Terug naar de hoofdpagina.</button>
+          		</div>
           </div>
         </div>
       </div>
@@ -113,6 +130,7 @@
     <script src="js/moment.min.js"></script>
     
     <script>
+    
     $.get("../sources/navbar.html", function(data) {
 		$("#navbar_placeholder").replaceWith(data);
 	});
@@ -255,7 +273,7 @@
 	   		fromStorageToTable(artikelID, aantal, prijs, aanbieding);
 		}
 		
-		//document.getElementById("bestelBericht").innerHTML = "<b>Bevestig hier de inhoud van uw winkelmandje voordat u verder gaat.<br>U kunt hier nog artikelen toevoegen, verwijderen of het aantal exemplaren wijzigen.<br></b>";
+		document.getElementById("bestelBericht").innerHTML = "<b>Bevestig hier de inhoud van uw winkelmandje voordat u verder gaat.<br>U kunt hier nog artikelen toevoegen, verwijderen of het aantal exemplaren wijzigen.<br></b>";
 	    document.getElementById("winkelmandjeTotal").innerHTML = totalPriceFormatted;
 			
 		function fromStorageToTable(artikelID, aantal, prijs, aanbieding) {
