@@ -217,6 +217,8 @@
 		var rij = document.getElementById(artikelID);
 		rij.parentNode.removeChild(rij);
 		
+		showWinkelmandje();
+		
 		if (localStorage.length == 0) {
     	document.getElementById("winkelmand").style.visibility = "hidden";
        	document.getElementById("totaal").style.visibility = "hidden";
@@ -257,6 +259,7 @@
     		document.getElementById("winkelmandjeTotal").innerHTML = totalPriceFormatted;
     		document.getElementById("amountof" + artIDforChange).innerHTML = amount;
     		document.getElementById("priceof" + artIDforChange).innerHTML = totalWorthOfItemFormatted;
+    		showWinkelmandje();
 		}
 		
 		if (showError) {
