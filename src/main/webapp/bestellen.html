@@ -389,8 +389,8 @@
 		    
 		    function saveBestellingsregels(bestellingID) {
 				for (i=0;i<localStorage.length;i++) {
-					aantal = JSON.parse(localStorage.getItem(localStorage.key(0)))["amount"]
-					productID = JSON.parse(localStorage.getItem(localStorage.key(0)))["productID"]
+					aantal = JSON.parse(localStorage.getItem(localStorage.key(i)))["amount"]
+					productID = JSON.parse(localStorage.getItem(localStorage.key(i)))["productID"]
 					doBestellingsregelCall(aantal, productID);
 				}
 			    doPayment(bestellingID);
