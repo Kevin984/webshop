@@ -128,6 +128,7 @@
 			document.getElementById("omschrijvingCell").innerHTML=data["Omschrijving"];
 						
 			document.title = data["Naam"];
+			productNaam = data["Naam"];
 			
 			var button = document.createElement('button');
   			button.innerHTML = 'Voeg toe aan winkelmandje';
@@ -139,7 +140,7 @@
 					success : function (data) {
 						var prijs = data["Prijs"];
 						var discount = data["Discount"];
-						addItemToWinkelmandje(prijs, discount);
+						addItemToWinkelmandje(prijs, discount, productNaam);
 					},
 					error : function (data) {
 						console.log("Er is iets misgegaan bij het ophalen van de prijs.");			
@@ -154,7 +155,7 @@
 		}
 	});
 	
-	function addItemToWinkelmandje(prijs, discount) {
+	function addItemToWinkelmandje(prijs, discount, productNaam) {
 		productid = id;
 		var amount = Number(document.getElementById("aantalArtikelen").value);
 		
@@ -189,7 +190,7 @@
 			}
 			showError = true;
 		} else {
-			document.getElementById("successmessage").innerHTML = amount + " keer artikel '" + data["Naam"] + "' toegevoegd!";
+			document.getElementById("successmessage").innerHTML = amount + " keer artikel '" + productNaam + "' toegevoegd!";
 			if (localStorage.getItem(productid) === null) {
 	  			localStorage.setItem(productid, JSON.stringify(artikel));
 			} else {
