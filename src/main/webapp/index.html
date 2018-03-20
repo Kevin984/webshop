@@ -115,15 +115,13 @@
 		window.location="product.html?id=" + prodID;
 	}
 	
-	function testPUT() {
-		https://webshopiac.herokuapp.com/restservices/producten/5
-		
+	function testPUT() {		
 		$.ajax({
 	        type: 'PUT',
 	        contentType: 'application/json',
 	        url: "/restservices/producten/" + 5,
 	        dataType: "json",
-	        data: "?ID=5&Naam=Haaaaaallo",
+	        data: "ID=5&Naam=Haaaaaallo",
 	        success: function(data, textStatus, jqXHR){
 	            alert('Wine updated successfully');
 	        },
