@@ -164,7 +164,7 @@
 		window.location="product.html?id=" + prodID;
 	}
 	
-	function showProduct(inDeAanbieding) {
+	function showProduct(inDeAanbieding, productID, productNaam, productOmschrijving, productPrijs, aanbiedingPrijs) {
 		if (inDeAanbieding) {
 			$("#categorie").append("<tr><td>" + productNaam + "</td><td>" + productOmschrijving + "</td><td><p style='text-decoration: line-through; display:inline;'>" + productPrijs 
 			+ "</p><p style='color: #388724; display:inline;'> " + aanbiedingPrijs + "</p><td><button type='button' class='btn btn-warning' onclick='goToProductPage(" + productID
