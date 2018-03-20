@@ -108,12 +108,12 @@
     	var Naam = $("#Naam").val();
     	var Omschrijving = $("#Omschrijving").val();
     	
-    	if(Naam.length < 1 || Naam.length > 50){
-    		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>Naam moet 1-50 karakters bevatten!</div>");	
+    	if(Naam.length < 1 || Naam.length > 30){
+    		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>Naam moet 1-30 karakters bevatten!</div>");	
     	}
 
-    	else if(Omschrijving.length < 1 || Omschrijving.length > 50){
-    		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>Naam moet 1-100 karakters bevatten!</div>");	
+    	else if(Omschrijving.length < 1 || Omschrijving.length > 100){
+    		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>Omschrijving moet 1-100 karakters bevatten!</div>");	
     	} else {
 	    	$.ajax({
 				url: "restservices/categorieen/",
