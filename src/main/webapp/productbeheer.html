@@ -147,10 +147,10 @@
 		   		+ "'>Artikel Wijzigen</button></td><td>" + "<button type='button' class='btn btn-danger' id='delete" 
 		   		+ artikel.ID + "'> Artikel Verwijderen</button>" + "</td></tr>");
 		   		
-		   		 var trid = $(this).closest('tr').attr('id');
-	   		    
-		   		 $("#wijzigArtikel" + artikel.ID).click(function(){
-		   			 var replacer = $("<tr>").attr('id', trid);
+		   	
+		   		 $("#alter"+artikel.ID).click(function(){
+		   			 var trid = $(this).closest('tr').attr('id');
+ 					var replacer = $("<tr>").attr('id', trid);
 		   		     
 		   		     var formulier = $("<form id='updateForm"+trid+"'>");
 		   		     formulier.append($("<td>").append($("<input id='id"+trid+"' value='"+trid+"' readonly name='ID'/>"))); //inputs vullen en deze rij herhalen
@@ -158,52 +158,62 @@
 		   		     formulier.append($("<td>").append($("<input id='omschrijving"+trid+"' placeholder='Omschrijving' name='Omschrijving' type='text' required='required'/>"))); //inputs vullen en deze rij herhalen
 		   		     formulier.append($("<td>").append($("<input id='prijs"+trid+"' placeholder='Prijs' type='text' required='required' name='Prijs'/>"))); //inputs vullen en deze rij herhalen
 		   		     formulier.append($("<td>").append($("<button type='button' class='btn btn-primary' id='wijzigArtikel" + artikel.ID + "'>Wijziging opslaan</button>"))); //inputs vullen en deze rij herhalen
-		   		     formulier.append($("<td>").append($("<button type='button' class='btn btn-info' id='wijzigArtikelAnnuleren" + artikel.ID+ "'>Wijzigen annuleren</button>"))); //inputs vullen en deze rij herhalen
+		   		     formulier.append($("<td>").append($("<button type='button' class='btn btn-warning' id='wijzigArtikelAnnuleren" + artikel.ID+ "'>Wijzigen annuleren</button>"))); //inputs vullen en deze rij herhalen
 
 		   		     formulier.appendTo(replacer);
 		   		     $(this).parents("tr").replaceWith(replacer);	
+		   	
+		   		  $("#wijzigArtikel" + artikel.ID).click(function(){
+			   		 	var trid = $(this).closest('tr').attr('id');
+			   	   		console.log($("#id"+trid).val());
+			   	   		console.log($("#naam"+trid).val());
+			   	   		console.log($("#omschrijving"+trid).val());
+			   	   		console.log($("#prijs"+trid).val());
 
-		   		 	var trid = $(this).closest('tr').attr('id');
-		   	   		console.log($("#id"+trid).val());
-		   	   		console.log($("#naam"+trid).val());
-		   	   		console.log($("#omschrijving"+trid).val());
-		   	   		console.log($("#prijs"+trid).val());
-
-     				var uri = "restservices/producten/" + trid;
-		   	   	 
-     				$.ajax({
-     					url: "restservices/producten/"+ trid,
-     					success: function(response){
-     						var data = $("#updateForm"+trid).serialize();
-     				    	$.post("restservices/producten/"+trid, data, function(response){
-     		   					$("#updateForm"+trid)[0].reset(); 
-     		   					$(".expendable").replaceWith("<div class='alert alert-success expendable' id='response'> <strong>Artikel:</strong> " + response.ID + " " + response.Naam + " is ge-update!</div>");
-     				    	})
-     				    },
-     		   			error: function(response){
-     		   				$(".expendable").replaceWith("<div class='alert alert-danger expendable' id='response'> Er is iets mis gegaan! Artikel is <strong>niet</strong> toegevoegd.</div>");
-     		   			}
-     		    	});
-     				
-     				/*  	$.ajax(uri, {
-        				type: "PUT",
-        				data: $("updateForm" + trid).serialize(),
-        				success: function(response){
-        					$("body").load("productbeheer.html")	
-							function notification(){
-								$(".expendable").replaceWith("<div class='alert alert-success' id='response'> <strong>Artikel:</strong> " + artikel.ID + " " + artikel.Naam + " is aangepast!</div>");
-							} 
-							setTimeout(notification, 300); 
-						},
-						error: function(response){
-							$(".expendable").replaceWith("<div class='alert alert-danger' id='response'> Er is iets mis gegaan! Artikel is <strong>niet</strong> aangepast.</div>");
-						}
-        			});*/
-		   	   	})
-				$("#wijzigArtikelAnnuleren"+artikel.ID).click(function(){
-		   	   		// refresh pagina
-		   	   		location.reload();	
-				})
+	     				var uri = "restservices/producten/" + trid;
+	     				$.ajax({
+	     					url: "restservices/producten/"+ trid,
+	     					success: function(response){
+	     						var data = $("#updateForm"+trid).serialize();
+	     				    	$.post("restservices/producten/"+trid, data, function(response){
+	     		   					$("#updateForm"+trid)[0].reset(); 
+	     		   					$(".expendable").replaceWith("<div class='alert alert-success expendable' id='response'> <strong>Artikel:</strong> " + trid + " " + response.Naam + " is ge-update!</div>");
+	     				    	})
+	     				    },
+	     		   			error: function(response){
+	     		   				$(".expendable").replaceWith("<div class='alert alert-danger expendable' id='response'> Er is iets mis gegaan! Artikel is <strong>niet</strong> toegevoegd.</div>");
+	     		   			}
+	     		    	});
+	     				
+	     				/*  	$.ajax(uri, {
+	        				type: "PUT",
+	        				data: $("updateForm" + trid).serialize(),
+	        				success: function(response){
+	        					$("body").load("productbeheer.html")	
+								function notification(){
+									$(".expendable").replaceWith("<div class='alert alert-success' id='response'> <strong>Artikel:</strong> " + artikel.ID + " " + artikel.Naam + " is aangepast!</div>");
+								} 
+								setTimeout(notification, 300); 
+							},
+							error: function(response){
+								$(".expendable").replaceWith("<div class='alert alert-danger' id='response'> Er is iets mis gegaan! Artikel is <strong>niet</strong> aangepast.</div>");
+							}
+	        			});*/
+			   	   	})
+					$("#wijzigArtikelAnnuleren"+artikel.ID).click(function(){
+			   	   		// refresh pagina
+			   	   		location.reload();	
+					})
+		   		 })
+		   		 
+		   		 
+		   		 
+		   		 
+		   		 
+		   		 
+		   		 
+		   		 
+		   	
 				
 			   	$("#delete" + artikel.ID).one("click",function(){   
 			   		var uri = ("restservices/producten/") + artikel.ID;
