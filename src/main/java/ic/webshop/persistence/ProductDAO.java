@@ -113,14 +113,26 @@ return null;
 			
 			String query = "DELETE FROM public.\"Product\" WHERE \"ID\" IN ("+artikel.getID()+")";
 			String query2 = "DELETE FROM public.\"Bestellingsregel\" WHERE \"Product_ID\" IN (?)";
+			String query3 ="DELETE FROM public.\"Aanbieding\" WHERE \"Product_ID\" IN (?)";
+			String query4 ="DELETE FROM public.\"Product_Categorie\" WHERE \"Product_ID\" IN (?)";
 			//delete aanbieding en alle ProductFKs.
-		//	String query3 = "DELETE FROM public.\"Bestelling\" WHERE \"Product_ID\" IN (?)";
 
 			try(Connection con = super.getConnection()){
 				Statement stmt = con.createStatement();
 				//verwijder eerst alle verkoopregels met hetzelfde artikel omdat ze gelinkt zijn aan artikel
 				preparedStatement = con.prepareStatement(query2); 
+				preparedStatement.setInt(1, artikel.getID());
+				preparedStatement.executeUpdate();
+				preparedStatement.close();
 				
+				
+				preparedStatement = con.prepareStatement(query3); 
+				preparedStatement.setInt(1, artikel.getID());
+				preparedStatement.executeUpdate();
+				preparedStatement.close();
+				
+				
+				preparedStatement = con.prepareStatement(query4); 
 				preparedStatement.setInt(1, artikel.getID());
 				preparedStatement.executeUpdate();
 				preparedStatement.close();
