@@ -41,6 +41,7 @@
 		  
           <div class="table-responsive">		  
             <table class="table table-striped" id='winkelmand'>
+            
               <thead>
                 <tr>
                   <th class="col-xs-1">Naam</th>
@@ -52,14 +53,16 @@
 				  <th class="col-xs-1">Bekijk artikel</th>
                 </tr>
               </thead>
-              <tbody>
               
+              <tbody>
               </tbody>
+              
             </table>
           </div>
           
           <div class="table-responsive">		  
             <table class="table table-striped" id='totaal'>
+            
               <thead>
                 <tr>
                   <th class="col-xs-5"> </th>
@@ -67,14 +70,15 @@
                   <th class="col-xs-1"></th>
                 </tr>
               </thead>
+              
               <tbody>
               	<tr>
-              		<td></td><td id="winkelmandjeTotal"></td><td><button type='button' class='btn btn-success' onclick='checkout()'>Bestellen</button></td>
+              		<td></td>
+              		<td id="winkelmandjeTotal"></td><td><button type='button' class='btn btn-success' onclick='checkout()'>Bestellen</button></td>
               	</tr>
               </tbody>
             </table>
           </div>
-          
         </div>
       </div>
     </div>
@@ -87,6 +91,7 @@
     
     <script>
     $.noConflict();
+    
     $.get("../sources/navbar.html", function(data) {
 		$("#navbar_placeholder").replaceWith(data);
 	});
@@ -251,13 +256,8 @@
 			localStorage.setItem(artIDforChange, JSON.stringify(huidigArtikel));
 			var oldTotalWorthOfItem = Number(JSON.parse(localStorage.getItem(artIDforChange))["priceNoFormat"]) * document.getElementById("amountof" + artIDforChange).innerHTML;
 			var totalWorthOfItem = Number(JSON.parse(localStorage.getItem(artIDforChange))["priceNoFormat"]) * amount;
-			//console.log(totalPrice);
-			//console.log(oldTotalWorthOfItem);
 			totalPrice -= oldTotalWorthOfItem;
-			//console.log(totalPrice);
-			//console.log(totalWorthOfItem);
 			totalPrice += totalWorthOfItem;
-			//console.log(totalPrice);
 			totalPriceFormatted = totalPrice.toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
 			totalWorthOfItemFormatted = totalWorthOfItem.toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
 			
@@ -296,6 +296,5 @@
 	<div id="dialog-changeerror" title="Onjuiste invoer.">
     	<p id="errormessage"> </p>
 	</div>
-    
   </body>
 </html>

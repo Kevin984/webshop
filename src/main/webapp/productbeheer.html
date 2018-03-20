@@ -35,41 +35,43 @@
 		  
           <div class="table-responsive">
             <table class="table table-striped">
+            
               <thead>
                 <tr>
-                 
-                  <th class="col-xs-2">Afbeelding</th>
-                  <th class="col-xs-2">Naam</th>
-                  <th class="col-xs-1">Omschrijving</th>
-				  <th class="col-xs-1">Prijs</th>
-				 <th></th>
+                  	<th class="col-xs-2">Afbeelding</th>
+                  	<th class="col-xs-2">Naam</th>
+                  	<th class="col-xs-1">Omschrijving</th>
+				  	<th class="col-xs-1">Prijs</th>
+				  	<th></th>
                 </tr>
               </thead>
               
               <tbody>
                 <tr>
-				<form id="artikelAanmaken" accept-charset="utf-8">
-                 <td> <input id="Afbeelding" type="file" class="form-control" name="Afbeelding" accept="image/gif, image/jpeg, image/png"></td>
-                  <td> <input type="text" class="form-control" id="Naam" name="Naam"/></td>
-                  <td><input type="text" class="form-control" id="Omschrijving" name="Omschrijving"/></td>
-                  <td><input type="text" class="form-control" id="Prijs" name="Prijs"/></td>
-				  <td><button type="button" class="btn btn-success" id="artikelPost">Product aanmaken</button></td>
+				  <form id="artikelAanmaken" accept-charset="utf-8">
+                 	<td> <input id="Afbeelding" type="file" class="form-control" name="Afbeelding" accept="image/gif, image/jpeg, image/png"></td>
+                  	<td> <input type="text" class="form-control" id="Naam" name="Naam"/></td>
+                  	<td><input type="text" class="form-control" id="Omschrijving" name="Omschrijving"/></td>
+                  	<td><input type="text" class="form-control" id="Prijs" name="Prijs"/></td>
+				  	<td><button type="button" class="btn btn-success" id="artikelPost">Product aanmaken</button></td>
 				  </form>
                 </tr>
               </tbody>
+              
             </table>
           </div>
           
-              <div class="table-responsive">		  
+            <div class="table-responsive">		  
             <table class="table table-striped" id='voorraad'>
+            
               <thead>
-                <tr>
-                  <th class="col-xs-1">#ID</th>
-                  <th class="col-xs-3">Naam</th>
-                  <th class="col-xs-2">Omschrijving</th>
-				  <th class="col-xs-1">Prijs</th>
-				 <th class="col-xs-1">Wijzigen</th>
-				 <th class="col-xs-1">Verwijderen</th>
+               	<tr>
+                  	<th class="col-xs-1">#ID</th>
+                  	<th class="col-xs-3">Naam</th>
+                  	<th class="col-xs-2">Omschrijving</th>
+				  	<th class="col-xs-1">Prijs</th>
+				 	<th class="col-xs-1">Wijzigen</th>
+				 	<th class="col-xs-1">Verwijderen</th>
                 </tr>
               </thead>
               <tbody>
@@ -88,6 +90,7 @@
     <script src="assets/js/ie10-viewport-bug-workaround.js"></script>
     
     <script>
+    
     $.get("../sources/navbar.html", function(data) {
 		$("#navbar_placeholder").replaceWith(data);
 	});
@@ -95,52 +98,38 @@
 	$.get("../sources/sidebar.html", function(data) {
 		$("#sidebar_placeholder").replaceWith(data);
 	});
+	
+	
+
     
     $("#artikelPost").click(function(response){
-   // 	var ID = $("#ID").val();
     	var Afbeelding = $("#Afbeelding").val();
     	var Naam = $("#Naam").val();
     	var Omschrijving = $("#Omschrijving").val();
     	var Prijs = $("#Prijs").val();
-    	// format voor bedragen (4.10, 9.43 etc)
     	var currRegex = /^\d+(?:\.\d{0,2})$/;    	
     	
-    	//controleer of alle in ingevuld en niet groter is dan wat de database toe staat. isNaN gebruikt om te kijken of input wel een nummer is a
-  //  	if( isNaN(ID) || ID.length != 4){
-   // 		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>ID moet 4 cijfers bevatten!</div>");
-   // 	}
+  
     	if(Naam.length < 1 || Naam.length > 50){
     		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>Naam moet 1-50 karakters bevatten!</div>");	
-    	}
-    //	else if(Afbeelding.length < 1){
-    //		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>Categorie moet worden ingevuld!</div>");
-    //	}
-    	else if (!(currRegex.test(Prijs))){
+    	} else if (!(currRegex.test(Prijs))){
     		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>Prijs moet een bedrag zijn met 2 decimalen! Voorbeeld: 15.94</div>");
-    	}
-    //	else if(isNaN(Aantal) || Aantal.length < 1 || !(Aantal % 1 === 0)){
-    //		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>Aantal moet een heel getal zijn!</div>");
-    //	}
-    	
-    else {
-    	$.ajax({
-			url: "restservices/producten/",
-			success: function(response){
-				var data = $("#artikelAanmaken").serialize();
-		    	$.post("restservices/producten", data, function(response){
-		    		// reset de form voor nieuwe input
-   				$("#artikelAanmaken")[0].reset(); 
-   				
-   				$(".expendable").replaceWith("<div class='alert alert-success expendable' id='response'> <strong>Artikel:</strong> " + response.ID + " " + response.Naam + " is toegevoegd aan de voorraad!</div>");
-		    	})
-		    	},
-   				error: function(response){
-   				$(".expendable").replaceWith("<div class='alert alert-danger expendable' id='response'> Er is iets mis gegaan! Artikel is <strong>niet</strong> toegevoegd.</div>");
-   			}
-    	
-    	});
-    }
-     });
+    	} else {
+	    	$.ajax({
+				url: "restservices/producten/",
+				success: function(response){
+					var data = $("#artikelAanmaken").serialize();
+			    	$.post("restservices/producten", data, function(response){
+	   					$("#artikelAanmaken")[0].reset(); 
+	   					$(".expendable").replaceWith("<div class='alert alert-success expendable' id='response'> <strong>Artikel:</strong> " + response.ID + " " + response.Naam + " is toegevoegd aan de voorraad!</div>");
+			    	})
+			    },
+	   			error: function(response){
+	   				$(".expendable").replaceWith("<div class='alert alert-danger expendable' id='response'> Er is iets mis gegaan! Artikel is <strong>niet</strong> toegevoegd.</div>");
+	   			}
+	    	});
+	    }
+	});
     
 	$.ajax({
 		url: "restservices/producten/",
@@ -150,25 +139,14 @@
 		xhr.setRequestHeader( 'Authorization', 'Bearer ' + token);
 		},
 		success: function (voorraad) {
-			//vul hele pagina met alle artikelen
 			$.each(voorraad, function(i, artikel){ 
+			
 		   		$("#voorraad").append("<tr id='"+artikel.ID+"'><td>" + artikel.ID + "</td><td>" + artikel.Naam + "</td><td>" + artikel.Omschrijving 
 		   		+ "</td>><td>€" + artikel.Prijs + "</td>" 
 		   		+ "<td><button type='button' class='btn btn-warning' id='alter" + artikel.ID
 		   		+ "'>Artikel Wijzigen</button></td><td>" + "<button type='button' class='btn btn-danger' id='delete" 
 		   		+ artikel.ID + "'> Artikel Verwijderen</button>" + "</td></tr>");
 		   		
-		   		$("#alter" + artikel.ID).one("click",function(){ 
-		   			//als gebruiker op wijzig artikel klikt, maak van alle gegevens input velden met daarin wel de bijhorende gegevens
-		   //			$(this).parents("tr").replaceWith("<tr><form id='updateArtikelForm'>"
-		   //			+   "<td><input class='form-control'   type='text' name='ID'        id='" + artikel.ID +"' value='" + artikel.ID + "' readonly></td>" 
-		   //			+ 	"<td> <input class='form-control'  type='text' name='Naam'      id='" + artikel.Naam + "' value='"+artikel.Naam+"'></td>"	
-		   //			+ 	"<td> <input class='form-control'  type='text' name='Omschrijving'      id='" + artikel.Omschrijving + "' value='"+artikel.Omschrijving+"'></td>"	
-		   //			+ 	"<td> <input class='form-control'  type='text' name='Prijs'id='" + artikel.Prijs + "' value='"+artikel.Prijs+"'></td>"	
-		   //			+   "<td> <button type='button' class='btn btn-primary' id='wijzigArtikel" + artikel.ID + "'>Wijziging opslaan</button> </td>"
-		   //			+   "<td> <button type='button' class='btn btn-info' id='wijzigArtikelAnnuleren" + artikel.ID+ "'>Wijzigen annuleren</button></td>"
-		   //			+		"</form></tr>");
-		   			
 		   		 var trid = $(this).closest('tr').attr('id');
 	   		     var replacer = $("<tr>").attr('id', trid);
 	   		     
@@ -182,106 +160,58 @@
 
 	   		     formulier.appendTo(replacer);
 	   		     $(this).parents("tr").replaceWith(replacer);	
-		   			$("#wijzigArtikel" + artikel.ID).click(function(){
-		   			
-		   				/* var uri = "/restservices/voorraad/" + artikel.ID + "/" + artikel.Maat + "/" + artikel.Kleur;
-		   	   			$.ajax(uri, {
-		   	   				method: "PUT",
-		   	   				data: $("#updateArtikelForm").serialize(),
-		   	   			beforeSend: function (xhr) {
-		   					var token = window.sessionStorage.getItem("sessionToken");
-		   					xhr.setRequestHeader( 'Authorization', 'Bearer ' + token);
-		   					},
-		   	   			success: function(response){	
-		   	   				$(".expendable").replaceWith("<div class='alert alert-success' id='response'> <strong>Artikel:</strong> " + artikel.ID + " " + artikel.Naam + " is gewijzigd!</div>");
-		   	   				},
-		   	   			error: function(response){
-		   	   				$(".expendable").replaceWith("<div class='alert alert-danger' id='response'> Er is iets mis gegaan! Artikel is <strong>niet</strong> gewijzigd.</div>");
-		   	   			}
-		   	   			})	*/
-		   	   	//functie hierboven in de comment werkt niet door een '403 forbidden' error, nu krijgt de gebruiker een bericht van de browser  	
-		   	   	     var trid = $(this).closest('tr').attr('id');
-		   	   			console.log($("#id"+trid).val());
-		   	   			console.log($("#naam"+trid).val());
-		   	   			console.log($("#omschrijving"+trid).val());
-		   	   			console.log($("#prijs"+trid).val());
+		   		 $("#wijzigArtikel" + artikel.ID).click(function(){
+		   		 	var trid = $(this).closest('tr').attr('id');
+		   	   		console.log($("#id"+trid).val());
+		   	   		console.log($("#naam"+trid).val());
+		   	   		console.log($("#omschrijving"+trid).val());
+		   	   		console.log($("#prijs"+trid).val());
 
-     var uri = "restservices/producten/" + trid;
-		   	   	   $.ajax(uri, {
-        type: "PUT",
-        data: $("updateForm" + trid).serialize(),
-     //    beforeSend: function (xhr) {
-      //       var token = window.sessionStorage.getItem("sessionToken");
-       //      xhr.setRequestHeader( 'Authorization', 'Bearer ' + token);
-        //     },
-        success: function(response){
-        	$("body").load("productbeheer.html")	
-				
-				function notification(){
-				$(".expendable").replaceWith("<div class='alert alert-success' id='response'> <strong>Artikel:</strong> " + artikel.ID + " " + artikel.Naam + " is aangepast!</div>");
-				} 
-			// laat bericht zien,  0.3 seconde na de pagina refresh
-				setTimeout(notification, 300); 
-				},
-				
-				error: function(response){
-				$(".expendable").replaceWith("<div class='alert alert-danger' id='response'> Er is iets mis gegaan! Artikel is <strong>niet</strong> aangepast.</div>");
-			}
-        
-        });
-		   	   	
-		   				//alert("Deze functie werkt nog niet. Onze excuses."); 
-		   	   		})
-		   	   		
-		   	   		$("#wijzigArtikelAnnuleren"+artikel.ID).click(function(){
-		   	   	// refresh pagina
+     				var uri = "restservices/producten/" + trid;
+		   	   	   	$.ajax(uri, {
+        				type: "PUT",
+        				data: $("updateForm" + trid).serialize(),
+        				success: function(response){
+        					$("body").load("productbeheer.html")	
+							function notification(){
+								$(".expendable").replaceWith("<div class='alert alert-success' id='response'> <strong>Artikel:</strong> " + artikel.ID + " " + artikel.Naam + " is aangepast!</div>");
+							} 
+							setTimeout(notification, 300); 
+						},
+						error: function(response){
+							$(".expendable").replaceWith("<div class='alert alert-danger' id='response'> Er is iets mis gegaan! Artikel is <strong>niet</strong> aangepast.</div>");
+						}
+        			});
+		   	   	})
+				$("#wijzigArtikelAnnuleren"+artikel.ID).click(function(){
+		   	   		// refresh pagina
 		   	   		location.reload();	
-		   	   		
-		   	   		})
+				})
 		   	})
-		   		
-	
 		   	
-		   	
-		   	
-		   	
-		   		$("#delete" + artikel.ID).one("click",function(){   
-		   			var uri = ("restservices/producten/") + artikel.ID;
-		   			
-		   		//vraag gebruiker om op OK of annuleren te drukken
-		   		  var r = confirm("Weet je zeker dat je dit artikel wilt verwijderen?"); 
-		   		  
-		   		//als gebruiker OK kiest, verwijder artikel. hiermee worden ook alle verkoopregels verwijderd die gelinkt zijn aan dit artikel(zie artikelDAO.java)
-		   		  if (r == true){ 
-		   			$.ajax(uri, {
-		   				method: "DELETE",
-		   	//			beforeSend: function (xhr) {
-		   	//				var token = window.sessionStorage.getItem("sessionToken");
-		   	//				xhr.setRequestHeader( 'Authorization', 'Bearer ' + token);
-		   	//				},
-		   				success: function(response){	
-		   				// refresh pagina
-		   				$("body").load("productbeheer.html")	
-		   				
-		   				function notification(){
-		   				$(".expendable").replaceWith("<div class='alert alert-success' id='response'> <strong>Artikel:</strong> " + artikel.ID + " " + artikel.Naam + " is verwijderd uit de voorraad!</div>");
-		   				} 
-		   			// laat bericht zien,  0.3 seconde na de pagina refresh
-		   				setTimeout(notification, 300); 
-		   				},
-		   				
-		   				error: function(response){
-		   				$(".expendable").replaceWith("<div class='alert alert-danger' id='response'> Er is iets mis gegaan! Artikel is <strong>niet</strong> verwijderd.</div>");
-		   			}
-		   			})
-		   		  }
-		   		  else {
-		   		  }
-		   			
-		   		})
-		})
+		   	$("#delete" + artikel.ID).one("click",function(){   
+		   		var uri = ("restservices/producten/") + artikel.ID;
+		   		var r = confirm("Weet je zeker dat je dit artikel wilt verwijderen?"); 
+		   		if (r == true){ 
+			   		$.ajax(uri, {
+			   			method: "DELETE",
+			   			success: function(response){	
+			   				// refresh pagina
+			   				$("body").load("productbeheer.html")	
+			   				function notification(){
+			   					$(".expendable").replaceWith("<div class='alert alert-success' id='response'> <strong>Artikel:</strong> " + artikel.ID + " " + artikel.Naam + " is verwijderd uit de voorraad!</div>");
+			   				} 
+			   				// laat bericht zien,  0.3 seconde na de pagina refresh
+			   				setTimeout(notification, 300); 
+			   			},
+			   			error: function(response){
+			   				$(".expendable").replaceWith("<div class='alert alert-danger' id='response'> Er is iets mis gegaan! Artikel is <strong>niet</strong> verwijderd.</div>");
+			   			}
+		   			});
+		   		}
+		   	});
 		}
-		});
+	});
     </script>
   </body>
 </html>

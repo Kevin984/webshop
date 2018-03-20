@@ -46,7 +46,7 @@ public interface ProductService {
 	@Path("{ID}")
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public String updateProductTest(@FormParam("ID") int ID, @FormParam("Naam") String naam);
+    public String updateProductTest(@PathParam("ID") int ID, @PathParam("Naam") String naam);
 	
 	@POST 
 	@Produces("application/json")
