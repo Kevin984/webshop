@@ -36,12 +36,7 @@ public interface ProductService {
 	@Path("{ID}")  													
 	public Response deleteProduct(@PathParam("ID") int productID); 
 	
-	@PUT
-	@Path("{ID}")
-	@Produces("application/json") 
-	public String updateProduct(@FormParam("ID") int ID, @FormParam("Naam") String naam, @FormParam("Omschrijving") String omschrijving
-			, @FormParam("Prijs") double prijs);
-	
+		
 	@PUT 
 	@Path("{ID}")
 	@Produces("application/json") 
