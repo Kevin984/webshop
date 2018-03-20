@@ -18,32 +18,30 @@ import io.jsonwebtoken.impl.crypto.MacProvider;
 
 @Path("/authentication")
 public class AuthenticationResource {
- final static public Key key = MacProvider.generateKey();
- @POST
- @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
- public Response authenticateUser(@FormParam("username") String username,
- @FormParam("password") String password) {
- try {
- // Authenticate the user against the database
- UserDAO dao = new UserDAO();
- String role = dao.findRoleForUsernameAndPassword(username, password);
+	final static public Key key = MacProvider.generateKey();
 
- if (role == null) { throw new IllegalArgumentException("No user found!"); }
+	@POST
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response authenticateUser(@FormParam("username") String username, @FormParam("password") String password) {
+		try {
+			// Authenticate the user against the database
+			UserDAO dao = new UserDAO();
+			String role = dao.findRoleForUsernameAndPassword(username, password);
 
- // Issue a token for the user
- Calendar expiration = Calendar.getInstance();
- expiration.add(Calendar.MINUTE, 1);
+			if (role == null) {
+				throw new IllegalArgumentException("No user found!");
+			}
 
- String token = Jwts.builder()
- .setSubject(username)
- .claim("role", role)
- .setExpiration(expiration.getTime())
- .signWith(SignatureAlgorithm.HS512, key)
- .compact();
- // Return the token on the response
- return Response.ok(token).build();
- } catch (JwtException | IllegalArgumentException e) {
- return Response.status(Response.Status.UNAUTHORIZED).build();
- }
- }
-} 
+			// Issue a token for the user
+			Calendar expiration = Calendar.getInstance();
+			expiration.add(Calendar.MINUTE, 1);
+
+			String token = Jwts.builder().setSubject(username).claim("role", role).setExpiration(expiration.getTime())
+					.signWith(SignatureAlgorithm.HS512, key).compact();
+			// Return the token on the response
+			return Response.ok(token).build();
+		} catch (JwtException | IllegalArgumentException e) {
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		}
+	}
+}
