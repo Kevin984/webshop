@@ -98,7 +98,7 @@
 				document.title = "Nieuwe artikelen";
 				document.getElementById("categorieOmschrijving").innerHTML="De meest recent toegevoegde artikelen";
 			} else {
-				document.getElementById("categorieNaam").innerHTML="Artikelen uit de " + data["Naam"] + " categorie.";
+				document.getElementById("categorieNaam").innerHTML="Artikelen uit de categorie '" + data["Naam"] + "'.";
 				document.title = data["Naam"];
 				document.getElementById("categorieOmschrijving").innerHTML=data["Omschrijving"];
 			}
