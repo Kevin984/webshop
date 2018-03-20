@@ -138,7 +138,7 @@ JsonArrayBuilder jab = Json.createArrayBuilder();
 
 	private JsonObjectBuilder artikelToJson(Product a ){
 		JsonObjectBuilder job = Json.createObjectBuilder();
-//		job.add("ID", a.getID());
+		job.add("ID", a.getID());
 		job.add("Naam", a.getNaam());
 		System.out.println(" Naam: " + a.getNaam()); 
 //		String blob = new String(a.getBlobPlaatje(), StandardCharsets.UTF_8);
