@@ -135,7 +135,7 @@
   				var productid = getUrlParameter('id');
   				
   				$.ajax({
-					url : "restservices/producten/prijs" + id,
+					url : "restservices/producten/prijs/" + id,
 					method : "GET",
 					success : function (data) {
 						var prijs = data["Prijs"]
