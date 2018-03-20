@@ -219,6 +219,12 @@
 	     $("#2goToStap2").click(function(event){
 	     	if($("#Naam2").val() == "" || $("#StraatNaam").val() == "" || $("#HuisNummer").val() == ""){
 	    		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>U heeft geen naam of adres ingevuld.</div>");
+	       	} else if ($("#Naam2").val().length > 30) {
+	       		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>Uw naam mag niet meer dan 30 tekens bevatten.</div>");
+	       	} else if ($("#StraatNaam").val().length > 50) {
+	       		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>Uw straatnaam mag niet meer dan 50 tekens bevatten.</div>");
+	       	} else if ($("#HuisNummer").val().length > 5) {
+	       		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>Uw huisnummer mag niet meer dan 5 tekens bevatten.</div>");
 	       	} else {
 	       	    document.getElementById("bestelBericht").innerHTML = "<b>Controleer de inhoud van uw winkelmandje.</b>";
 	       		$(".expendable").replaceWith("<div class='expendable'></div>");

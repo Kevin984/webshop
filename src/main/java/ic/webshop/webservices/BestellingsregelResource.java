@@ -96,13 +96,17 @@ private BestellingDAO bestellingDAO = new BestellingDAO();
 	@Produces("application/json")
 	public String createBestellingsregel(@FormParam("Aantal") int aantal, @FormParam("BestellingID") int bestellingID, @FormParam("ProductID") int productID) {
 		
-		Bestelling bestelling = bestellingDAO.findBestellingByPK(bestellingID);
-		Product product = productDAO.findByPK(productID);
-		double totaalprijs = prodResource.getPrijs(productID) * aantal;
+		if(aantal > 20 || aantal < 1){
+			throw new WebApplicationException("Aantal is minder dan 1 of meer dan 20!");
+		} else {
+			Bestelling bestelling = bestellingDAO.findBestellingByPK(bestellingID);
+			Product product = productDAO.findByPK(productID);
+			double totaalprijs = prodResource.getPrijs(productID) * aantal;
 		
-		Bestellingsregel bestellingsregel = new Bestellingsregel(bestelling, aantal, totaalprijs, product);
-		bDAO.saveBestellingsregel(bestellingsregel);
-		return bestellingsregelToJson(bestellingsregel).build().toString();
+			Bestellingsregel bestellingsregel = new Bestellingsregel(bestelling, aantal, totaalprijs, product);
+			bDAO.saveBestellingsregel(bestellingsregel);
+			return bestellingsregelToJson(bestellingsregel).build().toString();
+		}
 	}
 
 	@Override
