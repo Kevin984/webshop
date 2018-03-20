@@ -74,7 +74,7 @@ JsonArrayBuilder jab = Json.createArrayBuilder();
 	
 	@Override
 	@DELETE
-//	@RolesAllowed({"admin"})
+	@RolesAllowed({"admin"})
 	@Path("{ID}")
 	public Response deleteProduct(@PathParam("ID") int productID) {
 		Product found = null;
@@ -91,7 +91,7 @@ JsonArrayBuilder jab = Json.createArrayBuilder();
 
 	@Override
 	@POST
-//	@RolesAllowed({"admin"})
+	@RolesAllowed({"admin"})
 	@Path("{ID}")
 	@Produces("application/json")
 //	@Consumes({ MediaType.WILDCARD })
@@ -128,7 +128,7 @@ JsonArrayBuilder jab = Json.createArrayBuilder();
 
 	@Override
 	@POST
-//	@RolesAllowed({"admin"})
+	@RolesAllowed({"admin"})
 	@Produces("application/json")
 	public String createProduct(@FormParam("Naam") String naam, @FormParam("Omschrijving") String omschrijving
 			, @FormParam("Prijs") double prijs) {
