@@ -45,6 +45,42 @@ else{
 	$("#loginlink").hide();
 }
 
+for (j = 0; j < localStorage.length; j++){
+	artikelID = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["productID"]);
+	aantal = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["amount"]);
+	prijsNoFormat = (Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["priceNoFormat"]) * aantal);
+	prijs = prijsNoFormat.toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
+	aanbieding = JSON.parse(localStorage.getItem(localStorage.key(j)))["discount"] == true;
+	totalPrice += prijsNoFormat
+	
+	totalPriceFormatted = totalPrice.toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
+	
+	fromStorageToPreview(artikelID, aantal, prijs, aanbieding);
+}
+
+function fromStorageToPreview(artikelID, aantal, prijs, aanbieding) {
+	$.ajax({
+		url : "restservices/producten/" + artikelID,
+		method : "GET",
+		success : function (data) {
+		
+			if (aanbieding) {
+			 	var color = "#388724";
+			} else {
+				var color = "000000";	
+			}
+			
+			colorStyle = "style='color:" + color + "';"
+			
+			document.getElementById("cartPreviewPlaceholder").innerHTML += aantal + " keer " + data["Naam"] + " - <span " + colorStyle + ">" + prijs + "</span";
+		},
+		error : function() {
+			document.getElementById("winkelmandOmschrijving").innerHTML="Er is iets misgegaan bij het weergeven van uw winkelmandje.";
+		}
+	});
+}
+
+
 $.ajax({
 		url : "https://webshopiac.herokuapp.com/restservices/categorieen",
 		method : "GET",
