@@ -198,6 +198,7 @@
 				huidigArtikel['amount'] = Number(huidigArtikel['amount']) + amount;
 				huidigArtikel['price'] = prijs;
 				localStorage.setItem(productid, JSON.stringify(huidigArtikel));
+				showWinkelmandje();
 			}
 			$("#dialog-confirm").dialog('open');return false;
 		}

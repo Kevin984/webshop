@@ -217,6 +217,8 @@
 		var rij = document.getElementById(artikelID);
 		rij.parentNode.removeChild(rij);
 		
+		showWinkelmandje();
+		
 		if (localStorage.length == 0) {
     	document.getElementById("winkelmand").style.visibility = "hidden";
        	document.getElementById("totaal").style.visibility = "hidden";
@@ -249,14 +251,20 @@
 			localStorage.setItem(artIDforChange, JSON.stringify(huidigArtikel));
 			var oldTotalWorthOfItem = Number(JSON.parse(localStorage.getItem(artIDforChange))["priceNoFormat"]) * document.getElementById("amountof" + artIDforChange).innerHTML;
 			var totalWorthOfItem = Number(JSON.parse(localStorage.getItem(artIDforChange))["priceNoFormat"]) * amount;
+			//console.log(totalPrice);
+			//console.log(oldTotalWorthOfItem);
 			totalPrice -= oldTotalWorthOfItem;
-			totalPrice += totalWorthOfItem
+			//console.log(totalPrice);
+			//console.log(totalWorthOfItem);
+			totalPrice += totalWorthOfItem;
+			//console.log(totalPrice);
 			totalPriceFormatted = totalPrice.toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
 			totalWorthOfItemFormatted = totalWorthOfItem.toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
 			
     		document.getElementById("winkelmandjeTotal").innerHTML = totalPriceFormatted;
     		document.getElementById("amountof" + artIDforChange).innerHTML = amount;
     		document.getElementById("priceof" + artIDforChange).innerHTML = totalWorthOfItemFormatted;
+    		showWinkelmandje();
 		}
 		
 		if (showError) {

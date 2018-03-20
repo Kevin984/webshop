@@ -46,9 +46,8 @@ else{
 	$("#loginlink").hide();
 }
 
-totalPrice = 0;
-
 function showWinkelmandje() {
+	totalPrice = 0;
 	if (localStorage.length > 0) {
 		document.getElementById("cartPreviewPlaceholder").innerHTML = "<b>Uw winkelmandje:</b>";
 		for (j = 0; j < localStorage.length; j++){
@@ -66,6 +65,7 @@ function showWinkelmandje() {
 		document.getElementById("cartTotal").innerHTML = "<br><b>Totale waarde: </b>" + totalPriceFormatted;
 	} else {
 		document.getElementById("cartPreviewPlaceholder").innerHTML = "<b>Uw winkelmandje is leeg.</b>";
+		document.getElementById("cartTotal").innerHTML = "";
 	}
 }
 

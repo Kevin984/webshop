@@ -209,6 +209,7 @@
 	    }
 	  
 	     $("#1goToStap2").click(function(event){
+	     	isSessieVerlopen()
 	        document.getElementById("bestelBericht").innerHTML = "<b>Controleer de inhoud van uw winkelmandje.</b>";
 	    	$("#stap11").hide();
 	     	$("#stap12").hide();
@@ -291,6 +292,7 @@
 		}
 			
 		$("#bestellen").click(function(event){
+			isSessieVerlopen()
 	     	if(! $("#agreement").is(":checked")){
 	    		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>U bent niet akkoord gegaan met de algemene voorwaarden.</div>");
 	       	} else {
@@ -396,6 +398,14 @@
 	    	$.post("restservices/bestellingen/ordernumber/" + bestellingID, data, function(response){
 	    	});
 	    	localStorage.clear();
+	    	showWinkelmandje();
+	    }
+	
+		function isSessieVerlopen() {
+			if (sessionStorage.getItem('sessionToken') == 'guest' && user != 'guest'){
+	    		// sessie verlopen
+	    		window.location = "index.html"
+	    	}
 	    }
 	}
     </script>
