@@ -137,8 +137,9 @@
 					url : "restservices/producten/prijs/" + id,
 					method : "GET",
 					success : function (data) {
-						var prijs = data["Prijs"]
-						addItemToWinkelmandje(prijs);
+						var prijs = data["Prijs"];
+						var discount = data["Discount"];
+						addItemToWinkelmandje(prijs, discount);
 					},
 					error : function (data) {
 						console.log("Er is iets misgegaan bij het ophalen van de prijs.");			

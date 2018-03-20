@@ -119,8 +119,10 @@ JsonArrayBuilder jab = Json.createArrayBuilder();
 		}
 		
 		double prijs = getPrijs(ID);
+		boolean discount = getIsDiscount(ID);
 		JsonObjectBuilder job = Json.createObjectBuilder();
 		job.add("Prijs", prijs);
+		job.add("Discount", discount);
 		return job.build().toString();
 	} 
 
@@ -156,5 +158,17 @@ JsonArrayBuilder jab = Json.createArrayBuilder();
 			return aanbiedingprijs;
 		}
 		return prijs;
+	}
+	
+	public boolean getIsDiscount(int productID) {
+		boolean discount;
+		double prijs = -1;
+		double aanbiedingprijs = aanbiedingResource.getPrijs(productID);
+		if (aanbiedingprijs == -1) {
+			discount = false;
+		} else {
+			discount = true;
+		}
+		return discount;
 	}
 }
