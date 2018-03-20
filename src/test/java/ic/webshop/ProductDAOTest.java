@@ -11,7 +11,7 @@ import ic.webshop.domain.Product;
 import ic.webshop.persistence.ProductDAO;
 
 
-public class ProductDAOTest {
+ class ProductDAOTest {
 	private ProductDAO pDAO;
 	
 	@BeforeEach
