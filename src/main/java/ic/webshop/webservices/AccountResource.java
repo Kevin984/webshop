@@ -23,6 +23,9 @@ import ic.webshop.domain.Klant;
 import ic.webshop.persistence.AccountDAO;
 import ic.webshop.persistence.AdresDAO;
 import ic.webshop.persistence.KlantDAO;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtParser;
+import io.jsonwebtoken.Jwts;
 @Path("/accounts")
 public class AccountResource implements AccountService{
 private AccountDAO aDAO = new AccountDAO();
@@ -178,8 +181,14 @@ private AdresDAO adresDAO = new AdresDAO();
 		return job.build().toString();
 	}
 
-
-	
-	
-	
+	@GET
+	@Path("username/{token}")
+	public String getCollectie(@PathParam("token") String token) {
+		JwtParser parser = Jwts.parser().setSigningKey(AuthenticationResource.key);
+		Claims claims = parser.parseClaimsJws(token).getBody();
+		
+		String username = claims.getSubject();
+		
+		return username;
+	}
 }
