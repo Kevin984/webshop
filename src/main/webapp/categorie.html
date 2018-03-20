@@ -142,13 +142,14 @@
 								if (huidigeDatum > vanDatum && huidigeDatum < totDatum) {
 									aanbiedingPrijs = Number(data[i]["Aanbiedingsprijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});	
 									var inDeAanbieding = true;  
-									showProduct(inDeAanbieding)	
+									showProduct(inDeAanbieding, productID, productNaam, productOmschrijving, productPrijs, aanbiedingPrijs);
 									break;	  
 								}
 							}
 						},
 						error : function() {
-							//console.log("Dit product is niet in de aanbieding.");
+							var inDeAanbieding = false;  
+							showProduct(inDeAanbieding, productID, productNaam, productOmschrijving, productPrijs, 0);	
 						}
 					});
 				});
