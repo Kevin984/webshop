@@ -32,7 +32,7 @@ public class AuthenticationResource {
 
  // Issue a token for the user
  Calendar expiration = Calendar.getInstance();
- expiration.add(Calendar.MINUTE, 30);
+ expiration.add(Calendar.MINUTE, 1);
 
  String token = Jwts.builder()
  .setSubject(username)
