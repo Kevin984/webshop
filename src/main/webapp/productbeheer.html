@@ -177,11 +177,11 @@
 	     						var data = $("#updateForm"+trid).serialize();
 	     				    	$.post("restservices/producten/"+trid, data, function(response){
 	     		   					$("#updateForm"+trid)[0].reset(); 
-	     		   					$(".expendable").replaceWith("<div class='alert alert-success expendable' id='response'> <strong>Artikel:</strong> " + trid + " " + response.Naam + " is ge-update!</div>");
+	     		   					$(".expendable").replaceWith("<div class='alert alert-success expendable' id='response'> <strong>Artikel:</strong> " + trid + " " + response.Naam + " is gewijzigd!</div>");
 	     				    	})
 	     				    },
 	     		   			error: function(response){
-	     		   				$(".expendable").replaceWith("<div class='alert alert-danger expendable' id='response'> Er is iets mis gegaan! Artikel is <strong>niet</strong> toegevoegd.</div>");
+	     		   				$(".expendable").replaceWith("<div class='alert alert-danger expendable' id='response'> Er is iets mis gegaan! Artikel is <strong>niet</strong> gewijzigd.</div>");
 	     		   			}
 	     		    	});
 	     				
