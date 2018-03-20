@@ -142,15 +142,18 @@
 								if (huidigeDatum > vanDatum && huidigeDatum < totDatum) {
 									aanbiedingPrijs = Number(data[i]["Aanbiedingsprijs"]).toLocaleString('en-US', {style: 'currency', currency: 'EUR'});	
 									var inDeAanbieding = true;  
-									showProduct(inDeAanbieding)	
+									showProduct(inDeAanbieding, productID, productNaam, productOmschrijving, productPrijs, aanbiedingPrijs);
 									break;	  
 								}
 							}
 						},
 						error : function() {
-							//console.log("Dit product is niet in de aanbieding.");
+							var inDeAanbieding = false;  
+							showProduct(inDeAanbieding, productID, productNaam, productOmschrijving, productPrijs, 0);	
 						}
 					});
+					var inDeAanbieding = false;  
+					showProduct(inDeAanbieding, productID, productNaam, productOmschrijving, productPrijs, 0);	
 				});
 			} else {
 				document.getElementById("categorie").style.visibility = "hidden";
@@ -163,7 +166,7 @@
 		window.location="product.html?id=" + prodID;
 	}
 	
-	function showProduct(inDeAanbieding) {
+	function showProduct(inDeAanbieding, productID, productNaam, productOmschrijving, productPrijs, aanbiedingPrijs) {
 		if (inDeAanbieding) {
 			$("#categorie").append("<tr><td>" + productNaam + "</td><td>" + productOmschrijving + "</td><td><p style='text-decoration: line-through; display:inline;'>" + productPrijs 
 			+ "</p><p style='color: #388724; display:inline;'> " + aanbiedingPrijs + "</p><td><button type='button' class='btn btn-warning' onclick='goToProductPage(" + productID
