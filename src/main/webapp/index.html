@@ -32,8 +32,6 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
          <h1 class="page-header">Welkom op onze webshop!</h1>
          
-         <button onclick="testPUT()">Test put</button>
-
           <h2 class="sub-header">Onze huidige aanbiedingen</h2>
           <div class="table-responsive">
                  
@@ -114,22 +112,7 @@
 	function goToProductPage(prodID) {
 		window.location="product.html?id=" + prodID;
 	}
-	
-	function testPUT() {		
-		$.ajax({
-	        type: 'PUT',
-	        contentType: 'application/json',
-	        url: "/restservices/producten/" + 5,
-	        dataType: "json",
-	        data: "ID=5&Naam=Haaaaaallo",
-	        success: function(data, textStatus, jqXHR){
-	            alert('Wine updated successfully');
-	        },
-	        error: function(jqXHR, textStatus, errorThrown){
-	            alert('updateWine error: ' + textStatus);
-	        }
-    	});
-	}
+
     </script>
   </body>
 </html>

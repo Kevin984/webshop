@@ -198,8 +198,8 @@
 				huidigArtikel['amount'] = Number(huidigArtikel['amount']) + amount;
 				huidigArtikel['price'] = prijs;
 				localStorage.setItem(productid, JSON.stringify(huidigArtikel));
-				showWinkelmandje();
 			}
+			showWinkelmandje();
 			$("#dialog-confirm").dialog('open');return false;
 		}
 		
@@ -260,7 +260,7 @@
 	      	autoOpen: false,
 	      	draggable: false,
 	      	buttons: {
-	        	"Bestellen": function() {
+	        	"Bekijk winkelmandje": function() {
 	          		$( this ).dialog( "close" );
 	          		$(location).attr('href', '/winkelmandje.html')
 	        	},
@@ -291,7 +291,7 @@
     
     <div id="dialog-confirm" title="Toegevoegd!">
     	<p id="successmessage"> </p>
-  		<p>Wilt u door naar bestellen of verder winkelen?</p>
+  		<p>Wilt u meteen naar uw winkelmandje of verder winkelen?</p>
 	</div>
 	
 	<div id="dialog-error" title="Onjuiste invoer.">

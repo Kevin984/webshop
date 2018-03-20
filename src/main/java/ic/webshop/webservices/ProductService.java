@@ -42,13 +42,6 @@ public interface ProductService {
 	public String updateProduct(@FormParam("ID") int ID, @FormParam("Naam") String naam, @FormParam("Omschrijving") String omschrijving
 			, @FormParam("Prijs") double prijs);
 	
-	@PUT 
-	@Path("{ID}")
-	@Produces("application/json") 
-    //@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    //@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public String updateProductTest(@PathParam("ID") int ID, @PathParam("Naam") String naam);
-	
 	@POST 
 	@Produces("application/json")
 	public String createProduct(@FormParam("Naam") String nm, @FormParam("Omschrijving") String omschrijving
