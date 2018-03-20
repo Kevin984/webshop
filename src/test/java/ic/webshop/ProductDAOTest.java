@@ -12,11 +12,11 @@ import ic.webshop.persistence.ProductDAO;
 
 
  class ProductDAOTest {
-	private ProductDAO pDAO;
+	private ProductDAO pDAO = new ProductDAO();
 	
 	@BeforeEach
 	void init() {
-	pDAO = new ProductDAO();
+//	pDAO = new ProductDAO();
 	}
 	
 	@Test
