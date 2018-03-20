@@ -132,7 +132,6 @@
 			var button = document.createElement('button');
   			button.innerHTML = 'Voeg toe aan winkelmandje';
   			button.onclick = function(){
-  				var productid = getUrlParameter('id');
   				
   				$.ajax({
 					url : "restservices/producten/prijs/" + id,
@@ -155,6 +154,7 @@
 	});
 	
 	function addItemToWinkelmandje(prijs) {
+		productid = id;
 		var amount = Number(document.getElementById("aantalArtikelen").value);
 		
 		if (localStorage.getItem(productid) !== null) {
@@ -194,6 +194,7 @@
 			} else {
 				var huidigArtikel = JSON.parse(localStorage[productid]);
 				huidigArtikel['amount'] = Number(huidigArtikel['amount']) + amount;
+				huidigArtikel['price'] = prijs;
 				localStorage.setItem(productid, JSON.stringify(huidigArtikel));
 			}
 			$("#dialog-confirm").dialog('open');return false;
