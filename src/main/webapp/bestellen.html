@@ -377,7 +377,6 @@
 					success: function(response){
 						var data = "AdresID=" + bestellingFactuurAdresID + "&AccountID=" + accountID;
 				    	$.post("restservices/bestellingen", data, function(response){
-					    	console.log("bestelling id: " + response["ID"]);
 				    		bestellingID = response["ID"];
 				       		saveBestellingsregels(bestellingID);
 				    	})
