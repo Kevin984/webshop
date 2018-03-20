@@ -149,7 +149,6 @@
 		   		
 		   		 var trid = $(this).closest('tr').attr('id');
 	   		    
-	   		     $(this).parents("tr").replaceWith(replacer);	
 		   		 $("#wijzigArtikel" + artikel.ID).click(function(){
 		   			 var replacer = $("<tr>").attr('id', trid);
 		   		     
@@ -162,6 +161,8 @@
 		   		     formulier.append($("<td>").append($("<button type='button' class='btn btn-info' id='wijzigArtikelAnnuleren" + artikel.ID+ "'>Wijzigen annuleren</button>"))); //inputs vullen en deze rij herhalen
 
 		   		     formulier.appendTo(replacer);
+		   		     $(this).parents("tr").replaceWith(replacer);	
+
 		   		 	var trid = $(this).closest('tr').attr('id');
 		   	   		console.log($("#id"+trid).val());
 		   	   		console.log($("#naam"+trid).val());
