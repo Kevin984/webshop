@@ -148,282 +148,311 @@
     	$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>U heeft nog geen artikelen in uw winkelmandje.</div>");
     } else {
        	$(".expendable").replaceWith("<div class='expendable'></div>");
-	    var user = sessionStorage.getItem('loggedInUsername');
+
 	    var ingelogdeStraat = null;
 		var ingelogdeStraatnummer = null;
 		var ingelogdeNaam = null;
-	    
-	    if(sessionStorage.getItem('loggedInUsername') == null){
-	    	user = 'Guest';
-	    }
-	    	
-	    if(user == 'Guest' || null){
-	    	document.getElementById("bestelBericht").innerHTML = "<b>Voer uw naam en adres in.</b>";
-	    	$("#stap11").hide();
-	    	$("#stap12").show();
-	    	$("#stap2").hide();
-	    	$("#stap3").hide();
-	    }
-	    else{
-	        document.getElementById("bestelBericht").innerHTML = "<b>Controleer uw naam en adres.</b>";
-	    	$("#stap11").show();
-	    	$("#stap12").hide();
-	    	$("#stap2").hide();
-	    	$("#stap3").hide();
-			
-			
-	    	$.ajax({
-	    		url: "restservices/accounts/username/"+user,
-	    		method: "GET",
-	    		beforeSend: function (xhr) {
-	    		var token = window.sessionStorage.getItem("sessionToken");
-	    		xhr.setRequestHeader( 'Authorization', 'Bearer ' + token);
-	    		},
-	    		success: function (acc) {
-					accountID = acc.ID;
-	    			$.ajax({
-	    	    		url: "restservices/klanten/"+acc.KlantID,
-	    	    		method: "GET",
-	    	    		beforeSend: function (xhr) {
-	    	    		var token = window.sessionStorage.getItem("sessionToken");
-	    	    		xhr.setRequestHeader( 'Authorization', 'Bearer ' + token);
-	    	    		},
-	    	    		success: function (klant) {
-	    	    			ingelogdeNaam = klant.Naam;
-	    	    			$("#naam1").html(klant.Naam);
-	
-	    	    			$.ajax({
-	    	    	    		url: "restservices/adressen/"+klant.AdresID,
-	    	    	    		method: "GET",
-	    	    	    		beforeSend: function (xhr) {
-	    	    	    		var token = window.sessionStorage.getItem("sessionToken");
-	    	    	    		xhr.setRequestHeader( 'Authorization', 'Bearer ' + token);
-	    	    	    		},
-	    	    	    		success: function (adres) {
-	    	    	    			ingelogdeStraat = adres.Straat;
-	    	    	    			ingelogdeStraatnummer = adres.Straatnummer;
-	       	    	    	    	$("#woonadres1").html(adres.Straat + ' ' + adres.Straatnummer);
-	    	    	    		}		
-	    	    	    	})
-	    	    		}
-	    	    	})
-	    			
-	    			$.ajax({
-	    	    		url: "restservices/adressen/"+acc.FactuurAdresID,
-	    	    		method: "GET",
-	    	    		beforeSend: function (xhr) {
-	    	    		var token = window.sessionStorage.getItem("sessionToken");
-	    	    		xhr.setRequestHeader( 'Authorization', 'Bearer ' + token);
-	    	    		},
-	    	    		success: function (adres) {
-	    	    	    	$("#factuuradres1").html(adres.Straat + ' ' + adres.Straatnummer);
-	    	    		}
-	    	    		
-	    	    	})
-	    	    	bestellingFactuurAdresID = acc.FactuurAdresID;
-	    		}
-	    		
-	    	})
-	    }
-	  
-	     $("#1goToStap2").click(function(event){
-	     	isSessieVerlopen()
-	        document.getElementById("bestelBericht").innerHTML = "<b>Controleer de inhoud van uw winkelmandje.</b>";
-	    	$("#stap11").hide();
-	     	$("#stap12").hide();
-	       	$("#stap2").show();
-	       	$("#stap3").hide();
-	    })
-	    
-	     $("#2goToStap2").click(function(event){
-	     	if($("#Naam2").val() == "" || $("#StraatNaam").val() == "" || $("#HuisNummer").val() == ""){
-	    		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>U heeft geen naam of adres ingevuld.</div>");
-	       	} else if ($("#Naam2").val().length > 30) {
-	       		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>Uw naam mag niet meer dan 30 tekens bevatten.</div>");
-	       	} else if ($("#StraatNaam").val().length > 50) {
-	       		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>Uw straatnaam mag niet meer dan 50 tekens bevatten.</div>");
-	       	} else if ($("#HuisNummer").val().length > 5) {
-	       		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>Uw huisnummer mag niet meer dan 5 tekens bevatten.</div>");
-	       	} else {
-	       	    document.getElementById("bestelBericht").innerHTML = "<b>Controleer de inhoud van uw winkelmandje.</b>";
-	       		$(".expendable").replaceWith("<div class='expendable'></div>");
-	       		$("#stap11").hide();
-		     	$("#stap12").hide();
-		     	$("#stap2").show();
-		     	$("#stap3").hide();
-		 		
-		     	naam = $("#Naam2").val();
-		     	straatnaam = $("#StraatNaam").val();
-		     	straatnummer = $("#HuisNummer").val();
-	       	}
-	    })
-	    
-	    totalPrice = 0;
-	    
-	    for (j = 0; j < localStorage.length; j++){
-	    	artikelID = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["productID"]);
-	    	aantal = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["amount"]);
-	    	prijsNoFormat = (Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["priceNoFormat"]) * aantal);
-	    	prijs = prijsNoFormat.toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
-	    	aanbieding = JSON.parse(localStorage.getItem(localStorage.key(j)))["discount"] == "true";
-	    	totalPrice += prijsNoFormat
-	    	
-	    	totalPriceFormatted = totalPrice.toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
-	    	
-	   		fromStorageToTable(artikelID, aantal, prijs, aanbieding);
-		}
 		
-	    document.getElementById("winkelmandjeTotal").innerHTML = totalPriceFormatted;
-			
-		function fromStorageToTable(artikelID, aantal, prijs, aanbieding) {
-			$.ajax({
-				url : "restservices/producten/" + artikelID,
-				method : "GET",
-				success : function (data) {
-				
-					if (aanbieding) {
-					 	var color = "#388724";
-					} else {
-						var color = "000000";	
+		getUser()
+	
+		function getUser() {
+			token = window.sessionStorage.getItem("sessionToken");
+			if (token != null) {
+				$.ajax({
+					url: "restservices/accounts/usernamebytoken/" + window.sessionStorage.getItem("sessionToken"),
+					method: "GET",
+					success: function (username) {
+						if (username == "expiredToken") {
+							window.sessionStorage.clear();
+							startBestelling("Guest");
+						} else {
+							startBestelling(username);
+						}
 					}
-					
-					colorStyle = "style='color:" + color + "';"
-					
-		  			$("#winkelmand").append("<tr id='"+ data["ID"] +"'><td>" + data["Naam"] + "</td><td>" + data["Omschrijving"] + "</td><td " + colorStyle + " id='priceof"+ data["ID"] +"'>" + prijs + "</td>"
-		  			+ "<td id='amountof"+ data["ID"] +"'>" + aantal + "</td>"
-					+ "<td><button type='button' class='btn btn-warning' onclick='goToProductPage(" + data["ID"]
-					+ ")'>Bekijk artikel</button></td></tr>");  
-				},
-				error : function() {
-					document.getElementById("bestelBericht").innerHTML="Er is iets misgegaan bij het laden van uw winkelmandje.";
-				}
-			});
-		};
-	    
-	    function goToProductPage(artikelID) {
-			window.location="product.html?id=" + artikelID;
+				});
+			} else {
+				startBestelling("Guest");
+			}
 		}
+	    
+	    function startBestelling(user) {
+		    if(user == 'Guest'){
+		    	document.getElementById("bestelBericht").innerHTML = "<b>Voer uw naam en adres in.</b>";
+		    	$("#stap11").hide();
+		    	$("#stap12").show();
+		    	$("#stap2").hide();
+		    	$("#stap3").hide();
+		    }
+		    else{
+		        document.getElementById("bestelBericht").innerHTML = "<b>Controleer uw naam en adres.</b>";
+		    	$("#stap11").show();
+		    	$("#stap12").hide();
+		    	$("#stap2").hide();
+		    	$("#stap3").hide();
+				
+				
+		    	$.ajax({
+		    		url: "restservices/accounts/username/"+user,
+		    		method: "GET",
+		    		beforeSend: function (xhr) {
+		    		var token = window.sessionStorage.getItem("sessionToken");
+		    		xhr.setRequestHeader( 'Authorization', 'Bearer ' + token);
+		    		},
+		    		success: function (acc) {
+						accountID = acc.ID;
+		    			$.ajax({
+		    	    		url: "restservices/klanten/"+acc.KlantID,
+		    	    		method: "GET",
+		    	    		beforeSend: function (xhr) {
+		    	    		var token = window.sessionStorage.getItem("sessionToken");
+		    	    		xhr.setRequestHeader( 'Authorization', 'Bearer ' + token);
+		    	    		},
+		    	    		success: function (klant) {
+		    	    			ingelogdeNaam = klant.Naam;
+		    	    			$("#naam1").html(klant.Naam);
 		
-		function goHome() {
-			window.location="index.html";
-		}
+		    	    			$.ajax({
+		    	    	    		url: "restservices/adressen/"+klant.AdresID,
+		    	    	    		method: "GET",
+		    	    	    		beforeSend: function (xhr) {
+		    	    	    		var token = window.sessionStorage.getItem("sessionToken");
+		    	    	    		xhr.setRequestHeader( 'Authorization', 'Bearer ' + token);
+		    	    	    		},
+		    	    	    		success: function (adres) {
+		    	    	    			ingelogdeStraat = adres.Straat;
+		    	    	    			ingelogdeStraatnummer = adres.Straatnummer;
+		       	    	    	    	$("#woonadres1").html(adres.Straat + ' ' + adres.Straatnummer);
+		    	    	    		}		
+		    	    	    	})
+		    	    		}
+		    	    	})
+		    			
+		    			$.ajax({
+		    	    		url: "restservices/adressen/"+acc.FactuurAdresID,
+		    	    		method: "GET",
+		    	    		beforeSend: function (xhr) {
+		    	    		var token = window.sessionStorage.getItem("sessionToken");
+		    	    		xhr.setRequestHeader( 'Authorization', 'Bearer ' + token);
+		    	    		},
+		    	    		success: function (adres) {
+		    	    	    	$("#factuuradres1").html(adres.Straat + ' ' + adres.Straatnummer);
+		    	    		}
+		    	    		
+		    	    	})
+		    	    	bestellingFactuurAdresID = acc.FactuurAdresID;
+		    		}
+		    		
+		    	})
+		    }
+		  
+		     $("#1goToStap2").click(function(event){
+		     	isSessieVerlopen()
+		        document.getElementById("bestelBericht").innerHTML = "<b>Controleer de inhoud van uw winkelmandje.</b>";
+		    	$("#stap11").hide();
+		     	$("#stap12").hide();
+		       	$("#stap2").show();
+		       	$("#stap3").hide();
+		    })
+		    
+		     $("#2goToStap2").click(function(event){
+		     	if($("#Naam2").val() == "" || $("#StraatNaam").val() == "" || $("#HuisNummer").val() == ""){
+		    		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>U heeft geen naam of adres ingevuld.</div>");
+		       	} else if ($("#Naam2").val().length > 30) {
+		       		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>Uw naam mag niet meer dan 30 tekens bevatten.</div>");
+		       	} else if ($("#StraatNaam").val().length > 50) {
+		       		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>Uw straatnaam mag niet meer dan 50 tekens bevatten.</div>");
+		       	} else if ($("#HuisNummer").val().length > 5) {
+		       		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>Uw huisnummer mag niet meer dan 5 tekens bevatten.</div>");
+		       	} else {
+		       	    document.getElementById("bestelBericht").innerHTML = "<b>Controleer de inhoud van uw winkelmandje.</b>";
+		       		$(".expendable").replaceWith("<div class='expendable'></div>");
+		       		$("#stap11").hide();
+			     	$("#stap12").hide();
+			     	$("#stap2").show();
+			     	$("#stap3").hide();
+			 		
+			     	naam = $("#Naam2").val();
+			     	straatnaam = $("#StraatNaam").val();
+			     	straatnummer = $("#HuisNummer").val();
+		       	}
+		    })
+		    
+		    totalPrice = 0;
+		    
+		    for (j = 0; j < localStorage.length; j++){
+		    	artikelID = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["productID"]);
+		    	aantal = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["amount"]);
+		    	prijsNoFormat = (Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["priceNoFormat"]) * aantal);
+		    	prijs = prijsNoFormat.toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
+		    	aanbieding = JSON.parse(localStorage.getItem(localStorage.key(j)))["discount"] == "true";
+		    	totalPrice += prijsNoFormat
+		    	
+		    	totalPriceFormatted = totalPrice.toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
+		    	
+		   		fromStorageToTable(artikelID, aantal, prijs, aanbieding);
+			}
 			
-		$("#bestellen").click(function(event){
-			isSessieVerlopen()
-	     	if(! $("#agreement").is(":checked")){
-	    		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>U bent niet akkoord gegaan met de algemene voorwaarden.</div>");
-	       	} else {
-	       		amountsAreGood = checkAllAmounts();
-	       		
-	       		if(amountsAreGood) {
-	       			$(".expendable").replaceWith("<div class='expendable'></div>");
-		       	    document.getElementById("bestelBericht").innerHTML = " ";
-		       		$("#stap2").hide();
-		       		$("#stap3").show();
-		       		if(user == 'Guest' || null){	
-		       			saveGuestAddress();
-				    } else {
-				    	saveBestelling(bestellingFactuurAdresID);
-				    }
-	       		} else {
-	       			$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>Er is iets misgegaan. 1 van de artikelen in uw winkelmandje komt meer dan 20 keer voor. <br>Wijzig het aantal naar minder dan 20 of verwijder het artikel.</div>");
-	       		}
+		    document.getElementById("winkelmandjeTotal").innerHTML = totalPriceFormatted;
+				
+			function fromStorageToTable(artikelID, aantal, prijs, aanbieding) {
+				$.ajax({
+					url : "restservices/producten/" + artikelID,
+					method : "GET",
+					success : function (data) {
+					
+						if (aanbieding) {
+						 	var color = "#388724";
+						} else {
+							var color = "000000";	
+						}
+						
+						colorStyle = "style='color:" + color + "';"
+						
+			  			$("#winkelmand").append("<tr id='"+ data["ID"] +"'><td>" + data["Naam"] + "</td><td>" + data["Omschrijving"] + "</td><td " + colorStyle + " id='priceof"+ data["ID"] +"'>" + prijs + "</td>"
+			  			+ "<td id='amountof"+ data["ID"] +"'>" + aantal + "</td>"
+						+ "<td><button type='button' class='btn btn-warning' onclick='goToProductPage(" + data["ID"]
+						+ ")'>Bekijk artikel</button></td></tr>");  
+					},
+					error : function() {
+						document.getElementById("bestelBericht").innerHTML="Er is iets misgegaan bij het laden van uw winkelmandje.";
+					}
+				});
+			};
+		    
+		    function goToProductPage(artikelID) {
+				window.location="product.html?id=" + artikelID;
 			}
-	    });
-	    
-	    function checkAllAmounts() {
-	    	isGood = true;
-	    	for (i=0;i<localStorage.length;i++) {
-				aantal = JSON.parse(localStorage.getItem(localStorage.key(0)))["amount"]
-				if (aantal > 20) {
-					isGood = false;
-					return isGood;
+			
+			function goHome() {
+				window.location="index.html";
+			}
+				
+			$("#bestellen").click(function(event){
+				isSessieVerlopen()
+		     	if(! $("#agreement").is(":checked")){
+		    		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>U bent niet akkoord gegaan met de algemene voorwaarden.</div>");
+		       	} else {
+		       		amountsAreGood = checkAllAmounts();
+		       		
+		       		if(amountsAreGood) {
+		       			$(".expendable").replaceWith("<div class='expendable'></div>");
+			       	    document.getElementById("bestelBericht").innerHTML = " ";
+			       		$("#stap2").hide();
+			       		$("#stap3").show();
+			       		if(user == 'Guest' || null){	
+			       			saveGuestAddress();
+					    } else {
+					    	saveBestelling(bestellingFactuurAdresID);
+					    }
+		       		} else {
+		       			$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>Er is iets misgegaan. 1 van de artikelen in uw winkelmandje komt meer dan 20 keer voor. <br>Wijzig het aantal naar minder dan 20 of verwijder het artikel.</div>");
+		       		}
 				}
-			}
-			return isGood;
-	    }
-	    
-	    function saveGuestAddress() {
-	    	accountID = 0;	    	
-	    	$.ajax({
-				url: "restservices/adressen/",
-				success: function(response){
-					var data = "Straat=" + straatnaam + "&Straatnummer=" + straatnummer;
-			    	$.post("restservices/adressen", data, function(response){
-			    		bestellingFactuurAdresID = response["ID"];
-			    	    saveBestelling(bestellingFactuurAdresID);
-			    	})
-			    },
-	   			error: function(response){
-	   				console.log("Er is iets misgegaan bij het opslaan van het adres.");
-	   			}
-	    	});
-	    }
-	    
-	    function saveBestelling(bestellingFactuurAdresID) {
-			$.ajax({
-				url: "restservices/bestellingen/",
-				success: function(response){
-					var data = "AdresID=" + bestellingFactuurAdresID + "&AccountID=" + accountID;
-			    	$.post("restservices/bestellingen", data, function(response){
-				    	console.log("bestelling id: " + response["ID"]);
-			    		bestellingID = response["ID"];
-			       		saveBestellingsregels(bestellingID);
-			    	})
-			    },
-	   			error: function(response){
-	   				console.log("Er is iets misgegaan bij het opslaan van de bestelling.");
-	   			}
-	    	});	 
-	    }
-	    
-	    function saveBestellingsregels(bestellingID) {
-			for (i=0;i<localStorage.length;i++) {
-				aantal = JSON.parse(localStorage.getItem(localStorage.key(0)))["amount"]
-				productID = JSON.parse(localStorage.getItem(localStorage.key(0)))["productID"]
-				doBestellingsregelCall(aantal, productID);
-			}
-		    doPayment(bestellingID);
-	    }
-	    
-	    function doBestellingsregelCall(aantal, productID) {
-	    	$.ajax({
-				url: "restservices/bestellingsregels/",
-				success: function(response){
-					var data = "Aantal=" + aantal + "&BestellingID=" + bestellingID + "&ProductID=" + productID;
-			    	$.post("restservices/bestellingsregels", data, function(response){
-			    	})
-			    },
-	   			error: function(response){
-	   				console.log("Er is iets misgegaan bij het opslaan van de bestellingsregels.");
-	   			}
-	    	});
-	    }
-	    
-	    function doPayment(bestellingID) {
-	    	console.log("DOPAYMENT AANGEROEPEN, BESTELLING ID = " + bestellingID);
-			if(user == 'Guest' || null){	
-				naamToSend = naam;
-				straatToSend = straatnaam;
-				straatNummerToSend = straatnummer;
-	    	} else {
-	    		naamToSend = ingelogdeNaam;
-				straatToSend = ingelogdeStraat;
-				straatNummerToSend = ingelogdeStraatnummer;
-	    	}
-			var data = "ID=" + bestellingID + "&Naam=" + naamToSend + "&Straat=" + straatToSend + "&Straatnummer=" + straatNummerToSend + "&Bedrag=" + totalPrice;
-	    	$.post("restservices/bestellingen/ordernumber/" + bestellingID, data, function(response){
-	    	});
-	    	localStorage.clear();
-	    	showWinkelmandje();
-	    }
-	
-		function isSessieVerlopen() {
-			if (sessionStorage.getItem('sessionToken') == 'guest' && user != 'guest'){
-	    		// sessie verlopen
-	    		window.location = "index.html"
-	    	}
-	    }
+		    });
+		    
+		    function checkAllAmounts() {
+		    	isGood = true;
+		    	for (i=0;i<localStorage.length;i++) {
+					aantal = JSON.parse(localStorage.getItem(localStorage.key(0)))["amount"]
+					if (aantal > 20) {
+						isGood = false;
+						return isGood;
+					}
+				}
+				return isGood;
+		    }
+		    
+		    function saveGuestAddress() {
+		    	accountID = 0;	    	
+		    	$.ajax({
+					url: "restservices/adressen/",
+					success: function(response){
+						var data = "Straat=" + straatnaam + "&Straatnummer=" + straatnummer;
+				    	$.post("restservices/adressen", data, function(response){
+				    		bestellingFactuurAdresID = response["ID"];
+				    	    saveBestelling(bestellingFactuurAdresID);
+				    	})
+				    },
+		   			error: function(response){
+		   				console.log("Er is iets misgegaan bij het opslaan van het adres.");
+		   			}
+		    	});
+		    }
+		    
+		    function saveBestelling(bestellingFactuurAdresID) {
+				$.ajax({
+					url: "restservices/bestellingen/",
+					success: function(response){
+						var data = "AdresID=" + bestellingFactuurAdresID + "&AccountID=" + accountID;
+				    	$.post("restservices/bestellingen", data, function(response){
+					    	console.log("bestelling id: " + response["ID"]);
+				    		bestellingID = response["ID"];
+				       		saveBestellingsregels(bestellingID);
+				    	})
+				    },
+		   			error: function(response){
+		   				console.log("Er is iets misgegaan bij het opslaan van de bestelling.");
+		   			}
+		    	});	 
+		    }
+		    
+		    function saveBestellingsregels(bestellingID) {
+				for (i=0;i<localStorage.length;i++) {
+					aantal = JSON.parse(localStorage.getItem(localStorage.key(0)))["amount"]
+					productID = JSON.parse(localStorage.getItem(localStorage.key(0)))["productID"]
+					doBestellingsregelCall(aantal, productID);
+				}
+			    doPayment(bestellingID);
+		    }
+		    
+		    function doBestellingsregelCall(aantal, productID) {
+		    	$.ajax({
+					url: "restservices/bestellingsregels/",
+					success: function(response){
+						var data = "Aantal=" + aantal + "&BestellingID=" + bestellingID + "&ProductID=" + productID;
+				    	$.post("restservices/bestellingsregels", data, function(response){
+				    	})
+				    },
+		   			error: function(response){
+		   				console.log("Er is iets misgegaan bij het opslaan van de bestellingsregels.");
+		   			}
+		    	});
+		    }
+		    
+		    function doPayment(bestellingID) {
+		    	console.log("DOPAYMENT AANGEROEPEN, BESTELLING ID = " + bestellingID);
+				if(user == 'Guest' || null){	
+					naamToSend = naam;
+					straatToSend = straatnaam;
+					straatNummerToSend = straatnummer;
+		    	} else {
+		    		naamToSend = ingelogdeNaam;
+					straatToSend = ingelogdeStraat;
+					straatNummerToSend = ingelogdeStraatnummer;
+		    	}
+				var data = "ID=" + bestellingID + "&Naam=" + naamToSend + "&Straat=" + straatToSend + "&Straatnummer=" + straatNummerToSend + "&Bedrag=" + totalPrice;
+		    	$.post("restservices/bestellingen/ordernumber/" + bestellingID, data, function(response){
+		    	});
+		    	localStorage.clear();
+		    	showWinkelmandje();
+		    }
+		
+			function isSessieVerlopen() {
+		    	token = window.sessionStorage.getItem("sessionToken");
+				if (token != null) {
+			    	$.ajax({
+						url: "restservices/accounts/usernamebytoken/" + window.sessionStorage.getItem("sessionToken"),
+						method: "GET",
+						success: function (username) {
+							if (username == "expiredToken") {
+								window.sessionStorage.clear();
+								window.location = "index.html";
+							}
+						}
+					});
+				}
+		    }
+		}
 	}
     </script>
   </body>

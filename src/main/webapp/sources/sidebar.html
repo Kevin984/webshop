@@ -35,17 +35,26 @@
 	user = getUsername()
 	
 	function getUsername() {
-		$.ajax({
-			url: "restservices/accounts/usernamebytoken/" + window.sessionStorage.getItem("sessionToken"),
-			method: "GET",
-			success: function (username) {
-				return username;
-			}
-		});
-		return "guest";
+		token = window.sessionStorage.getItem("sessionToken");
+		if (token != null) {
+			$.ajax({
+				url: "restservices/accounts/usernamebytoken/" + window.sessionStorage.getItem("sessionToken"),
+				method: "GET",
+				success: function (username) {
+					if (username == "expiredToken") {
+						window.sessionStorage.clear();
+						return "Guest";
+					} else {
+						return username;
+					}
+				}
+			});
+		} else {
+			return "Guest";
+		}
 	}
 	    
-	if(user == 'Guest' || null){
+	if(user == 'Guest'){
 		$("#logoutlink").hide();
 		$("#loginlink").show();
 	}
@@ -108,10 +117,6 @@
 	$.ajax({
 			url : "https://webshopiac.herokuapp.com/restservices/categorieen",
 			method : "GET",
-			beforeSend : function(xhr) {
-				var token = window.sessionStorage.getItem("sessionToken");
-				xhr.setRequestHeader('Authorization', 'Bearer ' + token);
-			},
 			success : function (data) {
 				var arrayLength = data.length;
 				var ul = document.getElementById('sidebarul')

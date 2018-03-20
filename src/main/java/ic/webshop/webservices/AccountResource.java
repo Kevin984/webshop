@@ -24,6 +24,7 @@ import ic.webshop.persistence.AccountDAO;
 import ic.webshop.persistence.AdresDAO;
 import ic.webshop.persistence.KlantDAO;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 @Path("/accounts")
@@ -184,11 +185,16 @@ private AdresDAO adresDAO = new AdresDAO();
 	@GET
 	@Path("usernamebytoken/{token}")
 	public String getUsername(@PathParam("token") String token) {
-		JwtParser parser = Jwts.parser().setSigningKey(AuthenticationResource.key);
-		Claims claims = parser.parseClaimsJws(token).getBody();
-		
-		String username = claims.getSubject();
-		
-		return username;
+		try {
+			JwtParser parser = Jwts.parser().setSigningKey(AuthenticationResource.key);
+			Claims claims = parser.parseClaimsJws(token).getBody();
+			
+			String username = claims.getSubject();
+			
+			return username;
+		} catch(ExpiredJwtException e) {
+			return "expiredToken";
+		}
+
 	}
 }
