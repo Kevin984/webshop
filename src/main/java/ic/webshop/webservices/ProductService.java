@@ -12,6 +12,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import ic.webshop.domain.Product;
@@ -40,6 +41,12 @@ public interface ProductService {
 	@Produces("application/json") 
 	public String updateProduct(@FormParam("ID") int ID, @FormParam("Naam") String naam, @FormParam("Omschrijving") String omschrijving
 			, @FormParam("Prijs") double prijs);
+	
+	@PUT 
+	@Path("{ID}")
+    @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    public String updateProductTest(@FormParam("ID") int ID, @FormParam("Naam") String naam);
 	
 	@POST 
 	@Produces("application/json")
