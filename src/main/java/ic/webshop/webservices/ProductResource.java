@@ -156,7 +156,6 @@ JsonArrayBuilder jab = Json.createArrayBuilder();
 		return discount;
 	}
 
-	@Override
 	public String updateProductTest(int ID, String naam) {
 		System.out.println("ID: " + ID + " Naam: " + naam); 
 		Product found = null;
