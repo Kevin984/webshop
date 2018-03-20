@@ -288,17 +288,35 @@
 	     	if(! $("#agreement").is(":checked")){
 	    		$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>U bent niet akkoord gegaan met de algemene voorwaarden.</div>");
 	       	} else {
-	       	    $(".expendable").replaceWith("<div class='expendable'></div>");
-	       	    document.getElementById("bestelBericht").innerHTML = " ";
-	       		$("#stap2").hide();
-	       		$("#stap3").show();
-	       		if(user == 'Guest' || null){	
-	       			saveGuestAddress();
-			    } else {
-			    	saveBestelling(bestellingFactuurAdresID);
-			    }
+	       		amountsAreGood = checkAllAmounts();
+	       		
+	       		if(amountsAreGood) {
+	       			$(".expendable").replaceWith("<div class='expendable'></div>");
+		       	    document.getElementById("bestelBericht").innerHTML = " ";
+		       		$("#stap2").hide();
+		       		$("#stap3").show();
+		       		if(user == 'Guest' || null){	
+		       			saveGuestAddress();
+				    } else {
+				    	saveBestelling(bestellingFactuurAdresID);
+				    }
+	       		} else {
+	       			$(".expendable").replaceWith("<div class='alert alert-warning expendable' id='response'>Er is iets misgegaan. 1 van de artikelen in uw winkelmandje komt meer dan 20 keer voor. <br>Wijzig het aantal naar minder dan 20 of verwijder het artikel.</div>");
+	       		}
 			}
 	    });
+	    
+	    function checkAllAmounts() {
+	    	isGood = true;
+	    	for (i=0;i<localStorage.length;i++) {
+				aantal = JSON.parse(localStorage.getItem(localStorage.key(0)))["amount"]
+				if (aantal > 20) {
+					isGood = false;
+					return isGood;
+				}
+			}
+			return isGood;
+	    }
 	    
 	    function saveGuestAddress() {
 	    	accountID = 0;	    	
@@ -335,13 +353,11 @@
 	    }
 	    
 	    function saveBestellingsregels(bestellingID) {
-	   		var table = document.getElementById('bestellingregels');
-			var rowLength = table.rows.length;
-			for(i=0; i<rowLength; i+=1){
-				aantal = document.getElementById('bestellingregels').rows[i].cells[3].innerHTML;
-			    productID = document.getElementById('bestellingregels').rows[i].cells[3].id.substring(8);
-			    doBestellingsregelCall(aantal, productID);
-		    }
+			for (i=0;i<localStorage.length;i++) {
+				aantal = JSON.parse(localStorage.getItem(localStorage.key(0)))["amount"]
+				productID = JSON.parse(localStorage.getItem(localStorage.key(0)))["productID"]
+				doBestellingsregelCall(aantal, productID);
+			}
 		    doPayment(bestellingID);
 	    }
 	    
