@@ -23,6 +23,7 @@ public class UserDAO extends BaseDAO {
 	 } catch (SQLException sqle) {
 	 sqle.printStackTrace();
 	 }
+	 System.out.print("DAO role: "+role);
 
 	 return role;
 	 }
