@@ -182,8 +182,8 @@ private AdresDAO adresDAO = new AdresDAO();
 	}
 
 	@GET
-	@Path("username/{token}")
-	public String getCollectie(@PathParam("token") String token) {
+	@Path("usernamebytoken/{token}")
+	public String getUsername(@PathParam("token") String token) {
 		JwtParser parser = Jwts.parser().setSigningKey(AuthenticationResource.key);
 		Claims claims = parser.parseClaimsJws(token).getBody();
 		

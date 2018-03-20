@@ -72,16 +72,6 @@
 		$("#sidebar_placeholder").replaceWith(data);
 	});
 	
-	$.ajax({
-		url: "restservices/accounts/username/" + window.sessionStorage.getItem("sessionToken"),
-		method: "GET",
-		success: function (username) {
-			console.log(username);
-		}
-	});
-	
-	
-    
     $.ajax({
 		url: "restservices/aanbiedingen",
 		method: "GET",

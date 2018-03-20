@@ -32,12 +32,19 @@
 </div>
 
 <script>
-	var user = sessionStorage.getItem('loggedInUsername');
-	    
-	if(sessionStorage.getItem('loggedInUsername') == null){
-		user = 'Guest';
+	user = getUsername()
+	
+	function getUsername() {
+		$.ajax({
+			url: "restservices/accounts/usernamebytoken/" + window.sessionStorage.getItem("sessionToken"),
+			method: "GET",
+			success: function (username) {
+				return username;
+			}
+		});
+		return "guest";
 	}
-		
+	    
 	if(user == 'Guest' || null){
 		$("#logoutlink").hide();
 		$("#loginlink").show();
@@ -121,7 +128,6 @@
 		
 	$("#logout").click(function(event){
 		window.sessionStorage.clear();
-	    window.sessionStorage.setItem("sessionToken", "guest");
 	    window.location ="index.html";
 	})
 </script>
