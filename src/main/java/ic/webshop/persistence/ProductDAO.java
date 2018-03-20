@@ -44,9 +44,14 @@ private ProductCategorieDAO pcDAO = new ProductCategorieDAO();
 	
 	
 	public Product findByPK(int ID){ 	
-		return selectArtikelen("SELECT * "
-			+ "FROM public.\"Product\" " 
-				+ " WHERE \"ID\" = " + ID).get(0);
+		try{
+		return selectArtikelen("SELECT * FROM public.\"Product\"  WHERE \"ID\" = " + ID).get(0);
+		}	catch (NullPointerException nullPointer)
+				{
+	
+System.out.println("Kan opgegeven Product ID niet vinden in de database.");	
+return null;
+}
 	}
 	 
 	public void saveArtikel(Product artikel){
@@ -77,7 +82,7 @@ private ProductCategorieDAO pcDAO = new ProductCategorieDAO();
 			preparedStatement = con.prepareStatement(query);
 			// eerste vraagteken = 1
 		//	byte[] source = artikel.getBlobPlaatje();
-		//	ByteArrayInputStream blob = new ByteArrayInputStream(source);
+		//	ByteArrayInputStream blob = new ByteArrayInputStream(source); 
 		//	preparedStatement.setBinaryStream(2, blob);
 			preparedStatement.setInt(1, productID);
 			preparedStatement.setString(2, artikel.getNaam()); 
