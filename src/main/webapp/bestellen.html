@@ -318,14 +318,6 @@
 					}
 				});
 			};
-		    
-		    function goToProductPage(artikelID) {
-				window.location="product.html?id=" + artikelID;
-			}
-			
-			function goHome() {
-				window.location="index.html";
-			}
 				
 			$("#bestellen").click(function(event){
 				isSessieVerlopen()
@@ -453,6 +445,14 @@
 				}
 		    }
 		}
+	}
+	
+	function goToProductPage(artikelID) {
+		window.location="product.html?id=" + artikelID;
+	}
+	
+	function goHome() {
+		window.location="index.html";
 	}
     </script>
   </body>
