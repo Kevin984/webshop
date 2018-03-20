@@ -102,7 +102,7 @@
     	aantal = Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["amount"]);
     	prijsNoFormat = (Number(JSON.parse(localStorage.getItem(localStorage.key(j)))["priceNoFormat"]) * aantal);
     	prijs = prijsNoFormat.toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
-    	aanbieding = JSON.parse(localStorage.getItem(localStorage.key(j)))["discount"] == "true";
+    	aanbieding = JSON.parse(localStorage.getItem(localStorage.key(j)))["discount"] == true;
     	totalPrice += prijsNoFormat
     	
     	totalPriceFormatted = totalPrice.toLocaleString('en-US', {style: 'currency', currency: 'EUR'});
@@ -170,22 +170,6 @@
 	});
 	
 	$( function() {
-		$("#dialog-deleted").dialog({
-	    	resizable: false,
-	      	height: "auto",
-	      	width: 400,
-	      	modal: true,
-	      	autoOpen: false,
-	      	draggable: false,
-	      	buttons: {
-	        	"OK": function() {
-	          		$( this ).dialog( "close" );
-	        	}
-	      	}
-	    });	
-	});
-	
-	$( function() {
 		$("#dialog-changeamount").dialog({
 	    	resizable: false,
 	      	height: "auto",
@@ -198,22 +182,6 @@
 	        		var artIDforChange = $(this).data('productid');
 					$( this ).dialog( "close" );
 	        		changeAmountOfProducts(artIDforChange);
-	        	}
-	      	}
-	    });	
-	});
-	
-	$( function() {
-		$("#dialog-changesuccess").dialog({
-	    	resizable: false,
-	      	height: "auto",
-	      	width: 400,
-	      	modal: true,
-	      	autoOpen: false,
-	      	draggable: false,
-	      	buttons: {
-	        	"OK": function() {
-	          		$( this ).dialog( "close" );
 	        	}
 	      	}
 	    });	
@@ -239,10 +207,6 @@
 		$("#dialog-confirm").data('productid', ArtikelID).dialog('open');
 	}
 	
-	function confirmDelete() {
-		$("#dialog-deleted").dialog('open');
-	}
-	
 	function deleteArtikel(artikelID){
 		var totalWorthOfItem = Number(JSON.parse(localStorage.getItem(artikelID))["priceNoFormat"]) * Number(JSON.parse(localStorage.getItem(artikelID))["amount"]);
 		totalPrice -= totalWorthOfItem;
@@ -258,9 +222,7 @@
        	document.getElementById("totaal").style.visibility = "hidden";
 		document.getElementById("winkelmandOmschrijving").innerHTML = "<b>U heeft op dit moment geen artikelen in uw winkelmandje!<br>Klik <a href='/categorie.html?id=1'>hier</a> om de meest recent toegevoegde artikelen te bekijken.</b>";
     	}
-    	
-    	confirmDelete();
-	};
+   	};
 	
 	function showChangeDialog(artIDforChange){
 		document.getElementById("aantalToChange").value = document.getElementById("amountof" + artIDforChange).innerHTML;
@@ -282,7 +244,6 @@
 			document.getElementById("errormessage").innerHTML = "Voer een aantal in van maximaal 20.";
 			showError = true;
 		} else {
-			document.getElementById("successmessage").innerHTML = "Aantal gewijzigd naar " + amount + "!";
 			var huidigArtikel = JSON.parse(localStorage[artIDforChange]);
 			huidigArtikel['amount'] = amount;
 			localStorage.setItem(artIDforChange, JSON.stringify(huidigArtikel));
@@ -296,7 +257,6 @@
     		document.getElementById("winkelmandjeTotal").innerHTML = totalPriceFormatted;
     		document.getElementById("amountof" + artIDforChange).innerHTML = amount;
     		document.getElementById("priceof" + artIDforChange).innerHTML = totalWorthOfItemFormatted;
-			$("#dialog-changesuccess").dialog('open');return false;
 		}
 		
 		if (showError) {
@@ -319,9 +279,6 @@
   		<p>Weet u zeker dat u dit artikel uit uw winkelmandje wilt verwijderen?</p>
 	</div>
 	
-	<div id="dialog-deleted" title="Artikel verwijderd.">
-    	<p>Het artikel is succesvol verwijderd.</p>
-	</div>
 	
 	<div id="dialog-changeamount" title="Wijzig aantal">
   		<p>Hoeveel exemplaren van dit artikel wilt u?</p>
@@ -330,10 +287,6 @@
 	
 	<div id="dialog-changeerror" title="Onjuiste invoer.">
     	<p id="errormessage"> </p>
-	</div>
-	
-	<div id="dialog-changesuccess" title="Aantal gewijzigd">
-    	<p id="successmessage"> </p>
 	</div>
     
   </body>
