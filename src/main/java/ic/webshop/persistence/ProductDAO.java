@@ -82,7 +82,7 @@ return null;
 			preparedStatement = con.prepareStatement(query);
 			// eerste vraagteken = 1
 		//	byte[] source = artikel.getBlobPlaatje();
-		//	ByteArrayInputStream blob = new ByteArrayInputStream(source);
+		//	ByteArrayInputStream blob = new ByteArrayInputStream(source); 
 		//	preparedStatement.setBinaryStream(2, blob);
 			preparedStatement.setInt(1, productID);
 			preparedStatement.setString(2, artikel.getNaam()); 
