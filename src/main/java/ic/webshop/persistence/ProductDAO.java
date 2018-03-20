@@ -44,9 +44,14 @@ private ProductCategorieDAO pcDAO = new ProductCategorieDAO();
 	
 	
 	public Product findByPK(int ID){ 	
-		return selectArtikelen("SELECT * "
-			+ "FROM public.\"Product\" " 
-				+ " WHERE \"ID\" = " + ID).get(0);
+		try{
+		return selectArtikelen("SELECT * FROM public.\"Product\"  WHERE \"ID\" = " + ID).get(0);
+		}	catch (NullPointerException nullPointer)
+				{
+	
+System.out.println("Kan opgegeven Product ID niet vinden in de database.");	
+return null;
+}
 	}
 	 
 	public void saveArtikel(Product artikel){
