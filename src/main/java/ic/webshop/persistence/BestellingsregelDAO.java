@@ -44,7 +44,7 @@ private BestellingDAO bestellingDAO = new BestellingDAO();
 	
 	public List<Bestellingsregel> findAll(){ return selectBestellingsregels("SELECT * FROM public.\"Bestellingsregel\" ORDER BY \"ID\"");}
 	
-	public Bestellingsregel findBestellingsregelByPK(int ID){ 	//nog een nullpointerexception handler toevoegen? nette 404 error geven
+	public Bestellingsregel findBestellingsregelByPK(int ID){ 	
 		return selectBestellingsregels("SELECT * FROM public.\"Bestellingsregel\"  WHERE \"ID\" = " + ID).get(0);
 	}
 	
@@ -56,7 +56,7 @@ private BestellingDAO bestellingDAO = new BestellingDAO();
 		try (Connection con = super.getConnection()) {
 			preparedStatement = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);			
 			preparedStatement.setInt(1, bestellingsregel.getAantal()); 
-			//preparedStatement.setFloat(2, bestellingsregel.getTotaalPrijs()); i have no idea what i am doing kavn help pls
+		
 			preparedStatement.setDouble(2, bestellingsregel.getTotaalPrijs());
 			preparedStatement.setInt(3, bestellingsregel.getProduct().getID()); 
 			preparedStatement.setInt(4, bestellingsregel.getBestelling().getID()); 	

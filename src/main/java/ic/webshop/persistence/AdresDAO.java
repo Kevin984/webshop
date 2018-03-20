@@ -34,7 +34,7 @@ public class AdresDAO extends BaseDAO{
 	
 	public List<Adres> findAll(){ return selectAdressen("SELECT * FROM public.\"Adres\" ORDER BY \"ID\"");}
 	
-	public Adres findAdresByPK(int ID){ 	//nog een nullpointerexception handler toevoegen? nette 404 error geven
+	public Adres findAdresByPK(int ID){ 	
 		return selectAdressen("SELECT * FROM public.\"Adres\"  WHERE \"ID\" = " + ID).get(0);
 	}
 	

@@ -39,7 +39,7 @@ public class KlantDAO extends BaseDAO{
 	
 	public List<Klant> findAll(){return selectKlanten("SELECT * FROM public.\"Klant\" ORDER BY \"ID\"");}
 	
-	public Klant findKlantByPK(int ID){ 	//nog een nullpointerexception handler toevoegen? nette 404 error geven
+	public Klant findKlantByPK(int ID){ 	
 		return selectKlanten("SELECT * FROM public.\"Klant\" WHERE \"ID\" = " + ID).get(0);
 	}
 	

@@ -45,7 +45,7 @@ private ProductDAO productDAO = new ProductDAO();
 	
 	public List<Aanbieding> findAll(){ return selectAanbiedingen("SELECT * FROM public.\"Aanbieding\" ORDER BY \"ID\"");}
 	
-	public Aanbieding findAanbiedingByPK(int ID){ 	//nog een nullpointerexception handler toevoegen? nette 404 error geven
+	public Aanbieding findAanbiedingByPK(int ID){ 	
 		return selectAanbiedingen("SELECT * FROM public.\"Aanbieding\" WHERE \"ID\" = " + ID).get(0);
 	}
 	

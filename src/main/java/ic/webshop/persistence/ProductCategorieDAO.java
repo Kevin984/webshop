@@ -23,8 +23,7 @@ public class ProductCategorieDAO extends BaseDAO{
 			ResultSet dbResultSet = stmt.executeQuery(query);
 			producten.clear();
 			while(dbResultSet.next()){ 
-			//	 int ID = dbResultSet.getInt("ID");
-			//	 int productID = dbResultSet.getInt("Product_ID");
+			
 				 int categorieID = dbResultSet.getInt("Categorie_ID");
 				 int prID = dbResultSet.getInt("Product_ID");
 				 String naam = dbResultSet.getString("Naam");
@@ -51,7 +50,6 @@ public class ProductCategorieDAO extends BaseDAO{
 	public Product findProductCategorieBypIDcID(int ID, int ID2){ 	//nog een nullpointerexception handler toevoegen? nette 404 error geven
 		return selectProductCategorieen("SELECT * FROM public.\"Product_Categorie\" as pc INNER JOIN  public.\"Product\" as p ON pc.\"Product_ID\" = p.\"ID\" WHERE \"Product_ID\" = "+ID+" AND \"Categorie_ID\" = "+ID2+";").get(0);
 
-//		return selectProductCategorieen("SELECT * FROM public.\"Product_Categorie\"  WHERE \"Product_ID\" = " + ID + " AND \"Categorie_ID\" = " + ID2 ).get(0);
 	}
 	
 	public void saveProductCategorie(Product product, Categorie categorie){
