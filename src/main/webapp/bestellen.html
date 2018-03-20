@@ -152,6 +152,28 @@
 	    var ingelogdeStraat = null;
 		var ingelogdeStraatnummer = null;
 		var ingelogdeNaam = null;
+		
+		user = getUsername()
+	
+		function getUsername() {
+			token = window.sessionStorage.getItem("sessionToken");
+			if (token != null) {
+				$.ajax({
+					url: "restservices/accounts/usernamebytoken/" + window.sessionStorage.getItem("sessionToken"),
+					method: "GET",
+					success: function (username) {
+						if (username == "expiredToken") {
+							window.sessionStorage.clear();
+							return "Guest";
+						} else {
+							return username;
+						}
+					}
+				});
+			} else {
+				return "Guest";
+			}
+		}
 	    	
 	    if(user == 'Guest'){
 	    	document.getElementById("bestelBericht").innerHTML = "<b>Voer uw naam en adres in.</b>";
@@ -415,10 +437,19 @@
 	    }
 	
 		function isSessieVerlopen() {
-			if (sessionStorage.getItem('sessionToken') == 'guest' && user != 'guest'){
-	    		// sessie verlopen
-	    		window.location = "index.html"
-	    	}
+	    	token = window.sessionStorage.getItem("sessionToken");
+			if (token != null) {
+		    	$.ajax({
+					url: "restservices/accounts/usernamebytoken/" + window.sessionStorage.getItem("sessionToken"),
+					method: "GET",
+					success: function (username) {
+						if (username == "expiredToken") {
+							window.sessionStorage.clear();
+							window.location = "index.html";
+						}
+					}
+				});
+			}
 	    }
 	}
     </script>

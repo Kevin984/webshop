@@ -41,7 +41,12 @@
 				url: "restservices/accounts/usernamebytoken/" + window.sessionStorage.getItem("sessionToken"),
 				method: "GET",
 				success: function (username) {
-					return username;
+					if (username == "expiredToken") {
+						window.sessionStorage.clear();
+						return "Guest";
+					} else {
+						return username;
+					}
 				}
 			});
 		} else {
