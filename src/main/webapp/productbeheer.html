@@ -148,19 +148,20 @@
 		   		+ artikel.ID + "'> Artikel Verwijderen</button>" + "</td></tr>");
 		   		
 		   		 var trid = $(this).closest('tr').attr('id');
-	   		     var replacer = $("<tr>").attr('id', trid);
-	   		     
-	   		     var formulier = $("<form id='updateForm"+trid+"'>");
-	   		     formulier.append($("<td>").append($("<input id='id"+trid+"' value='"+trid+"' readonly name='ID'/>"))); //inputs vullen en deze rij herhalen
-	   		     formulier.append($("<td>").append($("<input id='naam"+trid+"' placeholder='Naam' name='Naam' required='required' type='text'/>"))); //inputs vullen en deze rij herhalen
-	   		     formulier.append($("<td>").append($("<input id='omschrijving"+trid+"' placeholder='Omschrijving' name='Omschrijving' type='text' required='required'/>"))); //inputs vullen en deze rij herhalen
-	   		     formulier.append($("<td>").append($("<input id='prijs"+trid+"' placeholder='Prijs' type='text' required='required' name='Prijs'/>"))); //inputs vullen en deze rij herhalen
-	   		     formulier.append($("<td>").append($("<button type='button' class='btn btn-primary' id='wijzigArtikel" + artikel.ID + "'>Wijziging opslaan</button>"))); //inputs vullen en deze rij herhalen
-	   		     formulier.append($("<td>").append($("<button type='button' class='btn btn-info' id='wijzigArtikelAnnuleren" + artikel.ID+ "'>Wijzigen annuleren</button>"))); //inputs vullen en deze rij herhalen
-
-	   		     formulier.appendTo(replacer);
+	   		    
 	   		     $(this).parents("tr").replaceWith(replacer);	
 		   		 $("#wijzigArtikel" + artikel.ID).click(function(){
+		   			 var replacer = $("<tr>").attr('id', trid);
+		   		     
+		   		     var formulier = $("<form id='updateForm"+trid+"'>");
+		   		     formulier.append($("<td>").append($("<input id='id"+trid+"' value='"+trid+"' readonly name='ID'/>"))); //inputs vullen en deze rij herhalen
+		   		     formulier.append($("<td>").append($("<input id='naam"+trid+"' placeholder='Naam' name='Naam' required='required' type='text'/>"))); //inputs vullen en deze rij herhalen
+		   		     formulier.append($("<td>").append($("<input id='omschrijving"+trid+"' placeholder='Omschrijving' name='Omschrijving' type='text' required='required'/>"))); //inputs vullen en deze rij herhalen
+		   		     formulier.append($("<td>").append($("<input id='prijs"+trid+"' placeholder='Prijs' type='text' required='required' name='Prijs'/>"))); //inputs vullen en deze rij herhalen
+		   		     formulier.append($("<td>").append($("<button type='button' class='btn btn-primary' id='wijzigArtikel" + artikel.ID + "'>Wijziging opslaan</button>"))); //inputs vullen en deze rij herhalen
+		   		     formulier.append($("<td>").append($("<button type='button' class='btn btn-info' id='wijzigArtikelAnnuleren" + artikel.ID+ "'>Wijzigen annuleren</button>"))); //inputs vullen en deze rij herhalen
+
+		   		     formulier.appendTo(replacer);
 		   		 	var trid = $(this).closest('tr').attr('id');
 		   	   		console.log($("#id"+trid).val());
 		   	   		console.log($("#naam"+trid).val());
