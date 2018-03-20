@@ -139,61 +139,12 @@
 					method : "GET",
 					success : function (data) {
 						var prijs = data["Prijs"]
+						addItemToWinkelmandje(prijs);
 					},
 					error : function (data) {
-						document.getElementById("productNaam").innerHTML="Dit product kon helaas niet worden gevonden.";			
+						console.log("Er is iets misgegaan bij het ophalen van de prijs.");			
 					}
 				});
-  				
-				var amount = Number(document.getElementById("aantalArtikelen").value);
-				
-				if (localStorage.getItem(productid) !== null) {
-					huidigeAmount = Number(JSON.parse(localStorage[productid])['amount']);
-					nieuweAmount = amount + huidigeAmount;
-					maxNieuweAmount = 20 - huidigeAmount;
-				}
-				
-				var artikel = {'productID': productid, 'amount': amount, 'price': prijs, 'priceNoFormat': prijsNoFormat, 'discount': discount};
-				
-				showError = false;
-				
-				if (amount % 1 !== 0) {
-					document.getElementById("errormessage").innerHTML = "Voer een geheel aantal in.";
-					showError = true;
-				} else if (amount < 1) {
-					document.getElementById("errormessage").innerHTML = "Voer een aantal in van minimaal 1.";
-					showError = true;
-				} else if (amount > 20) {
-					document.getElementById("errormessage").innerHTML = "Voer een aantal in van maximaal 20.";
-					showError = true;
-				} else if (localStorage.getItem(productid) !== null && nieuweAmount > 20) {
-					if (huidigeAmount > 0 && huidigeAmount < 20) {
-						if (huidigeAmount == 1) {
-							document.getElementById("errormessage").innerHTML = "U heeft hiervan al een exemplaar in uw winkelmandje.<br>Voer een aantal in van maximaal " +  maxNieuweAmount + ".";
-						} else {
-							document.getElementById("errormessage").innerHTML = "U heeft hiervan al " + huidigeAmount + " exemplaren in uw winkelmandje.<br>Voer een aantal in van maximaal " +  maxNieuweAmount + ".";
-						}
-					} else if (huidigeAmount == 20) {
-						document.getElementById("errormessage").innerHTML = "U heeft hiervan al 20 exemplaren in uw winkelmandje.<br>Meer dan 20 exemplaren van 1 artikel bestellen is op dit moment helaas niet mogelijk.";
-					}
-					showError = true;
-				} else {
-					document.getElementById("successmessage").innerHTML = amount + " keer artikel '" + data["Naam"] + "' toegevoegd!";
-					if (localStorage.getItem(productid) === null) {
-			  			localStorage.setItem(productid, JSON.stringify(artikel));
-					} else {
-						var huidigArtikel = JSON.parse(localStorage[productid]);
-						huidigArtikel['amount'] = Number(huidigArtikel['amount']) + amount;
-						localStorage.setItem(productid, JSON.stringify(huidigArtikel));
-					}
-	  				$("#dialog-confirm").dialog('open');return false;
-				}
-				
-				if (showError) {
-	  				$("#dialog-error").dialog('open');return false;
-	  				showError = false;
-				}
-	
   			};
 			document.getElementById('buttonplaceholder').appendChild(button);
 			
@@ -202,6 +153,57 @@
 			document.getElementById("productNaam").innerHTML="Dit product kon helaas niet worden gevonden.";
 		}
 	});
+	
+	function addItemToWinkelmandje(prijs) {
+		var amount = Number(document.getElementById("aantalArtikelen").value);
+		
+		if (localStorage.getItem(productid) !== null) {
+			huidigeAmount = Number(JSON.parse(localStorage[productid])['amount']);
+			nieuweAmount = amount + huidigeAmount;
+			maxNieuweAmount = 20 - huidigeAmount;
+		}
+		
+		var artikel = {'productID': productid, 'amount': amount, 'price': prijs, 'priceNoFormat': prijsNoFormat, 'discount': discount};
+		
+		showError = false;
+		
+		if (amount % 1 !== 0) {
+			document.getElementById("errormessage").innerHTML = "Voer een geheel aantal in.";
+			showError = true;
+		} else if (amount < 1) {
+			document.getElementById("errormessage").innerHTML = "Voer een aantal in van minimaal 1.";
+			showError = true;
+		} else if (amount > 20) {
+			document.getElementById("errormessage").innerHTML = "Voer een aantal in van maximaal 20.";
+			showError = true;
+		} else if (localStorage.getItem(productid) !== null && nieuweAmount > 20) {
+			if (huidigeAmount > 0 && huidigeAmount < 20) {
+				if (huidigeAmount == 1) {
+					document.getElementById("errormessage").innerHTML = "U heeft hiervan al een exemplaar in uw winkelmandje.<br>Voer een aantal in van maximaal " +  maxNieuweAmount + ".";
+				} else {
+					document.getElementById("errormessage").innerHTML = "U heeft hiervan al " + huidigeAmount + " exemplaren in uw winkelmandje.<br>Voer een aantal in van maximaal " +  maxNieuweAmount + ".";
+				}
+			} else if (huidigeAmount == 20) {
+				document.getElementById("errormessage").innerHTML = "U heeft hiervan al 20 exemplaren in uw winkelmandje.<br>Meer dan 20 exemplaren van 1 artikel bestellen is op dit moment helaas niet mogelijk.";
+			}
+			showError = true;
+		} else {
+			document.getElementById("successmessage").innerHTML = amount + " keer artikel '" + data["Naam"] + "' toegevoegd!";
+			if (localStorage.getItem(productid) === null) {
+	  			localStorage.setItem(productid, JSON.stringify(artikel));
+			} else {
+				var huidigArtikel = JSON.parse(localStorage[productid]);
+				huidigArtikel['amount'] = Number(huidigArtikel['amount']) + amount;
+				localStorage.setItem(productid, JSON.stringify(huidigArtikel));
+			}
+			$("#dialog-confirm").dialog('open');return false;
+		}
+		
+		if (showError) {
+			$("#dialog-error").dialog('open');return false;
+			showError = false;
+		}
+	}
 	
 	$.ajax({
 		url : "restservices/aanbiedingen/product/" + id,
@@ -233,7 +235,7 @@
 					document.getElementById("aanbiedingPrijs").innerHTML=" " + aanbiedingsprijs + "<br>(" + korting + "% korting)";
 					document.getElementById("aanbiedingPrijs").style.color = "#388724";
 					
-					document.getElementById("reclameTekstCell").innerHTML=reclameTekst;
+					document.getElementById("reclameTekstCell").innerHTML="Deze aanbieding geldt van " + vanDatum + " tot " + totDatum + "<br>" + reclameTekst;
 					document.getElementById("aanbiedingAfbeelding").style.display = 'inline';
 					break;
 				}
