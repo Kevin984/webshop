@@ -99,6 +99,9 @@
 		$("#sidebar_placeholder").replaceWith(data);
 	});
 	
+	
+
+    
     $("#artikelPost").click(function(response){
     	var Afbeelding = $("#Afbeelding").val();
     	var Naam = $("#Naam").val();
@@ -165,23 +168,7 @@
 		   	   		console.log($("#prijs"+trid).val());
 
      				var uri = "restservices/producten/" + trid;
-     				
-     				
-     				$.ajax({
-     					url: "restservices/producten/"+ trid,
-     					success: function(response){
-     						var data = $("#updateForm"+trid).serialize();
-     				    	$.post("restservices/producten/"+trid, data, function(response){
-     		   					$("#updateForm"+trid)[0].reset(); 
-     		   					$(".expendable").replaceWith("<div class='alert alert-success expendable' id='response'> <strong>Artikel:</strong> " + response.ID + " " + response.Naam + " is ge-update!</div>");
-     				    	})
-     				    },
-     		   			error: function(response){
-     		   				$(".expendable").replaceWith("<div class='alert alert-danger expendable' id='response'> Er is iets mis gegaan! Artikel is <strong>niet</strong> toegevoegd.</div>");
-     		   			}
-     		    	});
-     				
-		   	   	   	/* $.ajax(uri, {
+		   	   	   	$.ajax(uri, {
         				type: "PUT",
         				data: $("updateForm" + trid).serialize(),
         				success: function(response){
@@ -194,13 +181,13 @@
 						error: function(response){
 							$(".expendable").replaceWith("<div class='alert alert-danger' id='response'> Er is iets mis gegaan! Artikel is <strong>niet</strong> aangepast.</div>");
 						}
-        			}); */
+        			});
 		   	   	})
 				$("#wijzigArtikelAnnuleren"+artikel.ID).click(function(){
 		   	   		// refresh pagina
 		   	   		location.reload();	
 				})
-		   	//})
+		   	})
 		   	
 		   	$("#delete" + artikel.ID).one("click",function(){   
 		   		var uri = ("restservices/producten/") + artikel.ID;
@@ -223,9 +210,8 @@
 		   			});
 		   		}
 		   	});
-		})
+		}
 	});
-});
     </script>
   </body>
 </html>
