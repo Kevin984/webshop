@@ -19,7 +19,7 @@ public class UserDAO extends BaseDAO {
 	 ResultSet rs = pstmt.executeQuery();
 	 if (rs.next())
 	 role = rs.getString("Role");
-
+	 System.out.print(role);
 	 } catch (SQLException sqle) {
 	 sqle.printStackTrace();
 	 }
