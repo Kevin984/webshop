@@ -19,11 +19,6 @@ import ic.webshop.persistence.ProductDAO;
 	
 	@BeforeEach
 	void init() throws NamingException {
-		Hashtable<String, String> props = new Hashtable<>();
-		props.put("java.naming.factory.initial","com.sun.enterprise.naming.impl.SerialInitContextFactory");
-		props.put("java.naming.factory.url.pkgs", "com.sun.enterprise.naming");
-		props.put("java.naming.factory.state","com.sun.corba.ee.impl.presentation.rmi.JNDIStateFactoryImpl");
-		InitialContext ctx = new InitialContext(props);
 	pDAO = new ProductDAO();
 	}
 	
