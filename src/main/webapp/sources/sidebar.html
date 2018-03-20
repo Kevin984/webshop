@@ -46,9 +46,8 @@ else{
 	$("#loginlink").hide();
 }
 
-totalPrice = 0;
-
 function showWinkelmandje() {
+	totalPrice = 0;
 	if (localStorage.length > 0) {
 		document.getElementById("cartPreviewPlaceholder").innerHTML = "<b>Uw winkelmandje:</b>";
 		for (j = 0; j < localStorage.length; j++){
